@@ -1,0 +1,12 @@
+{
+  "name": "alibabeto",
+  "version": "1.0.0",
+  "description": "Este repositorio contiene el código fuente del proyecto \"Alibabeto\", una tienda mayorista ubicada en Cancún que busca expandir su alcance mediante la transición al comercio electrónico. El proyecto se desarrollará utilizando las siguientes tecnologías:",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
