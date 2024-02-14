@@ -62,6 +62,8 @@ export function initModels(sequelize: Sequelize) {
   proveedores.hasMany(entradas, { as: "entradas", foreignKey: "ProveedorFK"});
   usuarios.belongsTo(roles, { as: "RolFK_role", foreignKey: "RolFK"});
   roles.hasMany(usuarios, { as: "usuarios", foreignKey: "RolFK"});
+  entradas.belongsTo(usuarios, { as: "UsuarioFK_usuario", foreignKey: "UsuarioFK"});
+  usuarios.hasMany(entradas, { as: "entradas", foreignKey: "UsuarioFK"});
 
   return {
     categorias: categorias,

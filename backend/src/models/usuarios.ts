@@ -1,5 +1,6 @@
 import * as Sequelize from 'sequelize';
 import { DataTypes, Model, Optional } from 'sequelize';
+import type { entradas, entradasId } from './entradas';
 import type { roles, rolesId } from './roles';
 
 export interface usuariosAttributes {
@@ -33,6 +34,18 @@ export class usuarios extends Model<usuariosAttributes, usuariosCreationAttribut
   getRolFK_role!: Sequelize.BelongsToGetAssociationMixin<roles>;
   setRolFK_role!: Sequelize.BelongsToSetAssociationMixin<roles, rolesId>;
   createRolFK_role!: Sequelize.BelongsToCreateAssociationMixin<roles>;
+  // usuarios hasMany entradas via UsuarioFK
+  entradas!: entradas[];
+  getEntradas!: Sequelize.HasManyGetAssociationsMixin<entradas>;
+  setEntradas!: Sequelize.HasManySetAssociationsMixin<entradas, entradasId>;
+  addEntrada!: Sequelize.HasManyAddAssociationMixin<entradas, entradasId>;
+  addEntradas!: Sequelize.HasManyAddAssociationsMixin<entradas, entradasId>;
+  createEntrada!: Sequelize.HasManyCreateAssociationMixin<entradas>;
+  removeEntrada!: Sequelize.HasManyRemoveAssociationMixin<entradas, entradasId>;
+  removeEntradas!: Sequelize.HasManyRemoveAssociationsMixin<entradas, entradasId>;
+  hasEntrada!: Sequelize.HasManyHasAssociationMixin<entradas, entradasId>;
+  hasEntradas!: Sequelize.HasManyHasAssociationsMixin<entradas, entradasId>;
+  countEntradas!: Sequelize.HasManyCountAssociationsMixin;
 
   static initModel(sequelize: Sequelize.Sequelize): typeof usuarios {
     return usuarios.init({
