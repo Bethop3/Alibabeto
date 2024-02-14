@@ -2,32 +2,36 @@ import { Usuario } from "../models/usuario";
 import { sequelize } from "../database";
 import { Controller } from "../types";
 
-// Usuario.initModel();
-
-// sequelize.sync();
-
-export const GetUsuarios : Controller<any , any, any> = async ( req , res ) => {
+/**
+ * @controller GetUsuarios
+ * @description Controlador para obtener la lista de usuarios.
+ * @param {Object} req - Objeto de solicitud de Express.
+ * @param {Object} res - Objeto de respuesta de Express.
+ * @returns {Object} Respuesta JSON con la lista de usuarios.
+ */
+export const GetUsuarios: Controller<Usuario[]> = async (req, res) => {
     
-    try
+    try 
     {
-        
-        const [users] = await sequelize.query(`SELECT * from usuarios`)
-        const usuarios2 = await Usuario.findAll()
+        // Consulta directa a la base de datos usando sequelize.query
+        const [usersFromQuery] = await sequelize.query(`SELECT * from usuarios`);
+
+        // Consulta a la base de datos usando el modelo Sequelize Usuario
+        const usuariosFromModel = await Usuario.findAll();
 
         return res.status(200).json({
             ok: true,
-            data: {
-                users1: users,
-                users2: usuarios2
-            },
-        })
-
-    }
-    catch(err)
+            data: usuariosFromModel,
+        });
+    } 
+    catch (err) 
     {
-        console.log(err);
         
-        return res.status(400).json()
+        console.error(err);
+
+        // Devuelve una respuesta de error en caso de un problema
+        return res.status(400)
+
     }
 
-}
+};

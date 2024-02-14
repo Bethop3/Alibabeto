@@ -1,41 +1,44 @@
+// Librerías
 import express, { Application } from 'express';
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
 
-// AQUI IMPORTAN LOS MODELOS
-// import Calificaciones from './models/calificaciones';
-// import Carrera from './models/carrera';
-// import Materia from './models/materia';
-// import Alumno from './models/alumno';
+// Routers
+import usuariosRouter from './router/usuarios.routes';
+import productosRouter from './router/producto.routes';
 
-// ROUTERS
-import usuariosRouter from './router/usuarios.routes'
-import prooductosRouter from './router/producto.routes'
-
-// base de datos
+// Base de Datos
 import { getConnection } from './database/conection';
 import { initModels } from './models/init-models';
 import { sequelize } from './database';
 
-// middlewares
+// Middlewares
 // import { MiddlewareTokenValidator } from './middlewares/middlewareTokenValidator';
 
+// Inicialización de la aplicación Express
 const app: Application = express();
 
-dotenv.config()
+// Configuración de variables de entorno
+dotenv.config();
 
+// Puerto de la aplicación
 const port = process.env.PORT || 8000;
 
-app.use(express.json())
+// Middleware para procesar datos en formato JSON
+app.use(express.json());
 
-app.use( "/producto", prooductosRouter )
-app.use( "/usuario", usuariosRouter )
+// Rutas
+app.use('/producto', productosRouter);
+app.use('/usuario', usuariosRouter);
 
+// Inicialización de modelos Sequelize
 app.listen(port, async () => {
   
-  await initModels(sequelize)
-  
-  await getConnection()
-  
+  // Inicialización de modelos Sequelize
+  await initModels(sequelize);
+
+  // Conexión a la base de datos
+  await getConnection();
+
   console.log(`Servidor corriendo en http://localhost:${port}`);
   
 });
