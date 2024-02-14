@@ -34,15 +34,6 @@ El proyecto se organizará en varias carpetas y seguirá una estructura modular 
    - Asegúrese de tener MySQL instalado y configurado.
    - Ejecute los scripts de la carpeta `/database` para crear la estructura de la base de datos.
 
-## Desarrollo por Fases
-
-El desarrollo del proyecto seguirá las fases propuestas en el documento del proyecto:
-
-- **Fase 1 (Meses 1-2):** Evaluación y Planificación.
-- **Fase 2 (Meses 3-6):** Desarrollo de la Plataforma en Línea.
-- **Fase 3 (Meses 7-9):** Integración de Servicios en la Nube.
-- **Fase 4 (Meses 10-12):** Prueba, Ajustes y Lanzamiento.
-
 ## Métricas de Éxito
 
 - Número de pedidos en línea.
