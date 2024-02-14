@@ -1,7 +1,7 @@
-// import { sequelize } from "../database";
-import { DataTypes, Sequelize } from "sequelize";
+import { sequelize } from "../database";
+import { DataTypes } from "sequelize";
 
-const Usuario = sequelize.define(
+export const Usuario = sequelize.define(
   "Usuario",
   {
     id: {
@@ -13,9 +13,17 @@ const Usuario = sequelize.define(
         type: DataTypes.STRING(255),
         allowNull: false,
     },
-    apelliods: {
+    apellidos: {
         type: DataTypes.STRING(255),
         allowNull: false,
+    },
+    email: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
   },
   {

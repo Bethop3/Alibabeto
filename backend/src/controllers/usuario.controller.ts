@@ -1,14 +1,15 @@
+import Usuario from "../models/carrito.model";
 import { Controller } from "../types";
-
-export const GetCarrito : Controller<any , any, any> = async ( req , res ) => {
-
+export const GetUsuarios : Controller<any , any, any> = async ( req , res ) => {
+    
     try
     {
+        
+        const users = await Usuario.findAll()
 
         return res.status(200).json({
             ok: true,
-            data: true,
-            msg: "Hola mundo"
+            data: users,
         })
 
     }

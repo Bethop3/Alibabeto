@@ -1,11 +1,11 @@
 import { NextFunction, Request , Response } from "express";
-// import { ValidationError } from 'express-validator'
+import { ValidationError } from 'express-validator'
 import { IncomingHttpHeaders } from "http";
-// import { JwtPayload } from "jsonwebtoken"
+import { JwtPayload } from "jsonwebtoken"
 
-// export type JWTAuthPayload = JwtPayload & {
-//   id: string
-// }
+export type JWTAuthPayload = JwtPayload & {
+  id: string
+}
 
 type CustomRequest<T ,T2, TBody , PayloadType> = Request<T ,T2, TBody> & {
   payload?: PayloadType
@@ -13,7 +13,6 @@ type CustomRequest<T ,T2, TBody , PayloadType> = Request<T ,T2, TBody> & {
     'x-auth-token'?: string
   }
 }
-
 
 export type Controller<TResponse = any , BodyRequest = null , PayloadBody = any , ReqParams = any> = (
   ( 
@@ -23,13 +22,13 @@ export type Controller<TResponse = any , BodyRequest = null , PayloadBody = any 
   ) => Promise<any>
 )
 
-// export type TypedMiddleware<Payload> = (
-//   ( 
-//     req: CustomRequest<any ,any , any , Payload>, 
-//     res: Response<ValidationError[] | undefined>, 
-//     next: NextFunction 
-//   ) => void
-// )
+export type Middleware<Payload> = (
+  ( 
+    req: CustomRequest<any ,any , any , Payload>, 
+    res: Response<ValidationError[] | undefined>, 
+    next: NextFunction 
+  ) => void
+)
 
 
 export interface BasicResponse<T> {
