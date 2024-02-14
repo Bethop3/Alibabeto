@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --pretty --transpile-only src/app.ts",
-    "migrate": "npx sequelize-auto -o './src/models' -d alibabeto -h localhost -u root2 -p 3306  -e mysql -l ts",
+    "migrate": "npx sequelize-auto -o './src/models' -d alibabeto -h localhost -u root2 -p 3306  -e mysql -l ts --caseModel p --sg",
     "start": "ts-node src/app.ts"
   },
   "keywords": [],

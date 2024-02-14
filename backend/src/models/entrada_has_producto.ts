@@ -1,9 +1,9 @@
 import * as Sequelize from 'sequelize';
 import { DataTypes, Model, Optional } from 'sequelize';
-import type { entradas, entradasId } from './entradas';
-import type { productos, productosId } from './productos';
+import type { Entrada, EntradaId } from './entrada';
+import type { Producto, ProductoId } from './producto';
 
-export interface entrada_has_productoAttributes {
+export interface EntradaHasProductoAttributes {
   EntradaId: number;
   ProductoId: number;
   id: number;
@@ -13,12 +13,12 @@ export interface entrada_has_productoAttributes {
   total: number;
 }
 
-export type entrada_has_productoPk = "id";
-export type entrada_has_productoId = entrada_has_producto[entrada_has_productoPk];
-export type entrada_has_productoOptionalAttributes = "id";
-export type entrada_has_productoCreationAttributes = Optional<entrada_has_productoAttributes, entrada_has_productoOptionalAttributes>;
+export type EntradaHasProductoPk = "id";
+export type EntradaHasProductoId = EntradaHasProducto[EntradaHasProductoPk];
+export type EntradaHasProductoOptionalAttributes = "id";
+export type EntradaHasProductoCreationAttributes = Optional<EntradaHasProductoAttributes, EntradaHasProductoOptionalAttributes>;
 
-export class entrada_has_producto extends Model<entrada_has_productoAttributes, entrada_has_productoCreationAttributes> implements entrada_has_productoAttributes {
+export class EntradaHasProducto extends Model<EntradaHasProductoAttributes, EntradaHasProductoCreationAttributes> implements EntradaHasProductoAttributes {
   EntradaId!: number;
   ProductoId!: number;
   id!: number;
@@ -27,19 +27,19 @@ export class entrada_has_producto extends Model<entrada_has_productoAttributes, 
   iva!: number;
   total!: number;
 
-  // entrada_has_producto belongsTo entradas via EntradaId
-  Entrada!: entradas;
-  getEntrada!: Sequelize.BelongsToGetAssociationMixin<entradas>;
-  setEntrada!: Sequelize.BelongsToSetAssociationMixin<entradas, entradasId>;
-  createEntrada!: Sequelize.BelongsToCreateAssociationMixin<entradas>;
-  // entrada_has_producto belongsTo productos via ProductoId
-  Producto!: productos;
-  getProducto!: Sequelize.BelongsToGetAssociationMixin<productos>;
-  setProducto!: Sequelize.BelongsToSetAssociationMixin<productos, productosId>;
-  createProducto!: Sequelize.BelongsToCreateAssociationMixin<productos>;
+  // EntradaHasProducto belongsTo Entrada via EntradaId
+  Entrada!: Entrada;
+  getEntrada!: Sequelize.BelongsToGetAssociationMixin<Entrada>;
+  setEntrada!: Sequelize.BelongsToSetAssociationMixin<Entrada, EntradaId>;
+  createEntrada!: Sequelize.BelongsToCreateAssociationMixin<Entrada>;
+  // EntradaHasProducto belongsTo Producto via ProductoId
+  Producto!: Producto;
+  getProducto!: Sequelize.BelongsToGetAssociationMixin<Producto>;
+  setProducto!: Sequelize.BelongsToSetAssociationMixin<Producto, ProductoId>;
+  createProducto!: Sequelize.BelongsToCreateAssociationMixin<Producto>;
 
-  static initModel(sequelize: Sequelize.Sequelize): typeof entrada_has_producto {
-    return entrada_has_producto.init({
+  static initModel(sequelize: Sequelize.Sequelize): typeof EntradaHasProducto {
+    return EntradaHasProducto.init({
     EntradaId: {
       type: DataTypes.INTEGER,
       allowNull: false,

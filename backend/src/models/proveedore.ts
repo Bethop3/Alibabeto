@@ -1,8 +1,8 @@
 import * as Sequelize from 'sequelize';
 import { DataTypes, Model, Optional } from 'sequelize';
-import type { entradas, entradasId } from './entradas';
+import type { Entrada, EntradaId } from './entrada';
 
-export interface proveedoresAttributes {
+export interface ProveedoreAttributes {
   id: number;
   nombre: string;
   contacto: string;
@@ -14,12 +14,12 @@ export interface proveedoresAttributes {
   CreatedDate: Date;
 }
 
-export type proveedoresPk = "id";
-export type proveedoresId = proveedores[proveedoresPk];
-export type proveedoresOptionalAttributes = "id";
-export type proveedoresCreationAttributes = Optional<proveedoresAttributes, proveedoresOptionalAttributes>;
+export type ProveedorePk = "id";
+export type ProveedoreId = Proveedore[ProveedorePk];
+export type ProveedoreOptionalAttributes = "id";
+export type ProveedoreCreationAttributes = Optional<ProveedoreAttributes, ProveedoreOptionalAttributes>;
 
-export class proveedores extends Model<proveedoresAttributes, proveedoresCreationAttributes> implements proveedoresAttributes {
+export class Proveedore extends Model<ProveedoreAttributes, ProveedoreCreationAttributes> implements ProveedoreAttributes {
   id!: number;
   nombre!: string;
   contacto!: string;
@@ -30,21 +30,21 @@ export class proveedores extends Model<proveedoresAttributes, proveedoresCreatio
   status!: number;
   CreatedDate!: Date;
 
-  // proveedores hasMany entradas via ProveedorFK
-  entradas!: entradas[];
-  getEntradas!: Sequelize.HasManyGetAssociationsMixin<entradas>;
-  setEntradas!: Sequelize.HasManySetAssociationsMixin<entradas, entradasId>;
-  addEntrada!: Sequelize.HasManyAddAssociationMixin<entradas, entradasId>;
-  addEntradas!: Sequelize.HasManyAddAssociationsMixin<entradas, entradasId>;
-  createEntrada!: Sequelize.HasManyCreateAssociationMixin<entradas>;
-  removeEntrada!: Sequelize.HasManyRemoveAssociationMixin<entradas, entradasId>;
-  removeEntradas!: Sequelize.HasManyRemoveAssociationsMixin<entradas, entradasId>;
-  hasEntrada!: Sequelize.HasManyHasAssociationMixin<entradas, entradasId>;
-  hasEntradas!: Sequelize.HasManyHasAssociationsMixin<entradas, entradasId>;
+  // Proveedore hasMany Entrada via ProveedorFK
+  entradas!: Entrada[];
+  getEntradas!: Sequelize.HasManyGetAssociationsMixin<Entrada>;
+  setEntradas!: Sequelize.HasManySetAssociationsMixin<Entrada, EntradaId>;
+  addEntrada!: Sequelize.HasManyAddAssociationMixin<Entrada, EntradaId>;
+  addEntradas!: Sequelize.HasManyAddAssociationsMixin<Entrada, EntradaId>;
+  createEntrada!: Sequelize.HasManyCreateAssociationMixin<Entrada>;
+  removeEntrada!: Sequelize.HasManyRemoveAssociationMixin<Entrada, EntradaId>;
+  removeEntradas!: Sequelize.HasManyRemoveAssociationsMixin<Entrada, EntradaId>;
+  hasEntrada!: Sequelize.HasManyHasAssociationMixin<Entrada, EntradaId>;
+  hasEntradas!: Sequelize.HasManyHasAssociationsMixin<Entrada, EntradaId>;
   countEntradas!: Sequelize.HasManyCountAssociationsMixin;
 
-  static initModel(sequelize: Sequelize.Sequelize): typeof proveedores {
-    return proveedores.init({
+  static initModel(sequelize: Sequelize.Sequelize): typeof Proveedore {
+    return Proveedore.init({
     id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
