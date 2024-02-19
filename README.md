@@ -20,10 +20,9 @@ El proyecto se organizará en varias carpetas y seguirá una estructura modular 
 ## Configuración del Entorno
 
 1. **Astro y ReactJS:**
-   - Asegúrese de tener [Node.js](https://nodejs.org/) instalado.
-   - Instale Astro globalmente: `npm install -g astro`.
-   - Vaya a la carpeta `/frontend` y ejecute `npm install` para instalar las dependencias.
-   - Ejecute el servidor de desarrollo con `npm start`.
+   - Asegúrese de tener [Node.js 20](https://nodejs.org/) instalado.
+   - Vaya a la carpeta `cd /alibabeto-frontend` y ejecute `npm install` para instalar las dependencias.
+   - Ejecute el servidor de desarrollo con `npm run dev`.
 
 2. **Express.js y TypeScript:**
    - En la carpeta `/backend`, ejecute `npm install` para instalar las dependencias.
