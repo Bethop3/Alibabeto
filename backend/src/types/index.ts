@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { ValidationError } from 'express-validator'
 import { IncomingHttpHeaders } from "http";
 import { JwtPayload } from "jsonwebtoken"
+import { UsuarioAttributes } from "../models/usuario";
 
 // Tipo para el payload de JWT que incluye la propiedad 'id'
 export type JWTAuthPayload = JwtPayload & {
@@ -45,3 +46,6 @@ export interface BasicResponse<T> {
 export interface ResponseAuth extends BasicResponse<null> {
 
 }
+
+
+export type UserLogin = Pick<UsuarioAttributes , 'correo' | 'password'>
