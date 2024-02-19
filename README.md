@@ -29,10 +29,6 @@ El proyecto se organizará en varias carpetas y seguirá una estructura modular 
    - Configure la base de datos MySQL en el archivo `.env` siguiendo el formato de `.env.example`.
    - Ejecute el servidor con `npm start`.
 
-3. **Base de Datos MySQL:**
-   - Asegúrese de tener MySQL instalado y configurado.
-   - Ejecute los scripts de la carpeta `/database` para crear la estructura de la base de datos.
-
 ## Métricas de Éxito
 
 - Número de pedidos en línea.
