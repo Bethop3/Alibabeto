@@ -1,15 +1,16 @@
-import { GetUsuarios } from '../controllers/usuario.controller';
+
+import { CreateUsuarioCtrl, EditUsuarioCtrl, EliminarUsuarioCtrl, GetUsuarios } from '../controllers/usuario.controller';
 import { Router } from 'express';
 
-// Crea un enrutador Express
 const router = Router();
+// Crea un enrutador Express
+router.get( '/all', GetUsuarios );
 
-/**
- * @route GET /usuario
- * @description Ruta para obtener todos los usuarios.
- * @controller GetUsuarios - Controlador que maneja la lógica para obtener usuarios.
- */
-router.get('/', GetUsuarios);
+router.post( '/create', CreateUsuarioCtrl );
 
-// Exporta el enrutador para su uso en otras partes de la aplicación
+router.put( '/edit', EditUsuarioCtrl );
+
+router.delete( '/:id', EliminarUsuarioCtrl);
+
 export default router;
+

@@ -104,7 +104,7 @@ export const EliminarProductoCtrl: Controller<string | null, number, any, { id: 
                 ok: false,
                 msg: "Producto inválido",
                 data: null,
-            });
+            }); 
         }
 
         // Elimina el producto de la base de datos

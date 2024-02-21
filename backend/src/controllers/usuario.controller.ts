@@ -1,6 +1,8 @@
-import { Usuario } from "../models/usuario";
+import { Usuario, UsuarioAttributes } from "../models/usuario";
 import { sequelize } from "../database";
 import { Controller } from "../types";
+import { CrearUsuario, EditarUsuario } from "../types/Usuario";
+import { Producto } from "../models/producto";
 
 /**
  * @controller GetUsuarios
@@ -10,9 +12,8 @@ import { Controller } from "../types";
  * @returns {Object} Respuesta JSON con la lista de usuarios.
  */
 export const GetUsuarios: Controller<Usuario[]> = async (req, res) => {
-    
-    try 
-    {
+
+    try {
         // Consulta directa a la base de datos usando sequelize.query
         const [usersFromQuery] = await sequelize.query(`SELECT * from usuarios`);
 
@@ -23,15 +24,101 @@ export const GetUsuarios: Controller<Usuario[]> = async (req, res) => {
             ok: true,
             data: usuariosFromModel,
         });
-    } 
-    catch (err) 
-    {
-        
+    }
+    catch (err) {
+
         console.error(err);
 
-        // Devuelve una respuesta de error en caso de un problema
         return res.status(400)
 
     }
 
+
+};
+
+export const CreateUsuarioCtrl: Controller<UsuarioAttributes, CrearUsuario> = async (req, res) => {
+    try {
+        const NuevoUsuario = await Usuario.create({
+            ...req.body,
+        });
+        return res.status(200).json({
+            ok: true,
+            data: NuevoUsuario,
+        });
+    } catch (error) {
+        console.error(error);
+
+
+        return res.status(400)
+    }
+
+};
+
+export const EditUsuarioCtrl: Controller<UsuarioAttributes | null, EditarUsuario> = async (req, res) => {
+    try {
+        const { id, ...rest } = req.body;
+
+
+        const UsuarioAEditar = await Usuario.findOne({
+            where: { id },
+
+        });
+
+
+        if (!UsuarioAEditar) {
+            return res.status(400).json({
+                ok: false,
+                msg: "Usuario no encontrado",
+                data: null,
+            });
+        };
+
+        UsuarioAEditar.set({
+            ...rest,
+        });
+
+        await UsuarioAEditar.save();
+
+
+        return res.status(200).json({
+            ok: true,
+            data: UsuarioAEditar,
+            msg: "Usuario actualizado correctamente",
+        });
+
+
+
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json();
+    }
+};
+
+export const EliminarUsuarioCtrl: Controller<string | null, number, any, { id: string }> = async (req, res) => {
+try {
+    const {id} = req.params;
+
+    const UsuarioAEliminar = await Usuario.findOne({
+        where: {id},
+    });
+
+    if (!UsuarioAEliminar) {
+        return res.status(400).json({
+            ok: false,
+            msg: "Usuario inválido",
+            data: null,
+        });
+    }
+    await UsuarioAEliminar.destroy();
+
+    return res.status(200).json({
+        ok: true,
+        data: null,
+        msg: "Usuario eliminado correctamente",
+    });
+    
+} catch (error) {
+    console.log(error);
+        return res.status(400).json();   
+}
 };
