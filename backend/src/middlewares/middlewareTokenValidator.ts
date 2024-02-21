@@ -1,44 +1,38 @@
 // import { validateJWT } from "../auth/helpers/validateJWT";
-import { JWTAuthPayload, Middleware } from './../types/index';
+import { type JWTAuthPayload, type Middleware } from './../types/index'
 
-export const MiddlewareTokenValidator: Middleware<JWTAuthPayload> = ( req, res, next ) => {
-  
-    const token = req.headers["x-auth-token"]
+export const MiddlewareTokenValidator: Middleware<JWTAuthPayload> = (req, res, next) => {
+  const token = req.headers['x-auth-token']
 
-    if( !token )
-    {
-      
-      return res.status(401).json([
-        // {
-        //   msg: "Token invalido",
-        //   location: "headers",
-        //   value: null,
-        // }
-      ])
+  if (!token) {
+    return res.status(401).json([
+      // {
+      //   msg: "Token invalido",
+      //   location: "headers",
+      //   value: null,
+      // }
+    ])
+  }
 
-    }
+  // const result = validateJWT(token)
 
-    // const result = validateJWT(token)
+  // console.log(result);
 
-    // console.log(result);
-    
-    // if( result === null )
-    // {
+  // if( result === null )
+  // {
 
-    //   return res.status(401).json([
-    //     {
-    //       msg: "Token invalido",
-    //       param: "token",
-    //       location: "headers",
-    //       value: token
-    //     }
-    //   ])
+  //   return res.status(401).json([
+  //     {
+  //       msg: "Token invalido",
+  //       param: "token",
+  //       location: "headers",
+  //       value: token
+  //     }
+  //   ])
 
-    // }
+  // }
 
-    // req.payload = result
+  // req.payload = result
 
-    next();
-    
-  };
-  
+  next()
+}

@@ -1,5 +1,5 @@
-import { ProductoAttributes } from "../models/producto";
+import { type ProductoAttributes } from '../models/producto'
 
-export type CrearProducto = Omit<ProductoAttributes , 'id'>
+export type CrearProducto = Omit<ProductoAttributes, 'id'>
 
 export type EditarProducto = ProductoAttributes

@@ -1,16 +1,14 @@
+import { CreateUsuarioCtrl, EditUsuarioCtrl, EliminarUsuarioCtrl, GetUsuarios } from '../controllers/usuario.controller'
+import { Router } from 'express'
 
-import { CreateUsuarioCtrl, EditUsuarioCtrl, EliminarUsuarioCtrl, GetUsuarios } from '../controllers/usuario.controller';
-import { Router } from 'express';
-
-const router = Router();
+const router = Router()
 // Crea un enrutador Express
-router.get( '/all', GetUsuarios );
+router.get('/all', GetUsuarios)
 
-router.post( '/create', CreateUsuarioCtrl );
+router.post('/create', CreateUsuarioCtrl)
 
-router.put( '/edit', EditUsuarioCtrl );
+router.put('/edit', EditUsuarioCtrl)
 
-router.delete( '/:id', EliminarUsuarioCtrl);
+router.delete('/:id', EliminarUsuarioCtrl)
 
-export default router;
-
+export default router

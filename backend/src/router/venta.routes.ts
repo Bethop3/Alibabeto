@@ -1,8 +1,8 @@
-import { GetVentasPorUsuario } from '../controllers/ventas.controller';
-import { Router } from 'express';
+import { GetVentasPorUsuario } from '../controllers/ventas.controller'
+import { Router } from 'express'
 
-const router = Router();
+const router = Router()
 
-router.get( '/', GetVentasPorUsuario );
+router.get('/', GetVentasPorUsuario)
 
-export default router;
+export default router

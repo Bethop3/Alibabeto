@@ -1,8 +1,8 @@
-import { NextFunction, Request, Response } from "express";
-import { ValidationError } from 'express-validator'
-import { IncomingHttpHeaders } from "http";
-import { JwtPayload } from "jsonwebtoken"
-import { UsuarioAttributes } from "../models/usuario";
+import { type NextFunction, type Request, type Response } from 'express'
+import { type ValidationError } from 'express-validator'
+import { type IncomingHttpHeaders } from 'http'
+import { type JwtPayload } from 'jsonwebtoken'
+import { type UsuarioAttributes } from '../models/usuario'
 
 // Tipo para el payload de JWT que incluye la propiedad 'id'
 export type JWTAuthPayload = JwtPayload & {
@@ -47,5 +47,4 @@ export interface ResponseAuth extends BasicResponse<null> {
 
 }
 
-
-export type UserLogin = Pick<UsuarioAttributes , 'correo' | 'password'>
+export type UserLogin = Pick<UsuarioAttributes, 'correo' | 'password'>

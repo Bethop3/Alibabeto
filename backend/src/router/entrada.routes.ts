@@ -1,8 +1,8 @@
-import { GetEntrada } from "../controllers/entrada.controller";
-import { Router } from "express";
+import { GetEntrada } from '../controllers/entrada.controller'
+import { Router } from 'express'
 
-const router = Router();
+const router = Router()
 
-router.get( '/', GetEntrada );
+router.get('/', GetEntrada)
 
-export default router;
+export default router
