@@ -1,0 +1,24 @@
+{
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.colorTheme": "SynthWave '84",
+    "explorer.compactFolders": false,
+    "[typescriptreact]": {
+      "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "[python]": {
+      "editor.formatOnType": true
+    },
+    "notebook.lineNumbers": "on",
+    "window.commandCenter": false,
+    "window.zoomLevel": 1,
+    "svelte.ask-to-enable-ts-plugin": false,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "always"
+    },
+    "eslint.debug": true,
+    "eslint.format.enable": true,
+    "editor.formatOnSave": true,
+    "eslint.codeActionsOnSave.rules": null,
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "eslint.configFile": "../eslint.json"
+  }

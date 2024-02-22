@@ -1,4 +1,5 @@
 import { sequelize } from '.'
+import { runESLint } from '../app'
 
 /**
 * @function getConnection
@@ -21,6 +22,8 @@ export const getConnection = async (): Promise<void> => {
     await sequelize.query('SET FOREIGN_KEY_CHECKS = 1')
 
     // Limpia la consola
+    // runESLint()
+
     console.clear()
 
     // Mensajes de confirmación

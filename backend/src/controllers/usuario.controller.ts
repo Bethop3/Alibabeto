@@ -1,5 +1,5 @@
 import { type CrearUsuario, type EditarUsuario } from '../types/Usuario'
-import { Usuario, type UsuarioAttributes, UsuarioId, UsuarioCreationAttributes } from '../models/usuario'
+import { Usuario, type UsuarioAttributes } from '../models/usuario'
 import { type Controller } from '../types'
 
 /**

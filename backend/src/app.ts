@@ -14,6 +14,7 @@ import categoriaRouter from './router/categoria.routes'
 import { getConnection } from './database/conection'
 import { initModels } from './models/init-models'
 import { sequelize } from './database'
+import { ESLint } from 'eslint'
 
 // Middlewares
 // import { MiddlewareTokenValidator } from './middlewares/middlewareTokenValidator';
@@ -37,6 +38,14 @@ app.use('/proveedores', provedoreesRouter)
 app.use('/categoria', categoriaRouter)
 app.use('/roles', rolesrouter)
 app.use('/entradas', entradaRouter)
+
+export async function runESLint (): Promise<void> {
+  const eslint = new ESLint()
+  const results = await eslint.lintFiles(['src/**/*.ts'])
+  const formatter = await eslint.loadFormatter('stylish')
+  const resultText = formatter.format(results)
+  console.log(resultText)
+}
 
 // Inicialización de modelos Sequelize
 app.listen(port, async () => {
