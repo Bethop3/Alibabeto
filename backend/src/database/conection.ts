@@ -1,5 +1,4 @@
 import { sequelize } from '.'
-import { runESLint } from '../app'
 
 /**
 * @function getConnection
