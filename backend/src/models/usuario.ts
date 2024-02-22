@@ -12,11 +12,12 @@ export interface UsuarioAttributes {
   nombreUsuario: string
   Imagen: string
   RolFK: number
+  is_deleted: number
 }
 
 export type UsuarioPk = 'id'
 export type UsuarioId = Usuario[UsuarioPk]
-export type UsuarioOptionalAttributes = 'id' | 'nombre' | 'apellidos' | 'password'
+export type UsuarioOptionalAttributes = 'id' | 'nombre' | 'apellidos' | 'password' | 'is_deleted'
 export type UsuarioCreationAttributes = Optional<UsuarioAttributes, UsuarioOptionalAttributes>
 
 export class Usuario extends Model<UsuarioAttributes, UsuarioCreationAttributes> implements UsuarioAttributes {
@@ -28,6 +29,7 @@ export class Usuario extends Model<UsuarioAttributes, UsuarioCreationAttributes>
   nombreUsuario!: string
   Imagen!: string
   RolFK!: number
+  is_deleted!: number
 
   // Usuario belongsTo Role via RolFK
   RolFK_role!: Role
@@ -86,6 +88,11 @@ export class Usuario extends Model<UsuarioAttributes, UsuarioCreationAttributes>
           model: 'roles',
           key: 'id'
         }
+      },
+      is_deleted: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: 0
       }
     }, {
       sequelize,

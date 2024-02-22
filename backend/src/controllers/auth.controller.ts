@@ -6,7 +6,10 @@ export const AuthRegister: Controller<Usuario | null, UsuarioAttributes> = async
   try {
     const { correo } = req.body
 
-    const UserExist = await Usuario.findOne({ where: { $correo$: correo } })
+    const UserExist = await Usuario.findOne({ where: { correo } })
+
+    console.log('UserExist')
+    console.log(UserExist)
 
     if (UserExist) {
       return res.status(400).json({

@@ -9,6 +9,6 @@ router.post('/create', CreateUsuarioCtrl)
 
 router.put('/edit', EditUsuarioCtrl)
 
-router.delete('/:id', EliminarUsuarioCtrl)
+router.delete('/delete/:id', EliminarUsuarioCtrl)
 
 export default router

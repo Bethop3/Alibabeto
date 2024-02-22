@@ -12,7 +12,11 @@ import { type Controller } from '../types'
 export const GetUsuarios: Controller<Usuario[]> = async (req, res) => {
   try {
     // Consulta a la base de datos usando el modelo Sequelize Usuario
-    const usuariosFromModel = await Usuario.findAll()
+    const usuariosFromModel = await Usuario.findAll({
+      where: {
+        is_deleted: 0
+      }
+    })
 
     return res.status(200).json({
       ok: true,
@@ -25,11 +29,21 @@ export const GetUsuarios: Controller<Usuario[]> = async (req, res) => {
   }
 }
 
-export const CreateUsuarioCtrl: Controller<UsuarioAttributes, CrearUsuario> = async (req, res) => {
+export const CreateUsuarioCtrl: Controller<UsuarioAttributes | null, CrearUsuario> = async (req, res) => {
   try {
+    const UsuarioExistente = await Usuario.findOne({ where: { correo: req.body.correo } })
+
+    if (UsuarioExistente) {
+      return res.status(401).json({
+        ok: false,
+        msg: 'Usuario ya registrado',
+        data: null
+      })
+    }
     const NuevoUsuario = await Usuario.create({
       ...req.body
     })
+
     return res.status(200).json({
       ok: true,
       data: NuevoUsuario
@@ -90,7 +104,12 @@ export const EliminarUsuarioCtrl: Controller<string | null, number, any, { id: s
         data: null
       })
     }
-    await UsuarioAEliminar.destroy()
+
+    UsuarioAEliminar.set({
+      is_deleted: 1
+    })
+
+    await UsuarioAEliminar.save()
 
     return res.status(200).json({
       ok: true,
