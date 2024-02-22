@@ -94,7 +94,7 @@ export const EliminarUsuarioCtrl: Controller<string | null, number, any, { id: s
     const { id } = req.params
 
     const UsuarioAEliminar = await Usuario.findOne({
-      where: { id }
+      where: { id, is_deleted: 0 }
     })
 
     if (!UsuarioAEliminar) {
