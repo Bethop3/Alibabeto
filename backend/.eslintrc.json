@@ -13,6 +13,7 @@
         "@typescript-eslint/strict-boolean-expressions": "off",
         "@typescript-eslint/no-misused-promises": "off",
         "import/no-duplicates": "off",
-        "@typescript-eslint/restrict-plus-operands": "off"
+        "@typescript-eslint/restrict-plus-operands": "off",
+        "t@typescript-eslint/no-non-null-assertion": "off"
     }
 }

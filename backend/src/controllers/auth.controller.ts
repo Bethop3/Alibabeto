@@ -1,16 +1,14 @@
 import { Usuario, type UsuarioAttributes } from '../models/usuario'
 import { type Controller, type UserLogin } from '../types'
+import { encryptPassword } from '../utils/encryptPassword'
 import { generateJWT } from '../utils/generateJWT'
+import { validatePassword } from '../utils/validatePassword'
 
-// export const AuthRegister : Controller<string | null , user> = async ( req , res ) => {
 export const AuthRegister: Controller<Usuario | null, UsuarioAttributes> = async (req, res) => {
   try {
     const { correo } = req.body
 
     const UserExist = await Usuario.findOne({ where: { correo } })
-
-    console.log('UserExist')
-    console.log(UserExist)
 
     if (UserExist) {
       return res.status(400).json({
@@ -24,7 +22,8 @@ export const AuthRegister: Controller<Usuario | null, UsuarioAttributes> = async
       ...req.body
     })
 
-    // NewUser.password = await encryptPassword(NewUser.password)
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    NewUser.password = await encryptPassword(NewUser.password!)
 
     console.log(NewUser.id)
 
@@ -65,31 +64,18 @@ export const AuthLogin: Controller<any | null, UserLogin> = async (req, res) => 
         data: null
       })
     }
-    // const isValid = validatePassword( password , UserExist.password )
 
-    // if( !isValid )
-    // {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const isValid = validatePassword(password!, UserExist.password!)
 
-    //     return res.status(400).json({
-    //         ok: false,
-    //         msg: errorAuth,
-    //         data: null
-    //     })
+    if (!isValid) {
+      return res.status(401).json({
+        ok: false,
+        msg: 'Sin autorizacion',
+        data: null
+      })
+    }
 
-    // }
-
-    // const token = await generateJWT(UserExist._id)
-
-    // const user : UserResponse = {
-    //     email: UserExist.email,
-    //     name: UserExist.name,
-    //     _id: UserExist._id,
-    // }
-
-    // const response : UserLoginResponse = {
-    //     token,
-    //     user
-    // }
     const token = await generateJWT(UserExist.id)
 
     return res.status(200).json({
@@ -101,7 +87,7 @@ export const AuthLogin: Controller<any | null, UserLogin> = async (req, res) => 
     })
   } catch (err) {
     console.error(err)
-    res.json({
+    return res.json({
       ok: false,
       msg: 'Error del servidor',
       data: null

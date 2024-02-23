@@ -1,10 +1,18 @@
 import type { Sequelize } from "sequelize";
 import { Categoria as _Categoria } from "./categoria";
 import type { CategoriaAttributes, CategoriaCreationAttributes } from "./categoria";
+import { DireccionEntrega as _DireccionEntrega } from "./direccion_entrega";
+import type { DireccionEntregaAttributes, DireccionEntregaCreationAttributes } from "./direccion_entrega";
 import { EntradaHasProducto as _EntradaHasProducto } from "./entrada_has_producto";
 import type { EntradaHasProductoAttributes, EntradaHasProductoCreationAttributes } from "./entrada_has_producto";
 import { Entrada as _Entrada } from "./entrada";
 import type { EntradaAttributes, EntradaCreationAttributes } from "./entrada";
+import { Estadopedido as _Estadopedido } from "./estadopedido";
+import type { EstadopedidoAttributes, EstadopedidoCreationAttributes } from "./estadopedido";
+import { Pedido as _Pedido } from "./pedido";
+import type { PedidoAttributes, PedidoCreationAttributes } from "./pedido";
+import { Productopedido as _Productopedido } from "./productopedido";
+import type { ProductopedidoAttributes, ProductopedidoCreationAttributes } from "./productopedido";
 import { Producto as _Producto } from "./producto";
 import type { ProductoAttributes, ProductoCreationAttributes } from "./producto";
 import { Proveedore as _Proveedore } from "./proveedore";
@@ -16,8 +24,12 @@ import type { UsuarioAttributes, UsuarioCreationAttributes } from "./usuario";
 
 export {
   _Categoria as Categoria,
+  _DireccionEntrega as DireccionEntrega,
   _EntradaHasProducto as EntradaHasProducto,
   _Entrada as Entrada,
+  _Estadopedido as Estadopedido,
+  _Pedido as Pedido,
+  _Productopedido as Productopedido,
   _Producto as Producto,
   _Proveedore as Proveedore,
   _Role as Role,
@@ -27,10 +39,18 @@ export {
 export type {
   CategoriaAttributes,
   CategoriaCreationAttributes,
+  DireccionEntregaAttributes,
+  DireccionEntregaCreationAttributes,
   EntradaHasProductoAttributes,
   EntradaHasProductoCreationAttributes,
   EntradaAttributes,
   EntradaCreationAttributes,
+  EstadopedidoAttributes,
+  EstadopedidoCreationAttributes,
+  PedidoAttributes,
+  PedidoCreationAttributes,
+  ProductopedidoAttributes,
+  ProductopedidoCreationAttributes,
   ProductoAttributes,
   ProductoCreationAttributes,
   ProveedoreAttributes,
@@ -43,8 +63,12 @@ export type {
 
 export function initModels(sequelize: Sequelize) {
   const Categoria = _Categoria.initModel(sequelize);
+  const DireccionEntrega = _DireccionEntrega.initModel(sequelize);
   const EntradaHasProducto = _EntradaHasProducto.initModel(sequelize);
   const Entrada = _Entrada.initModel(sequelize);
+  const Estadopedido = _Estadopedido.initModel(sequelize);
+  const Pedido = _Pedido.initModel(sequelize);
+  const Productopedido = _Productopedido.initModel(sequelize);
   const Producto = _Producto.initModel(sequelize);
   const Proveedore = _Proveedore.initModel(sequelize);
   const Role = _Role.initModel(sequelize);
@@ -52,23 +76,41 @@ export function initModels(sequelize: Sequelize) {
 
   Producto.belongsTo(Categoria, { as: "CategoriaFK_categoria", foreignKey: "CategoriaFK"});
   Categoria.hasMany(Producto, { as: "productos", foreignKey: "CategoriaFK"});
+  Pedido.belongsTo(DireccionEntrega, { as: "direccionEntregaFK_direccion_entrega", foreignKey: "direccionEntregaFK"});
+  DireccionEntrega.hasMany(Pedido, { as: "pedidos", foreignKey: "direccionEntregaFK"});
   EntradaHasProducto.belongsTo(Entrada, { as: "Entrada", foreignKey: "EntradaId"});
   Entrada.hasMany(EntradaHasProducto, { as: "entrada_has_productos", foreignKey: "EntradaId"});
+  Pedido.belongsTo(Estadopedido, { as: "estadoPedidoFK_estadopedido", foreignKey: "estadoPedidoFK"});
+  Estadopedido.hasMany(Pedido, { as: "pedidos", foreignKey: "estadoPedidoFK"});
+  Productopedido.belongsTo(Estadopedido, { as: "estadoProductoFK_estadopedido", foreignKey: "estadoProductoFK"});
+  Estadopedido.hasMany(Productopedido, { as: "productopedidos", foreignKey: "estadoProductoFK"});
+  Productopedido.belongsTo(Pedido, { as: "pedidoFK_pedido", foreignKey: "pedidoFK"});
+  Pedido.hasMany(Productopedido, { as: "productopedidos", foreignKey: "pedidoFK"});
   EntradaHasProducto.belongsTo(Producto, { as: "Producto", foreignKey: "ProductoId"});
   Producto.hasMany(EntradaHasProducto, { as: "entrada_has_productos", foreignKey: "ProductoId"});
   Entrada.belongsTo(Producto, { as: "ProductoFK_producto", foreignKey: "ProductoFK"});
   Producto.hasMany(Entrada, { as: "entradas", foreignKey: "ProductoFK"});
+  Productopedido.belongsTo(Producto, { as: "productoFK_producto", foreignKey: "productoFK"});
+  Producto.hasMany(Productopedido, { as: "productopedidos", foreignKey: "productoFK"});
   Entrada.belongsTo(Proveedore, { as: "ProveedorFK_proveedore", foreignKey: "ProveedorFK"});
   Proveedore.hasMany(Entrada, { as: "entradas", foreignKey: "ProveedorFK"});
   Usuario.belongsTo(Role, { as: "RolFK_role", foreignKey: "RolFK"});
   Role.hasMany(Usuario, { as: "usuarios", foreignKey: "RolFK"});
+  DireccionEntrega.belongsTo(Usuario, { as: "usuarioFK_usuario", foreignKey: "usuarioFK"});
+  Usuario.hasMany(DireccionEntrega, { as: "direccion_entregas", foreignKey: "usuarioFK"});
   Entrada.belongsTo(Usuario, { as: "UsuarioFK_usuario", foreignKey: "UsuarioFK"});
   Usuario.hasMany(Entrada, { as: "entradas", foreignKey: "UsuarioFK"});
+  Pedido.belongsTo(Usuario, { as: "clienteFK_usuario", foreignKey: "clienteFK"});
+  Usuario.hasMany(Pedido, { as: "pedidos", foreignKey: "clienteFK"});
 
   return {
     Categoria: Categoria,
+    DireccionEntrega: DireccionEntrega,
     EntradaHasProducto: EntradaHasProducto,
     Entrada: Entrada,
+    Estadopedido: Estadopedido,
+    Pedido: Pedido,
+    Productopedido: Productopedido,
     Producto: Producto,
     Proveedore: Proveedore,
     Role: Role,

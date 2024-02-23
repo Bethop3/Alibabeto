@@ -10,13 +10,14 @@ import productosRouter from './router/producto.routes'
 import rolesrouter from './router/roles.routes'
 import entradaRouter from './router/entrada.routes'
 import categoriaRouter from './router/categoria.routes'
+import pedidosRouter from './router/pedido.routes'
 
 // Base de Datos
 import { getConnection } from './database/conection'
 import { initModels } from './models/init-models'
 import { sequelize } from './database'
 import { ESLint } from 'eslint'
-import { MiddlewareTokenValidator } from './middlewares/middlewareTokenValidator'
+// import { MiddlewareTokenValidator } from './middlewares/middlewareTokenValidator'
 
 // Middlewares
 // import { MiddlewareTokenValidator } from './middlewares/middlewareTokenValidator';
@@ -36,13 +37,14 @@ app.use(express.json())
 // Rutas
 app.use('/auth', authRouter)
 
-app.use(MiddlewareTokenValidator)
+// app.use(MiddlewareTokenValidator)
 app.use('/producto', productosRouter)
 app.use('/usuario', usuariosRouter)
 app.use('/proveedores', provedoreesRouter)
 app.use('/categoria', categoriaRouter)
 app.use('/roles', rolesrouter)
 app.use('/entradas', entradaRouter)
+app.use('/pedido', pedidosRouter)
 
 export async function runESLint (): Promise<void> {
   const eslint = new ESLint()

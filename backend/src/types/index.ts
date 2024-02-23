@@ -9,7 +9,7 @@ export type JWTAuthPayload = JwtPayload & {
 }
 
 // Tipo personalizado para las solicitudes de Express que incluyen un payload JWT en headers
-type CustomRequest<T, T2, TBody, PayloadType> = Request<T, T2, TBody> & {
+export type CustomRequest<T, T2, TBody, PayloadType> = Request<T, T2, TBody> & {
   payload?: PayloadType
   headers: IncomingHttpHeaders & {
     'x-auth-token'?: string
@@ -36,9 +36,10 @@ export type Middleware<Payload, TResponse = any> = (
 
 // Interfaz para respuestas básicas con estructura común
 export interface BasicResponse<T> {
-  ok: boolean
+  ok?: boolean
   msg?: string
-  data: T
+  data?: T
+  errors?: any
 }
 
 // Interfaz específica para respuestas de autenticación
