@@ -27,10 +27,10 @@ export type Controller<TResponse = any, BodyRequest = null, PayloadBody = any, R
 )
 
 // Tipo para middlewares de Express que trabajan con un payload específico
-export type Middleware<Payload> = (
+export type Middleware<Payload ,TResponse = any> = (
   (
     req: CustomRequest<any, any, any, Payload>,
-    res: Response<ValidationError[] | undefined>,
+    res: Response<BasicResponse<TResponse>>,
     next: NextFunction
   ) => void
 )
