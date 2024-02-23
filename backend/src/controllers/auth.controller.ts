@@ -1,5 +1,6 @@
 import { Usuario, type UsuarioAttributes } from '../models/usuario'
 import { type Controller, type UserLogin } from '../types'
+import { generateJWT } from '../utils/generateJWT'
 
 // export const AuthRegister : Controller<string | null , user> = async ( req , res ) => {
 export const AuthRegister: Controller<Usuario | null, UsuarioAttributes> = async (req, res) => {
@@ -43,7 +44,7 @@ export const AuthRegister: Controller<Usuario | null, UsuarioAttributes> = async
 
 export const AuthLogin: Controller<any | null, UserLogin> = async (req, res) => {
   try {
-    const { correo } = req.body
+    const { correo, password } = req.body
 
     const errorAuth = 'Usuario o contraseña incorrectos.'
 
@@ -57,6 +58,13 @@ export const AuthLogin: Controller<any | null, UserLogin> = async (req, res) => 
       })
     }
 
+    if (password !== UserExist.password) {
+      return res.status(401).json({
+        ok: false,
+        msg: 'Sin autorizacion',
+        data: null
+      })
+    }
     // const isValid = validatePassword( password , UserExist.password )
 
     // if( !isValid )
@@ -82,16 +90,20 @@ export const AuthLogin: Controller<any | null, UserLogin> = async (req, res) => 
     //     token,
     //     user
     // }
+    const token = await generateJWT(UserExist.id)
 
     return res.status(200).json({
       ok: true,
       msg: 'Autenticado correctamente',
-      data: 'response'
+      data: {
+        token
+      }
     })
   } catch (err) {
+    console.error(err)
     res.json({
-      ok: true,
-      msg: 'Registrado correctamente',
+      ok: false,
+      msg: 'Error del servidor',
       data: null
     })
   }

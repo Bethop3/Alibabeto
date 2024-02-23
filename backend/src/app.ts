@@ -3,6 +3,7 @@ import express, { type Application } from 'express'
 import dotenv from 'dotenv'
 
 // Routers
+import authRouter from './router/auth.routes'
 import provedoreesRouter from './router/proveedores.routes'
 import usuariosRouter from './router/usuarios.routes'
 import productosRouter from './router/producto.routes'
@@ -15,6 +16,7 @@ import { getConnection } from './database/conection'
 import { initModels } from './models/init-models'
 import { sequelize } from './database'
 import { ESLint } from 'eslint'
+import { MiddlewareTokenValidator } from './middlewares/middlewareTokenValidator'
 
 // Middlewares
 // import { MiddlewareTokenValidator } from './middlewares/middlewareTokenValidator';
@@ -32,6 +34,9 @@ const port = process.env.PORT ?? 8000
 app.use(express.json())
 
 // Rutas
+app.use('/auth', authRouter)
+
+app.use(MiddlewareTokenValidator)
 app.use('/producto', productosRouter)
 app.use('/usuario', usuariosRouter)
 app.use('/proveedores', provedoreesRouter)

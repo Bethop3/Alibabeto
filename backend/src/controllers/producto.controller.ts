@@ -23,9 +23,11 @@ export const GetProductos: Controller<Producto[]> = async (req, res) => {
 // Controlador para crear un nuevo producto
 export const CrearProductoC: Controller<ProductoAttributes, CrearProducto> = async (req, res) => {
   try {
+    const producto = req.body
     // Crea un nuevo producto utilizando los datos del cuerpo de la solicitud
     const productoNuevo = await Producto.create({
-      ...req.body
+      ...producto,
+      CreatedDate: new Date()
     })
 
     // Retorna la respuesta con el producto recién creado en formato JSON
