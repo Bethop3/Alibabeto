@@ -1,5 +1,4 @@
 import { type NextFunction, type Request, type Response } from 'express'
-import { type ValidationError } from 'express-validator'
 import { type IncomingHttpHeaders } from 'http'
 import { type JwtPayload } from 'jsonwebtoken'
 import { type UsuarioAttributes } from '../models/usuario'
@@ -27,7 +26,7 @@ export type Controller<TResponse = any, BodyRequest = null, PayloadBody = any, R
 )
 
 // Tipo para middlewares de Express que trabajan con un payload específico
-export type Middleware<Payload ,TResponse = any> = (
+export type Middleware<Payload, TResponse = any> = (
   (
     req: CustomRequest<any, any, any, Payload>,
     res: Response<BasicResponse<TResponse>>,
