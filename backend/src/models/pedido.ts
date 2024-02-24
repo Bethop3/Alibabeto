@@ -7,9 +7,9 @@ import type { Usuario, UsuarioId } from './usuario'
 
 export interface PedidoAttributes {
   id: number
-  clienteFK?: number
-  estadoPedidoFK?: number
-  direccionEntregaFK?: number
+  usuarioID?: number
+  estadoPedidoID?: number
+  direccionEntregaID?: number
   fechaPedido: Date
   importe: number
   iva: number
@@ -18,29 +18,29 @@ export interface PedidoAttributes {
 
 export type PedidoPk = 'id'
 export type PedidoId = Pedido[PedidoPk]
-export type PedidoOptionalAttributes = 'id' | 'clienteFK' | 'estadoPedidoFK' | 'direccionEntregaFK' | 'fechaPedido' | 'total'
+export type PedidoOptionalAttributes = 'id' | 'usuarioID' | 'estadoPedidoID' | 'direccionEntregaID' | 'fechaPedido' | 'total'
 export type PedidoCreationAttributes = Optional<PedidoAttributes, PedidoOptionalAttributes>
 
 export class Pedido extends Model<PedidoAttributes, PedidoCreationAttributes> implements PedidoAttributes {
   id!: number
-  clienteFK?: number
-  estadoPedidoFK?: number
-  direccionEntregaFK?: number
+  usuarioID?: number
+  estadoPedidoID?: number
+  direccionEntregaID?: number
   fechaPedido!: Date
   importe!: number
   iva!: number
   total?: number
 
-  // Pedido belongsTo DireccionEntrega via direccionEntregaFK
-  direccion_entrega!: DireccionEntrega
-  getDireccionEntregaFK_direccion_entrega!: Sequelize.BelongsToGetAssociationMixin<DireccionEntrega>
-  setDireccionEntregaFK_direccion_entrega!: Sequelize.BelongsToSetAssociationMixin<DireccionEntrega, DireccionEntregaId>
-  createDireccionEntregaFK_direccion_entrega!: Sequelize.BelongsToCreateAssociationMixin<DireccionEntrega>
-  // Pedido belongsTo Estadopedido via estadoPedidoFK
-  estadoPedidoFK_estadopedido!: Estadopedido
-  getEstadoPedidoFK_estadopedido!: Sequelize.BelongsToGetAssociationMixin<Estadopedido>
-  setEstadoPedidoFK_estadopedido!: Sequelize.BelongsToSetAssociationMixin<Estadopedido, EstadopedidoId>
-  createEstadoPedidoFK_estadopedido!: Sequelize.BelongsToCreateAssociationMixin<Estadopedido>
+  // Pedido belongsTo DireccionEntrega via direccionEntregaID
+  direccionEntrega!: DireccionEntrega
+  getDireccionEntrega!: Sequelize.BelongsToGetAssociationMixin<DireccionEntrega>
+  setDireccionEntrega!: Sequelize.BelongsToSetAssociationMixin<DireccionEntrega, DireccionEntregaId>
+  createDireccionEntrega!: Sequelize.BelongsToCreateAssociationMixin<DireccionEntrega>
+  // Pedido belongsTo Estadopedido via estadoPedidoID
+  estadoPedido!: Estadopedido
+  getEstadoPedido!: Sequelize.BelongsToGetAssociationMixin<Estadopedido>
+  setEstadoPedido!: Sequelize.BelongsToSetAssociationMixin<Estadopedido, EstadopedidoId>
+  createEstadoPedido!: Sequelize.BelongsToCreateAssociationMixin<Estadopedido>
   // Pedido hasMany Productopedido via pedidoFK
   productopedidos!: Productopedido[]
   getProductopedidos!: Sequelize.HasManyGetAssociationsMixin<Productopedido>
@@ -53,11 +53,11 @@ export class Pedido extends Model<PedidoAttributes, PedidoCreationAttributes> im
   hasProductopedido!: Sequelize.HasManyHasAssociationMixin<Productopedido, ProductopedidoId>
   hasProductopedidos!: Sequelize.HasManyHasAssociationsMixin<Productopedido, ProductopedidoId>
   countProductopedidos!: Sequelize.HasManyCountAssociationsMixin
-  // Pedido belongsTo Usuario via clienteFK
-  clienteFK_usuario!: Usuario
-  getClienteFK_usuario!: Sequelize.BelongsToGetAssociationMixin<Usuario>
-  setClienteFK_usuario!: Sequelize.BelongsToSetAssociationMixin<Usuario, UsuarioId>
-  createClienteFK_usuario!: Sequelize.BelongsToCreateAssociationMixin<Usuario>
+  // Pedido belongsTo Usuario via usuarioID
+  usuario!: Usuario
+  getUsuario!: Sequelize.BelongsToGetAssociationMixin<Usuario>
+  setUsuario!: Sequelize.BelongsToSetAssociationMixin<Usuario, UsuarioId>
+  createUsuario!: Sequelize.BelongsToCreateAssociationMixin<Usuario>
 
   static initModel (sequelize: Sequelize.Sequelize): typeof Pedido {
     return Pedido.init({
@@ -67,7 +67,7 @@ export class Pedido extends Model<PedidoAttributes, PedidoCreationAttributes> im
         allowNull: false,
         primaryKey: true
       },
-      clienteFK: {
+      usuarioID: {
         type: DataTypes.INTEGER,
         allowNull: true,
         references: {
@@ -75,7 +75,7 @@ export class Pedido extends Model<PedidoAttributes, PedidoCreationAttributes> im
           key: 'id'
         }
       },
-      estadoPedidoFK: {
+      estadoPedidoID: {
         type: DataTypes.INTEGER,
         allowNull: true,
         references: {
@@ -83,7 +83,7 @@ export class Pedido extends Model<PedidoAttributes, PedidoCreationAttributes> im
           key: 'id'
         }
       },
-      direccionEntregaFK: {
+      direccionEntregaID: {
         type: DataTypes.INTEGER,
         allowNull: true,
         references: {
@@ -125,21 +125,21 @@ export class Pedido extends Model<PedidoAttributes, PedidoCreationAttributes> im
           name: 'clienteFK',
           using: 'BTREE',
           fields: [
-            { name: 'clienteFK' }
+            { name: 'usuarioID' }
           ]
         },
         {
           name: 'direccionEntregaFK',
           using: 'BTREE',
           fields: [
-            { name: 'direccionEntregaFK' }
+            { name: 'direccionEntregaID' }
           ]
         },
         {
           name: 'estadoPedidoFK',
           using: 'BTREE',
           fields: [
-            { name: 'estadoPedidoFK' }
+            { name: 'estadoPedidoID' }
           ]
         }
       ]

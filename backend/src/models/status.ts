@@ -1,5 +1,5 @@
 import type * as Sequelize from 'sequelize'
-import { DataTypes, Model } from 'sequelize'
+import { DataTypes, Model, Optional } from 'sequelize'
 
 export interface StatusAttributes {
   id: number

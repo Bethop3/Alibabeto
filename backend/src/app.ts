@@ -20,7 +20,7 @@ import authRouter from './router/auth.routes'
 // Base de Datos
 import { Producto, initModels } from './models/init-models'
 import { getConnection } from './database/conection'
-import swaggerDocument from './swagger/conf-2.json'
+import swaggerDocument from './swagger/conf-3.json'
 import { sequelize } from './database'
 
 // Middlewares

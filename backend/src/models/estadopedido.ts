@@ -17,7 +17,7 @@ export class Estadopedido extends Model<EstadopedidoAttributes, EstadopedidoCrea
   id!: number
   nombre!: string
 
-  // Estadopedido hasMany Pedido via estadoPedidoFK
+  // Estadopedido hasMany Pedido via estadoPedidoID
   pedidos!: Pedido[]
   getPedidos!: Sequelize.HasManyGetAssociationsMixin<Pedido>
   setPedidos!: Sequelize.HasManySetAssociationsMixin<Pedido, PedidoId>

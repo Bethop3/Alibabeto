@@ -51,7 +51,7 @@ export class Usuario extends Model<UsuarioAttributes, UsuarioCreationAttributes>
   hasCarrito!: Sequelize.HasManyHasAssociationMixin<Carrito, CarritoId>
   hasCarritos!: Sequelize.HasManyHasAssociationsMixin<Carrito, CarritoId>
   countCarritos!: Sequelize.HasManyCountAssociationsMixin
-  // Usuario hasMany DireccionEntrega via usuarioFK
+  // Usuario hasMany DireccionEntrega via usuarioId
   direccion_entregas!: DireccionEntrega[]
   getDireccion_entregas!: Sequelize.HasManyGetAssociationsMixin<DireccionEntrega>
   setDireccion_entregas!: Sequelize.HasManySetAssociationsMixin<DireccionEntrega, DireccionEntregaId>
@@ -75,7 +75,7 @@ export class Usuario extends Model<UsuarioAttributes, UsuarioCreationAttributes>
   hasEntrada!: Sequelize.HasManyHasAssociationMixin<Entrada, EntradaId>
   hasEntradas!: Sequelize.HasManyHasAssociationsMixin<Entrada, EntradaId>
   countEntradas!: Sequelize.HasManyCountAssociationsMixin
-  // Usuario hasMany Pedido via clienteFK
+  // Usuario hasMany Pedido via usuarioID
   pedidos!: Pedido[]
   getPedidos!: Sequelize.HasManyGetAssociationsMixin<Pedido>
   setPedidos!: Sequelize.HasManySetAssociationsMixin<Pedido, PedidoId>

@@ -5,7 +5,7 @@ import type { Usuario, UsuarioId } from './usuario'
 
 export interface DireccionEntregaAttributes {
   id: number
-  usuarioFK?: number
+  usuarioId?: number
   nombreDestinatario?: string
   direccion?: string
   ciudad?: string
@@ -16,12 +16,12 @@ export interface DireccionEntregaAttributes {
 
 export type DireccionEntregaPk = 'id'
 export type DireccionEntregaId = DireccionEntrega[DireccionEntregaPk]
-export type DireccionEntregaOptionalAttributes = 'id' | 'usuarioFK' | 'nombreDestinatario' | 'direccion' | 'ciudad' | 'codigoPostal' | 'pais' | 'telefono'
+export type DireccionEntregaOptionalAttributes = 'id' | 'usuarioId' | 'nombreDestinatario' | 'direccion' | 'ciudad' | 'codigoPostal' | 'pais' | 'telefono'
 export type DireccionEntregaCreationAttributes = Optional<DireccionEntregaAttributes, DireccionEntregaOptionalAttributes>
 
 export class DireccionEntrega extends Model<DireccionEntregaAttributes, DireccionEntregaCreationAttributes> implements DireccionEntregaAttributes {
   id!: number
-  usuarioFK?: number
+  usuarioId?: number
   nombreDestinatario?: string
   direccion?: string
   ciudad?: string
@@ -29,7 +29,7 @@ export class DireccionEntrega extends Model<DireccionEntregaAttributes, Direccio
   pais?: string
   telefono?: string
 
-  // DireccionEntrega hasMany Pedido via direccionEntregaFK
+  // DireccionEntrega hasMany Pedido via direccionEntregaID
   pedidos!: Pedido[]
   getPedidos!: Sequelize.HasManyGetAssociationsMixin<Pedido>
   setPedidos!: Sequelize.HasManySetAssociationsMixin<Pedido, PedidoId>
@@ -41,11 +41,11 @@ export class DireccionEntrega extends Model<DireccionEntregaAttributes, Direccio
   hasPedido!: Sequelize.HasManyHasAssociationMixin<Pedido, PedidoId>
   hasPedidos!: Sequelize.HasManyHasAssociationsMixin<Pedido, PedidoId>
   countPedidos!: Sequelize.HasManyCountAssociationsMixin
-  // DireccionEntrega belongsTo Usuario via usuarioFK
-  usuarioFK_usuario!: Usuario
-  getUsuarioFK_usuario!: Sequelize.BelongsToGetAssociationMixin<Usuario>
-  setUsuarioFK_usuario!: Sequelize.BelongsToSetAssociationMixin<Usuario, UsuarioId>
-  createUsuarioFK_usuario!: Sequelize.BelongsToCreateAssociationMixin<Usuario>
+  // DireccionEntrega belongsTo Usuario via usuarioId
+  usuario!: Usuario
+  getUsuario!: Sequelize.BelongsToGetAssociationMixin<Usuario>
+  setUsuario!: Sequelize.BelongsToSetAssociationMixin<Usuario, UsuarioId>
+  createUsuario!: Sequelize.BelongsToCreateAssociationMixin<Usuario>
 
   static initModel (sequelize: Sequelize.Sequelize): typeof DireccionEntrega {
     return DireccionEntrega.init({
@@ -55,7 +55,7 @@ export class DireccionEntrega extends Model<DireccionEntregaAttributes, Direccio
         allowNull: false,
         primaryKey: true
       },
-      usuarioFK: {
+      usuarioId: {
         type: DataTypes.INTEGER,
         allowNull: true,
         references: {
@@ -104,7 +104,7 @@ export class DireccionEntrega extends Model<DireccionEntregaAttributes, Direccio
           name: 'usuarioFK',
           using: 'BTREE',
           fields: [
-            { name: 'usuarioFK' }
+            { name: 'usuarioId' }
           ]
         }
       ]

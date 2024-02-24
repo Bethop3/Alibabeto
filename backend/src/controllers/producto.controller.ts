@@ -9,7 +9,8 @@ export const GetProductosByQuery: Controller<Producto[], any, null, null, Produc
   try {
     let {
       nombre,
-      precioMaximo
+      precioMaximo,
+      categoriaID
     } = req.query
 
     // Consulta todos los productos en la base de datos
@@ -21,7 +22,8 @@ export const GetProductosByQuery: Controller<Producto[], any, null, null, Produc
     const whereClause: any = {
       descripcion: {
         [Op.like]: `%${nombre}%`
-      }
+      },
+      is_deleted: 0
     }
 
     if (precioMaximo !== undefined) {
@@ -30,13 +32,21 @@ export const GetProductosByQuery: Controller<Producto[], any, null, null, Produc
       }
     }
 
+    // debugger
+
+    if (categoriaID !== undefined) {
+      whereClause.categoriaID = {
+        [Op.eq]: categoriaID
+      }
+    }
+
     const productos = await Producto.findAll({
       where: whereClause,
-      attributes: { exclude: ['CreatedDate', 'CategoriaFK'] },
+      attributes: { exclude: ['CreatedDate', 'categoriaID', 'is_deleted'] },
       include: [
         {
           model: Categoria, // El modelo de la tabla relacionada
-          as: 'CategoriaFK_categoria' // Renombrar la asociación
+          as: 'categorium' // Renombrar la asociación
           // attributes: ['nombre', 'descripcion'] // Atributos específicos de la tabla relacionada que deseas incluir
         }
       ]

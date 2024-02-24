@@ -14,13 +14,14 @@ export interface ProductoAttributes {
   descripcion: string
   precio: number
   existencias: number
-  CategoriaFK: number
+  categoriaID: number
   CreatedDate: Date
+  is_deleted: boolean
 }
 
 export type ProductoPk = 'id'
 export type ProductoId = Producto[ProductoPk]
-export type ProductoOptionalAttributes = 'id'
+export type ProductoOptionalAttributes = 'id' | 'is_deleted'
 export type ProductoCreationAttributes = Optional<ProductoAttributes, ProductoOptionalAttributes>
 
 export class Producto extends Model<ProductoAttributes, ProductoCreationAttributes> implements ProductoAttributes {
@@ -31,14 +32,15 @@ export class Producto extends Model<ProductoAttributes, ProductoCreationAttribut
   descripcion!: string
   precio!: number
   existencias!: number
-  CategoriaFK!: number
+  categoriaID!: number
   CreatedDate!: Date
+  is_deleted!: boolean
 
-  // Producto belongsTo Categoria via CategoriaFK
-  CategoriaFK_categoria!: Categoria
-  getCategoriaFK_categoria!: Sequelize.BelongsToGetAssociationMixin<Categoria>
-  setCategoriaFK_categoria!: Sequelize.BelongsToSetAssociationMixin<Categoria, CategoriaId>
-  createCategoriaFK_categoria!: Sequelize.BelongsToCreateAssociationMixin<Categoria>
+  // Producto belongsTo Categoria via categoriaID
+  categorium!: Categoria
+  getCategorium!: Sequelize.BelongsToGetAssociationMixin<Categoria>
+  setCategorium!: Sequelize.BelongsToSetAssociationMixin<Categoria, CategoriaId>
+  createCategorium!: Sequelize.BelongsToCreateAssociationMixin<Categoria>
   // Producto hasMany Carrito via productoFK
   carritos!: Carrito[]
   getCarritos!: Sequelize.HasManyGetAssociationsMixin<Carrito>
@@ -120,7 +122,7 @@ export class Producto extends Model<ProductoAttributes, ProductoCreationAttribut
         type: DataTypes.INTEGER,
         allowNull: false
       },
-      CategoriaFK: {
+      categoriaID: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
@@ -131,6 +133,11 @@ export class Producto extends Model<ProductoAttributes, ProductoCreationAttribut
       CreatedDate: {
         type: DataTypes.DATE(6),
         allowNull: false
+      },
+      is_deleted: {
+        type: 'BIT(2)',
+        allowNull: false,
+        defaultValue: "b'0'"
       }
     }, {
       sequelize,
@@ -149,7 +156,7 @@ export class Producto extends Model<ProductoAttributes, ProductoCreationAttribut
           name: 'CategoriaFK',
           using: 'BTREE',
           fields: [
-            { name: 'CategoriaFK' }
+            { name: 'categoriaID' }
           ]
         }
       ]
