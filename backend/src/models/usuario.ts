@@ -1,5 +1,6 @@
 import type * as Sequelize from 'sequelize'
 import { DataTypes, Model, type Optional } from 'sequelize'
+import type { Carrito, CarritoId } from './carrito'
 import type { DireccionEntrega, DireccionEntregaId } from './direccion_entrega'
 import type { Entrada, EntradaId } from './entrada'
 import type { Pedido, PedidoId } from './pedido'
@@ -38,6 +39,18 @@ export class Usuario extends Model<UsuarioAttributes, UsuarioCreationAttributes>
   getRolFK_role!: Sequelize.BelongsToGetAssociationMixin<Role>
   setRolFK_role!: Sequelize.BelongsToSetAssociationMixin<Role, RoleId>
   createRolFK_role!: Sequelize.BelongsToCreateAssociationMixin<Role>
+  // Usuario hasMany Carrito via usuarioFK
+  carritos!: Carrito[]
+  getCarritos!: Sequelize.HasManyGetAssociationsMixin<Carrito>
+  setCarritos!: Sequelize.HasManySetAssociationsMixin<Carrito, CarritoId>
+  addCarrito!: Sequelize.HasManyAddAssociationMixin<Carrito, CarritoId>
+  addCarritos!: Sequelize.HasManyAddAssociationsMixin<Carrito, CarritoId>
+  createCarrito!: Sequelize.HasManyCreateAssociationMixin<Carrito>
+  removeCarrito!: Sequelize.HasManyRemoveAssociationMixin<Carrito, CarritoId>
+  removeCarritos!: Sequelize.HasManyRemoveAssociationsMixin<Carrito, CarritoId>
+  hasCarrito!: Sequelize.HasManyHasAssociationMixin<Carrito, CarritoId>
+  hasCarritos!: Sequelize.HasManyHasAssociationsMixin<Carrito, CarritoId>
+  countCarritos!: Sequelize.HasManyCountAssociationsMixin
   // Usuario hasMany DireccionEntrega via usuarioFK
   direccion_entregas!: DireccionEntrega[]
   getDireccion_entregas!: Sequelize.HasManyGetAssociationsMixin<DireccionEntrega>
