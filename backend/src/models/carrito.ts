@@ -9,8 +9,8 @@ export interface CarritoAttributes {
   importe: number
   iva: number
   total: number
-  productoFK: number
-  usuarioFK: number
+  productoID: number
+  usuarioID: number
   status: number
   is_deleted: number
   is_creado: Date
@@ -27,22 +27,22 @@ export class Carrito extends Model<CarritoAttributes, CarritoCreationAttributes>
   importe!: number
   iva!: number
   total!: number
-  productoFK!: number
-  usuarioFK!: number
+  productoID!: number
+  usuarioID!: number
   status!: number
   is_deleted!: number
   is_creado!: Date
 
-  // Carrito belongsTo Producto via productoFK
-  productoFK_producto!: Producto
-  getProductoFK_producto!: Sequelize.BelongsToGetAssociationMixin<Producto>
-  setProductoFK_producto!: Sequelize.BelongsToSetAssociationMixin<Producto, ProductoId>
-  createProductoFK_producto!: Sequelize.BelongsToCreateAssociationMixin<Producto>
-  // Carrito belongsTo Usuario via usuarioFK
-  usuarioFK_usuario!: Usuario
-  getUsuarioFK_usuario!: Sequelize.BelongsToGetAssociationMixin<Usuario>
-  setUsuarioFK_usuario!: Sequelize.BelongsToSetAssociationMixin<Usuario, UsuarioId>
-  createUsuarioFK_usuario!: Sequelize.BelongsToCreateAssociationMixin<Usuario>
+  // Carrito belongsTo Producto via productoID
+  producto!: Producto
+  getProducto!: Sequelize.BelongsToGetAssociationMixin<Producto>
+  setProducto!: Sequelize.BelongsToSetAssociationMixin<Producto, ProductoId>
+  createProducto!: Sequelize.BelongsToCreateAssociationMixin<Producto>
+  // Carrito belongsTo Usuario via usuarioID
+  usuario!: Usuario
+  getUsuario!: Sequelize.BelongsToGetAssociationMixin<Usuario>
+  setUsuario!: Sequelize.BelongsToSetAssociationMixin<Usuario, UsuarioId>
+  createUsuario!: Sequelize.BelongsToCreateAssociationMixin<Usuario>
 
   static initModel (sequelize: Sequelize.Sequelize): typeof Carrito {
     return Carrito.init({
@@ -68,7 +68,7 @@ export class Carrito extends Model<CarritoAttributes, CarritoCreationAttributes>
         type: DataTypes.DECIMAL(10, 0),
         allowNull: false
       },
-      productoFK: {
+      productoID: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
@@ -76,7 +76,7 @@ export class Carrito extends Model<CarritoAttributes, CarritoCreationAttributes>
           key: 'id'
         }
       },
-      usuarioFK: {
+      usuarioID: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
@@ -114,14 +114,14 @@ export class Carrito extends Model<CarritoAttributes, CarritoCreationAttributes>
           name: 'productoFK',
           using: 'BTREE',
           fields: [
-            { name: 'productoFK' }
+            { name: 'productoID' }
           ]
         },
         {
           name: 'usuarioFK',
           using: 'BTREE',
           fields: [
-            { name: 'usuarioFK' }
+            { name: 'usuarioID' }
           ]
         }
       ]

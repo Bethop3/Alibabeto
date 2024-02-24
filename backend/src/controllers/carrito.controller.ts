@@ -3,13 +3,48 @@ import { type ProductoCarrito, type AgregarProductoCarrito } from '../types/Carr
 import { Carrito } from '../models/carrito'
 import { Producto } from '../models/producto'
 
+export const ObtenerCarritoUsuarioCtrl: Controller<Carrito[]> = async (req, res) => {
+  try {
+    console.log(req.payload)
+    const carritoUsuario = await Carrito.findAll({
+      where: {
+        usuarioID: req.payload?.id_usuario
+      },
+      attributes: { exclude: ['is_creado', 'is_deleted', 'status', 'usuarioID', 'usuarioID', 'productoID'] },
+      include: [
+        {
+          model: Producto, // El modelo de la tabla relacionada
+          as: 'producto', // Renombrar la asociación
+          attributes: [
+            'id',
+            'imagen',
+            'codigo',
+            'descripcion',
+            'precio'
+          ] // Atributos específicos de la tabla relacionada que deseas incluir
+        }
+      ]
+    })
+
+    return res.status(200).json({
+      ok: false,
+      data: carritoUsuario
+    })
+  } catch (err) {
+    console.log(err)
+    return res.status(500).json({
+      ok: false
+    })
+  }
+}
+
 export const AgregarProductoCarritoCtrl: Controller<ProductoCarrito, AgregarProductoCarrito> = async (req, res) => {
   try {
     const { ...rest } = req.body
 
     const productoAgregr = await Producto.findOne({
       where: {
-        id: rest.productoFK
+        id: rest.productoID
       }
     })
 
@@ -24,9 +59,9 @@ export const AgregarProductoCarritoCtrl: Controller<ProductoCarrito, AgregarProd
       importe: rest.importe,
       iva: rest.iva,
       total: rest.total,
-      usuarioFK: req.payload?.id_usuario!,
+      usuarioID: req.payload?.id_usuario!,
       cantidad: rest.cantidad,
-      productoFK: rest.productoFK,
+      productoID: rest.productoID,
       status: 1,
       is_deleted: 0
     })

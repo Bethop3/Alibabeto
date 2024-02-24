@@ -1,7 +1,7 @@
 import type * as Sequelize from 'sequelize'
 import { DataTypes, Model, type Optional } from 'sequelize'
+import type { PedidoHasProducto, PedidoHasProductoId } from './pedido_has_producto'
 import type { Pedido, PedidoId } from './pedido'
-import type { Productopedido, ProductopedidoId } from './productopedido'
 
 export interface EstadopedidoAttributes {
   id: number
@@ -17,6 +17,18 @@ export class Estadopedido extends Model<EstadopedidoAttributes, EstadopedidoCrea
   id!: number
   nombre!: string
 
+  // Estadopedido hasMany PedidoHasProducto via estadoProductoID
+  pedido_has_productos!: PedidoHasProducto[]
+  getPedido_has_productos!: Sequelize.HasManyGetAssociationsMixin<PedidoHasProducto>
+  setPedido_has_productos!: Sequelize.HasManySetAssociationsMixin<PedidoHasProducto, PedidoHasProductoId>
+  addPedido_has_producto!: Sequelize.HasManyAddAssociationMixin<PedidoHasProducto, PedidoHasProductoId>
+  addPedido_has_productos!: Sequelize.HasManyAddAssociationsMixin<PedidoHasProducto, PedidoHasProductoId>
+  createPedido_has_producto!: Sequelize.HasManyCreateAssociationMixin<PedidoHasProducto>
+  removePedido_has_producto!: Sequelize.HasManyRemoveAssociationMixin<PedidoHasProducto, PedidoHasProductoId>
+  removePedido_has_productos!: Sequelize.HasManyRemoveAssociationsMixin<PedidoHasProducto, PedidoHasProductoId>
+  hasPedido_has_producto!: Sequelize.HasManyHasAssociationMixin<PedidoHasProducto, PedidoHasProductoId>
+  hasPedido_has_productos!: Sequelize.HasManyHasAssociationsMixin<PedidoHasProducto, PedidoHasProductoId>
+  countPedido_has_productos!: Sequelize.HasManyCountAssociationsMixin
   // Estadopedido hasMany Pedido via estadoPedidoID
   pedidos!: Pedido[]
   getPedidos!: Sequelize.HasManyGetAssociationsMixin<Pedido>
@@ -29,18 +41,6 @@ export class Estadopedido extends Model<EstadopedidoAttributes, EstadopedidoCrea
   hasPedido!: Sequelize.HasManyHasAssociationMixin<Pedido, PedidoId>
   hasPedidos!: Sequelize.HasManyHasAssociationsMixin<Pedido, PedidoId>
   countPedidos!: Sequelize.HasManyCountAssociationsMixin
-  // Estadopedido hasMany Productopedido via estadoProductoFK
-  productopedidos!: Productopedido[]
-  getProductopedidos!: Sequelize.HasManyGetAssociationsMixin<Productopedido>
-  setProductopedidos!: Sequelize.HasManySetAssociationsMixin<Productopedido, ProductopedidoId>
-  addProductopedido!: Sequelize.HasManyAddAssociationMixin<Productopedido, ProductopedidoId>
-  addProductopedidos!: Sequelize.HasManyAddAssociationsMixin<Productopedido, ProductopedidoId>
-  createProductopedido!: Sequelize.HasManyCreateAssociationMixin<Productopedido>
-  removeProductopedido!: Sequelize.HasManyRemoveAssociationMixin<Productopedido, ProductopedidoId>
-  removeProductopedidos!: Sequelize.HasManyRemoveAssociationsMixin<Productopedido, ProductopedidoId>
-  hasProductopedido!: Sequelize.HasManyHasAssociationMixin<Productopedido, ProductopedidoId>
-  hasProductopedidos!: Sequelize.HasManyHasAssociationsMixin<Productopedido, ProductopedidoId>
-  countProductopedidos!: Sequelize.HasManyCountAssociationsMixin
 
   static initModel (sequelize: Sequelize.Sequelize): typeof Estadopedido {
     return Estadopedido.init({

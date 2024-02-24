@@ -39,7 +39,7 @@ export class Usuario extends Model<UsuarioAttributes, UsuarioCreationAttributes>
   getRolFK_role!: Sequelize.BelongsToGetAssociationMixin<Role>
   setRolFK_role!: Sequelize.BelongsToSetAssociationMixin<Role, RoleId>
   createRolFK_role!: Sequelize.BelongsToCreateAssociationMixin<Role>
-  // Usuario hasMany Carrito via usuarioFK
+  // Usuario hasMany Carrito via usuarioID
   carritos!: Carrito[]
   getCarritos!: Sequelize.HasManyGetAssociationsMixin<Carrito>
   setCarritos!: Sequelize.HasManySetAssociationsMixin<Carrito, CarritoId>

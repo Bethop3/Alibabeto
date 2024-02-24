@@ -1,9 +1,14 @@
-import { Router } from 'express'
+import { AgregarProductoCarritoCtrl, ObtenerCarritoUsuarioCtrl } from '../controllers/carrito.controller'
 import { handleValidationErrors } from '../utils/handleValidationErrors'
-import { AgregarProductoCarritoCtrl } from '../controllers/carrito.controller'
 import { validations } from '../validations/carrito.validation'
+import { Router } from 'express'
 
 const router = Router()
+
+router.get(
+  '/',
+  ObtenerCarritoUsuarioCtrl
+)
 
 router.post(
   '/add/producto',
