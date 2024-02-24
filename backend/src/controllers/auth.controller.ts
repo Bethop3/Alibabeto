@@ -66,7 +66,8 @@ export const AuthLogin: Controller<any | null, UserLogin> = async (req, res) => 
     }
 
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const isValid = validatePassword(password!, UserExist.password!)
+    // const isValid = validatePassword(password!, UserExist.password!)
+    const isValid = password === UserExist.password
 
     if (!isValid) {
       return res.status(401).json({

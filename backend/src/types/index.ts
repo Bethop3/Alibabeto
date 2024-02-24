@@ -5,7 +5,7 @@ import { type UsuarioAttributes } from '../models/usuario'
 
 // Tipo para el payload de JWT que incluye la propiedad 'id'
 export type JWTAuthPayload = JwtPayload & {
-  id: string
+  id_usuario: number
 }
 
 // Tipo personalizado para las solicitudes de Express que incluyen un payload JWT en headers
@@ -17,9 +17,9 @@ export type CustomRequest<T, T2, TBody, PayloadType> = Request<T, T2, TBody> & {
 }
 
 // Tipo para controladores de Express que toman y devuelven diferentes tipos de datos
-export type Controller<TResponse = any, BodyRequest = null, PayloadBody = any, ReqParams = any> = (
+export type Controller<TResponse = any, BodyRequest = null, PayloadBody = JWTAuthPayload, ReqParams = any> = (
   (
-    req: CustomRequest<ReqParams, any, BodyRequest, PayloadBody>,
+    req: CustomRequest<ReqParams, any, BodyRequest, PayloadBody | JWTAuthPayload>,
     res: Response<BasicResponse<TResponse>>,
     next: NextFunction
   ) => Promise<any>

@@ -1,6 +1,6 @@
 import { type PedidoAttributes } from '../models/pedido'
 
-interface ProductoHasPedido {
+export interface ProductoHasPedido {
   id_producto: number
   cantidad: number
   importe: number

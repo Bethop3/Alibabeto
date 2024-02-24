@@ -12,6 +12,7 @@ import rolesrouter from './router/roles.routes'
 import entradaRouter from './router/entrada.routes'
 import categoriaRouter from './router/categoria.routes'
 import pedidosRouter from './router/pedido.routes'
+import uploadsRouter from './router/upload.routes'
 
 // Base de Datos
 import { getConnection } from './database/conection'
@@ -21,7 +22,7 @@ import { ESLint } from 'eslint'
 // import { MiddlewareTokenValidator } from './middlewares/middlewareTokenValidator'
 
 // Middlewares
-// import { MiddlewareTokenValidator } from './middlewares/middlewareTokenValidator';
+import { MiddlewareTokenValidator } from './middlewares/middlewareTokenValidator'
 
 // Inicialización de la aplicación Express
 const app: Application = express()
@@ -41,7 +42,7 @@ app.use(express.static('./src/public'))
 // Rutas
 app.use('/auth', authRouter)
 
-// app.use(MiddlewareTokenValidator)
+app.use(MiddlewareTokenValidator)
 app.use('/producto', productosRouter)
 app.use('/usuario', usuariosRouter)
 app.use('/proveedores', provedoreesRouter)
@@ -49,8 +50,9 @@ app.use('/categoria', categoriaRouter)
 app.use('/roles', rolesrouter)
 app.use('/entradas', entradaRouter)
 app.use('/pedido', pedidosRouter)
+app.use('/upload', uploadsRouter)
 
-app.post('/upload', (req: any, res) => {
+app.post('/upload2', (req: any, res) => {
   try {
     // Log the files to the console
     const { image } = req.files

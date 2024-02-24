@@ -4,7 +4,7 @@ export const generateJWT = async (id: number): Promise<string> => {
   return await new Promise<string>((resolve, reject) => {
     try {
       const payload = {
-        id
+        id_usuario: id
       }
 
       const token = sign(payload, process.env.SECRET_JWT_SEED ?? '', {

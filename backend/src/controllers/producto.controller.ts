@@ -24,6 +24,21 @@ export const GetProductos: Controller<Producto[]> = async (req, res) => {
 export const CrearProductoC: Controller<ProductoAttributes, CrearProducto> = async (req, res) => {
   try {
     const producto = req.body
+
+    const productoExistente = await Producto.findOne({
+      where: {
+        codigo: producto.codigo
+      }
+    })
+
+    // si ya existe el producto
+    if (productoExistente) {
+      return res.status(400).json({
+        ok: false,
+        msg: 'Codigo ya existente'
+      })
+    }
+
     // Crea un nuevo producto utilizando los datos del cuerpo de la solicitud
     const productoNuevo = await Producto.create({
       ...producto,

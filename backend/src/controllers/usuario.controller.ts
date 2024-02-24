@@ -1,6 +1,8 @@
 import { type CrearUsuario, type EditarUsuario } from '../types/Usuario'
 import { Usuario, type UsuarioAttributes } from '../models/usuario'
 import { type Controller } from '../types'
+import { type CreateDireccionEntrega } from '../types/DireccionEntrega'
+import { DireccionEntrega } from '../models/direccion_entrega'
 
 /**
  * @controller GetUsuarios
@@ -41,7 +43,14 @@ export const CreateUsuarioCtrl: Controller<UsuarioAttributes | null, CrearUsuari
       })
     }
     const NuevoUsuario = await Usuario.create({
-      ...req.body
+      // ...req.body,
+      nombre: req.body.nombre,
+      apellidos: req.body.apellidos,
+      correo: req.body.correo,
+      password: req.body.password,
+      Imagen: req.body.Imagen,
+      nombreUsuario: '',
+      RolFK: 1
     })
 
     return res.status(200).json({
@@ -54,6 +63,31 @@ export const CreateUsuarioCtrl: Controller<UsuarioAttributes | null, CrearUsuari
     return res.status(400)
   }
 }
+export const CreateDireccionUsuarioCtrl: Controller<DireccionEntrega | null, CreateDireccionEntrega> = async (req, res) => {
+  try {
+    const UsuarioExistente = await Usuario.findOne({ where: { id: req.payload?.id_usuario } })
+
+    if (!UsuarioExistente) {
+      return res.status(401).json({
+        ok: false,
+        msg: 'Sin autorizacion',
+        data: null
+      })
+    }
+    const DireccionUsuario = await DireccionEntrega.create({
+      ...req.body,
+      usuarioFK: req.payload?.id_usuario
+    })
+
+    return res.status(200).json({
+      ok: true,
+      data: DireccionUsuario
+    })
+  } catch (error) {
+    console.error(error)
+    return res.status(400)
+  }
+}
 
 export const EditUsuarioCtrl: Controller<UsuarioAttributes | null, EditarUsuario> = async (req, res) => {
   try {
@@ -61,7 +95,6 @@ export const EditUsuarioCtrl: Controller<UsuarioAttributes | null, EditarUsuario
 
     const UsuarioAEditar = await Usuario.findOne({
       where: { id }
-
     })
 
     if (!UsuarioAEditar) {

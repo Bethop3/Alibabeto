@@ -19,6 +19,8 @@ import { Proveedore as _Proveedore } from "./proveedore";
 import type { ProveedoreAttributes, ProveedoreCreationAttributes } from "./proveedore";
 import { Role as _Role } from "./role";
 import type { RoleAttributes, RoleCreationAttributes } from "./role";
+import { Status as _Status } from "./status";
+import type { StatusAttributes, StatusCreationAttributes } from "./status";
 import { Usuario as _Usuario } from "./usuario";
 import type { UsuarioAttributes, UsuarioCreationAttributes } from "./usuario";
 
@@ -33,6 +35,7 @@ export {
   _Producto as Producto,
   _Proveedore as Proveedore,
   _Role as Role,
+  _Status as Status,
   _Usuario as Usuario,
 };
 
@@ -57,6 +60,8 @@ export type {
   ProveedoreCreationAttributes,
   RoleAttributes,
   RoleCreationAttributes,
+  StatusAttributes,
+  StatusCreationAttributes,
   UsuarioAttributes,
   UsuarioCreationAttributes,
 };
@@ -72,6 +77,7 @@ export function initModels(sequelize: Sequelize) {
   const Producto = _Producto.initModel(sequelize);
   const Proveedore = _Proveedore.initModel(sequelize);
   const Role = _Role.initModel(sequelize);
+  const Status = _Status.initModel(sequelize);
   const Usuario = _Usuario.initModel(sequelize);
 
   Producto.belongsTo(Categoria, { as: "CategoriaFK_categoria", foreignKey: "CategoriaFK"});
@@ -114,6 +120,7 @@ export function initModels(sequelize: Sequelize) {
     Producto: Producto,
     Proveedore: Proveedore,
     Role: Role,
+    Status: Status,
     Usuario: Usuario,
   };
 }
