@@ -125,7 +125,12 @@ export const EliminarProductoCtrl: Controller<string | null, number, any, { id: 
     }
 
     // Elimina el producto de la base de datos
-    await productoAEliminar.destroy()
+
+    // productoAEliminar.set({
+    //   is_deleted: 1
+    // })
+
+    await productoAEliminar.save()
 
     // Retorna la respuesta con un mensaje de éxito en formato JSON
     return res.status(200).json({

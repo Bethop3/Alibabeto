@@ -1,0 +1,680 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Alibabeto",
+    "description": "Esta es la documentacion del API, aqui encontraras los endpoints y lo que deben de llevar cada uno\nde ellos.",
+    "version": "1.0.11"
+  },
+  "paths": {
+    "/usuario/edit": {
+      "put": {
+        "tags": [
+          "Usuario"
+        ],
+        "summary": "Actualizar el usuario",
+        "description": "Actualizar el usuario",
+        "operationId": "updatePet",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActualizarUsuario"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Creado satisfactoriamente"
+          },
+          "400": {
+            "description": "Error del servidor"
+          }
+        }
+      }
+    },
+    "/usuario/create": {
+      "post": {
+        "tags": [
+          "Usuario"
+        ],
+        "summary": "Crear un nuevo usuario",
+        "description": "Crear un nuevo usuario",
+        "operationId": "addPet",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrearUsuario"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Creado satisfactoriamente"
+          },
+          "400": {
+            "description": "Error del servidor"
+          }
+        }
+      }
+    },
+    "/producto/create": {
+      "post": {
+        "tags": [
+          "Producto"
+        ],
+        "summary": "Crear producto",
+        "description": "Crear producto",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrearProducto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Creado satisfactoriamente"
+          },
+          "400": {
+            "description": "Error del servidor"
+          }
+        }
+      }
+    },
+    "/producto/edit": {
+      "put": {
+        "tags": [
+          "Producto"
+        ],
+        "summary": "Actualizar un producto",
+        "description": "Actualizar un producto",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActualizarProducto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Creado satisfactoriamente"
+          },
+          "400": {
+            "description": "Error del servidor"
+          }
+        }
+      }
+    },
+    "/producto/delete/{id}": {
+      "delete": {
+        "tags": [
+          "Producto"
+        ],
+        "summary": "Eliminar un producto",
+        "description": "Eliminar un producto por parametro de ruta",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id del producto a eliminar",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Creado satisfactoriamente"
+          },
+          "400": {
+            "description": "Error del servidor"
+          }
+        }
+      }
+    },
+    "/pedido/create": {
+      "post": {
+        "tags": [
+          "Pedido"
+        ],
+        "summary": "Crea un pedido para el usuario/cliente",
+        "description": "Genera el pedido de compra",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pedido"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Creado satisfactoriamente"
+          },
+          "400": {
+            "description": "Error del servidor"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Autenticacion"
+        ],
+        "summary": "Autenticar al usuario",
+        "description": "",
+        "operationId": "loginUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Te devolverra un json web token"
+          },
+          "401": {
+            "description": "Login invalido"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Login": {
+        "type": "object",
+        "properties": {
+          "correo": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "Proveedor": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "contacto": {
+            "type": "string"
+          },
+          "empresa": {
+            "type": "string"
+          },
+          "direccion": {
+            "type": "string"
+          },
+          "telefono": {
+            "type": "string"
+          },
+          "correo_electronico": {
+            "type": "string"
+          },
+          "status": {
+            "type": "number"
+          },
+          "CreatedDate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "CrearUsuario": {
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "type": "string"
+          },
+          "apellidos": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "correo": {
+            "type": "string"
+          },
+          "nombreUsuario": {
+            "type": "string"
+          },
+          "Imagen": {
+            "type": "string"
+          }
+        }
+      },
+      "ActualizarUsuario": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "apellidos": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "correo": {
+            "type": "string"
+          },
+          "nombreUsuario": {
+            "type": "string"
+          },
+          "Imagen": {
+            "type": "string"
+          }
+        }
+      },
+      "Carrito": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 1
+          },
+          "cantidad": {
+            "type": "integer",
+            "example": 2
+          },
+          "importe": {
+            "type": "number",
+            "format": "float",
+            "example": 20.5
+          },
+          "iva": {
+            "type": "number",
+            "format": "float",
+            "example": 3.2
+          },
+          "total": {
+            "type": "number",
+            "format": "float",
+            "example": 23.7
+          },
+          "productoFK": {
+            "type": "integer",
+            "example": 101
+          },
+          "usuarioFK": {
+            "type": "integer",
+            "example": 202
+          },
+          "status": {
+            "type": "integer",
+            "example": 1
+          },
+          "is_deleted": {
+            "type": "integer",
+            "example": 0
+          },
+          "creado": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-02-23T12:34:56Z"
+          }
+        }
+      },
+      "DireccionEntrega": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "usuarioFK": {
+            "type": "integer",
+            "example": 101
+          },
+          "nombreDestinatario": {
+            "type": "string",
+            "example": "Juan Pérez"
+          },
+          "direccion": {
+            "type": "string",
+            "example": "Calle Principal 123"
+          },
+          "ciudad": {
+            "type": "string",
+            "example": "Ciudad Principal"
+          },
+          "codigoPostal": {
+            "type": "string",
+            "example": "12345"
+          },
+          "pais": {
+            "type": "string",
+            "example": "País Principal"
+          },
+          "telefono": {
+            "type": "string",
+            "example": "123-456-7890"
+          }
+        }
+      },
+      "EntradaHasProducto": {
+        "type": "object",
+        "properties": {
+          "EntradaId": {
+            "type": "integer",
+            "example": 1
+          },
+          "ProductoId": {
+            "type": "integer",
+            "example": 101
+          },
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "cantidad": {
+            "type": "integer",
+            "example": 2
+          },
+          "importe": {
+            "type": "number",
+            "format": "float",
+            "example": 20.5
+          },
+          "iva": {
+            "type": "number",
+            "format": "float",
+            "example": 3.2
+          },
+          "total": {
+            "type": "number",
+            "format": "float",
+            "example": 23.7
+          }
+        }
+      },
+      "Entrada": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "status": {
+            "type": "integer",
+            "example": 1
+          },
+          "importe": {
+            "type": "number",
+            "format": "float",
+            "example": 20.5
+          },
+          "iva": {
+            "type": "number",
+            "format": "float",
+            "example": 3.2
+          },
+          "total": {
+            "type": "number",
+            "format": "float",
+            "example": 23.7
+          },
+          "ProveedorFK": {
+            "type": "integer",
+            "example": 101
+          },
+          "UsuarioFK": {
+            "type": "integer",
+            "example": 202
+          },
+          "ProductoFK": {
+            "type": "integer",
+            "example": 303
+          },
+          "CreatedDate": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-02-23T12:34:56Z"
+          }
+        }
+      },
+      "Pedido": {
+        "type": "object",
+        "properties": {
+          "direccionEntregaFK": {
+            "type": "integer",
+            "example": 301
+          },
+          "importe": {
+            "type": "number",
+            "format": "float",
+            "example": 20.5
+          },
+          "iva": {
+            "type": "number",
+            "format": "float",
+            "example": 3.2
+          },
+          "total": {
+            "type": "number",
+            "format": "float",
+            "example": 23.7
+          },
+          "productos": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id_producto": {
+                  "type": "number"
+                },
+                "cantidad": {
+                  "type": "number"
+                },
+                "importe": {
+                  "type": "number"
+                },
+                "iva": {
+                  "type": "number"
+                },
+                "total": {
+                  "type": "number"
+                }
+              }
+            },
+            "example": [
+              {
+                "id_producto": 1,
+                "cantidad": 2,
+                "importe": 10.5,
+                "iva": 1.2,
+                "total": 11.7
+              }
+            ]
+          }
+        }
+      },
+      "ActualizarPedido": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "direccionEntregaFK": {
+            "type": "integer",
+            "example": 301
+          },
+          "importe": {
+            "type": "number",
+            "format": "float",
+            "example": 20.5
+          },
+          "iva": {
+            "type": "number",
+            "format": "float",
+            "example": 3.2
+          },
+          "total": {
+            "type": "number",
+            "format": "float",
+            "example": 23.7
+          }
+        }
+      },
+      "ActualizarProducto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "status": {
+            "type": "integer",
+            "example": 1
+          },
+          "imagen": {
+            "type": "string",
+            "example": "imagen.jpg"
+          },
+          "codigo": {
+            "type": "string",
+            "example": "P001"
+          },
+          "descripcion": {
+            "type": "string",
+            "example": "Descripción del producto"
+          },
+          "precio": {
+            "type": "number",
+            "format": "float",
+            "example": 20.5
+          },
+          "existencias": {
+            "type": "integer",
+            "example": 100
+          },
+          "CategoriaFK": {
+            "type": "integer",
+            "example": 201
+          }
+        }
+      },
+      "CrearProducto": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "example": 1
+          },
+          "imagen": {
+            "type": "string",
+            "example": "imagen.jpg"
+          },
+          "codigo": {
+            "type": "string",
+            "example": "P001"
+          },
+          "descripcion": {
+            "type": "string",
+            "example": "Descripción del producto"
+          },
+          "precio": {
+            "type": "number",
+            "format": "float",
+            "example": 20.5
+          },
+          "existencias": {
+            "type": "integer",
+            "example": 100
+          },
+          "CategoriaFK": {
+            "type": "integer",
+            "example": 201
+          }
+        }
+      },
+      "Productopedido": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "pedidoFK": {
+            "type": "integer",
+            "example": 101
+          },
+          "productoFK": {
+            "type": "integer",
+            "example": 201
+          },
+          "cantidad": {
+            "type": "integer",
+            "example": 2
+          },
+          "precio": {
+            "type": "number",
+            "format": "float",
+            "example": 20.5
+          },
+          "importe": {
+            "type": "number",
+            "format": "float",
+            "example": 23.7
+          },
+          "iva": {
+            "type": "number",
+            "format": "float",
+            "example": 3.2
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "petstore_auth": {
+        "type": "oauth2",
+        "flows": {
+          "implicit": {
+            "authorizationUrl": "https://petstore3.swagger.io/oauth/authorize",
+            "scopes": {
+              "write:pets": "modify pets in your account",
+              "read:pets": "read your pets"
+            }
+          }
+        }
+      },
+      "api_key": {
+        "type": "apiKey",
+        "name": "api_key",
+        "in": "header"
+      }
+    }
+  }
+}

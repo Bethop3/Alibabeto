@@ -1,0 +1,20 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Alibabeto API",
+      "version": "1.0.0"
+    },
+    "paths": {
+      "/saludo": {
+        "get": {
+          "summary": "Obtiene un saludo",
+          "responses": {
+            "200": {
+              "description": "Saludo exitoso"
+            }
+          }
+        }
+      }
+    }
+  }
+  

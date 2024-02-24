@@ -1,26 +1,27 @@
 // Librerías
 import express, { type Application } from 'express'
-import dotenv from 'dotenv'
+import swaggerUI from 'swagger-ui-express'
 import fileUpload from 'express-fileupload'
+import { ESLint } from 'eslint'
+import dotenv from 'dotenv'
 
 // Routers
-import authRouter from './router/auth.routes'
 import provedoreesRouter from './router/proveedores.routes'
-import usuariosRouter from './router/usuarios.routes'
-import productosRouter from './router/producto.routes'
-import rolesrouter from './router/roles.routes'
-import entradaRouter from './router/entrada.routes'
 import categoriaRouter from './router/categoria.routes'
+import productosRouter from './router/producto.routes'
+import usuariosRouter from './router/usuarios.routes'
+import entradaRouter from './router/entrada.routes'
+import carritoRouter from './router/carrito.routes'
 import pedidosRouter from './router/pedido.routes'
 import uploadsRouter from './router/upload.routes'
-import carritoRouter from './router/carrito.routes'
+import rolesrouter from './router/roles.routes'
+import authRouter from './router/auth.routes'
 
 // Base de Datos
-import { getConnection } from './database/conection'
 import { Producto, initModels } from './models/init-models'
+import { getConnection } from './database/conection'
+import swaggerDocument from './swagger/conf-2.json'
 import { sequelize } from './database'
-import { ESLint } from 'eslint'
-// import { MiddlewareTokenValidator } from './middlewares/middlewareTokenValidator'
 
 // Middlewares
 import { MiddlewareTokenValidator } from './middlewares/middlewareTokenValidator'
@@ -42,7 +43,8 @@ app.use(express.static('./src/public'))
 
 // Rutas
 app.use('/auth', authRouter)
-
+// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
 app.use(MiddlewareTokenValidator)
 app.use('/producto', productosRouter)
 app.use('/usuario', usuariosRouter)
@@ -53,6 +55,8 @@ app.use('/entradas', entradaRouter)
 app.use('/pedido', pedidosRouter)
 app.use('/upload', uploadsRouter)
 app.use('/carrito', carritoRouter)
+
+// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 
 app.post('/upload2', (req: any, res) => {
   try {

@@ -1,10 +1,11 @@
-import { Usuario, type UsuarioAttributes } from '../models/usuario'
+import { Usuario } from '../models/usuario'
 import { type Controller, type UserLogin } from '../types'
+import { type AuthRegistroUsuario } from '../types/Usuario'
 import { encryptPassword } from '../utils/encryptPassword'
 import { generateJWT } from '../utils/generateJWT'
-// import { validatePassword } from '../utils/validatePassword'
+import { validatePassword } from '../utils/validatePassword'
 
-export const AuthRegister: Controller<Usuario | null, UsuarioAttributes> = async (req, res) => {
+export const AuthRegister: Controller<boolean | null, AuthRegistroUsuario> = async (req, res) => {
   try {
     const { correo } = req.body
 
@@ -18,25 +19,31 @@ export const AuthRegister: Controller<Usuario | null, UsuarioAttributes> = async
       })
     }
 
+    const passwordEncrypted = await encryptPassword(req.body.password!)
+
     const NewUser = await Usuario.create({
-      ...req.body
+      correo,
+      Imagen: req.body.Imagen,
+      nombreUsuario: req.body.nombreUsuario,
+      RolFK: 1,
+      apellidos: req.body.apellidos,
+      nombre: req.body.nombre,
+      password: passwordEncrypted
     })
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    NewUser.password = await encryptPassword(NewUser.password!)
-
-    console.log(NewUser.id)
+    delete NewUser.password
 
     res.status(201).json({
       ok: true,
       msg: 'Registrado correctamente',
-      data: NewUser
+      data: true
     })
   } catch (err) {
+    console.log(err)
     res.status(500).json({
       ok: false,
       msg: 'Error del servidor',
-      data: null
+      data: false
     })
   }
 }
@@ -65,9 +72,8 @@ export const AuthLogin: Controller<any | null, UserLogin> = async (req, res) => 
       })
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    // const isValid = validatePassword(password!, UserExist.password!)
-    const isValid = password === UserExist.password
+    const isValid = validatePassword(password!, UserExist.password!)
+    // const isValid = password === UserExist.password
 
     if (!isValid) {
       return res.status(401).json({
@@ -83,7 +89,8 @@ export const AuthLogin: Controller<any | null, UserLogin> = async (req, res) => 
       ok: true,
       msg: 'Autenticado correctamente',
       data: {
-        token
+        token,
+        usuario: UserExist
       }
     })
   } catch (err) {
