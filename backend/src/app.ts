@@ -1,6 +1,7 @@
 // Librerías
 import express, { type Application } from 'express'
 import dotenv from 'dotenv'
+import fileUpload from 'express-fileupload'
 
 // Routers
 import authRouter from './router/auth.routes'
@@ -14,7 +15,7 @@ import pedidosRouter from './router/pedido.routes'
 
 // Base de Datos
 import { getConnection } from './database/conection'
-import { initModels } from './models/init-models'
+import { Producto, initModels } from './models/init-models'
 import { sequelize } from './database'
 import { ESLint } from 'eslint'
 // import { MiddlewareTokenValidator } from './middlewares/middlewareTokenValidator'
@@ -32,7 +33,10 @@ dotenv.config()
 const port = process.env.PORT ?? 8000
 
 // Middleware para procesar datos en formato JSON
+app.use(fileUpload())
 app.use(express.json())
+app.use(express.static('public'))
+app.use(express.static('./src/public'))
 
 // Rutas
 app.use('/auth', authRouter)
@@ -45,6 +49,27 @@ app.use('/categoria', categoriaRouter)
 app.use('/roles', rolesrouter)
 app.use('/entradas', entradaRouter)
 app.use('/pedido', pedidosRouter)
+
+app.post('/upload', (req: any, res) => {
+  try {
+    // Log the files to the console
+    const { image } = req.files
+
+    // If no image submitted, exit
+    if (!image) return res.sendStatus(400)
+
+    Producto.create({
+      ...new Producto(),
+      imagen: 'http://localhost:3000/uploads/' + image.name
+    })
+
+    // Move the uploaded image to our upload folder
+    // eslint-disable-next-line n/no-path-concat
+    image.mv(__dirname + '/public/uploads/' + image.name)
+  } catch (error) {
+    console.log(error)
+  }
+})
 
 export async function runESLint (): Promise<void> {
   const eslint = new ESLint()
