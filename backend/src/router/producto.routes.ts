@@ -1,4 +1,4 @@
-import { CrearProductoC, EditarProductoCtrl, EliminarProductoCtrl, GetProductos } from '../controllers/producto.controller'
+import { CrearProductoC, EditarProductoCtrl, EliminarProductoCtrl, GetProductosByQuery } from '../controllers/producto.controller'
 import { Router } from 'express'
 import { validations } from '../validations/producto.validation'
 import { handleValidationErrors } from '../utils/handleValidationErrors'
@@ -6,8 +6,8 @@ import { handleValidationErrors } from '../utils/handleValidationErrors'
 const router = Router()
 
 router.get(
-  '/all',
-  GetProductos
+  '/query',
+  GetProductosByQuery
 )
 
 router.post(

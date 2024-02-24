@@ -9,7 +9,7 @@ export type JWTAuthPayload = JwtPayload & {
 }
 
 // Tipo personalizado para las solicitudes de Express que incluyen un payload JWT en headers
-export type CustomRequest<T, T2, TBody, PayloadType> = Request<T, T2, TBody> & {
+export type CustomRequest<T, T2, TBody, PayloadType, ReqQuery> = Request<T, T2, TBody, ReqQuery> & {
   payload?: PayloadType
   headers: IncomingHttpHeaders & {
     'x-auth-token'?: string
@@ -17,9 +17,9 @@ export type CustomRequest<T, T2, TBody, PayloadType> = Request<T, T2, TBody> & {
 }
 
 // Tipo para controladores de Express que toman y devuelven diferentes tipos de datos
-export type Controller<TResponse = any, BodyRequest = null, PayloadBody = JWTAuthPayload, ReqParams = any> = (
+export type Controller<TResponse = any, BodyRequest = null, PayloadBody = JWTAuthPayload, ReqParams = any, ReqQuery = any> = (
   (
-    req: CustomRequest<ReqParams, any, BodyRequest, PayloadBody | JWTAuthPayload>,
+    req: CustomRequest<ReqParams, any, BodyRequest, PayloadBody | JWTAuthPayload, ReqQuery>,
     res: Response<BasicResponse<TResponse>>,
     next: NextFunction
   ) => Promise<any>
@@ -28,7 +28,7 @@ export type Controller<TResponse = any, BodyRequest = null, PayloadBody = JWTAut
 // Tipo para middlewares de Express que trabajan con un payload específico
 export type Middleware<Payload, TResponse = any> = (
   (
-    req: CustomRequest<any, any, any, Payload>,
+    req: CustomRequest<any, any, any, Payload, any>,
     res: Response<BasicResponse<TResponse>>,
     next: NextFunction
   ) => void

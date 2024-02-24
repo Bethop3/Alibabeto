@@ -36,6 +36,7 @@ dotenv.config()
 const port = process.env.PORT ?? 8000
 
 // Middleware para procesar datos en formato JSON
+app.use(express.urlencoded({ extended: true }))
 app.use(fileUpload())
 app.use(express.json())
 app.use(express.static('public'))

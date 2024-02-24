@@ -1,12 +1,54 @@
+import { type ProductosQuery, type CrearProducto, type EditarProducto } from '../types/producto'
 import { Producto, type ProductoAttributes } from '../models/producto'
 import { type Controller } from '../types'
-import { type CrearProducto, type EditarProducto } from '../types/producto'
+import { Op } from 'sequelize'
+import { Categoria } from '../models/categoria'
 
 // Controlador para obtener todos los productos
-export const GetProductos: Controller<Producto[]> = async (req, res) => {
+export const GetProductosByQuery: Controller<Producto[], any, null, null, ProductosQuery> = async (req, res) => {
   try {
+    let {
+      nombre,
+      precioMaximo
+    } = req.query
+
     // Consulta todos los productos en la base de datos
-    const productos = await Producto.findAll()
+    console.log('req.query')
+    console.log(req.query)
+
+    nombre = nombre ?? ''
+
+    const whereClause: any = {
+      descripcion: {
+        [Op.like]: `%${nombre}%`
+      }
+    }
+
+    if (precioMaximo !== undefined) {
+      whereClause.precio = {
+        [Op.lte]: precioMaximo
+      }
+    }
+
+    const productos = await Producto.findAll({
+      where: whereClause,
+      attributes: { exclude: ['CreatedDate', 'CategoriaFK'] },
+      include: [
+        {
+          model: Categoria, // El modelo de la tabla relacionada
+          as: 'CategoriaFK_categoria' // Renombrar la asociación
+          // attributes: ['nombre', 'descripcion'] // Atributos específicos de la tabla relacionada que deseas incluir
+        }
+      ]
+      // where: {
+      //   descripcion: {
+      //     [Op.like]: `%${nombre}%`
+      //   },
+      //   precio: {
+      //     [Op.lte]: Number(precioMaximo)
+      //   }
+      // }
+    })
 
     // Retorna la respuesta con los productos en formato JSON
     return res.status(200).json({

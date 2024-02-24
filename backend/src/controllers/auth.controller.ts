@@ -64,13 +64,13 @@ export const AuthLogin: Controller<any | null, UserLogin> = async (req, res) => 
       })
     }
 
-    if (password !== UserExist.password) {
-      return res.status(401).json({
-        ok: false,
-        msg: 'Sin autorizacion',
-        data: null
-      })
-    }
+    // if (password !== UserExist.password) {
+    //   return res.status(401).json({
+    //     ok: false,
+    //     msg: 'Sin autorizacion',
+    //     data: null
+    //   })
+    // }
 
     const isValid = validatePassword(password!, UserExist.password!)
     // const isValid = password === UserExist.password

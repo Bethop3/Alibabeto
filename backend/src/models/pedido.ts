@@ -32,7 +32,7 @@ export class Pedido extends Model<PedidoAttributes, PedidoCreationAttributes> im
   total?: number
 
   // Pedido belongsTo DireccionEntrega via direccionEntregaFK
-  direccionEntregaFK_direccion_entrega!: DireccionEntrega
+  direccion_entrega!: DireccionEntrega
   getDireccionEntregaFK_direccion_entrega!: Sequelize.BelongsToGetAssociationMixin<DireccionEntrega>
   setDireccionEntregaFK_direccion_entrega!: Sequelize.BelongsToSetAssociationMixin<DireccionEntrega, DireccionEntregaId>
   createDireccionEntregaFK_direccion_entrega!: Sequelize.BelongsToCreateAssociationMixin<DireccionEntrega>
