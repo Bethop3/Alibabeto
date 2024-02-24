@@ -2,7 +2,7 @@ import { Usuario, type UsuarioAttributes } from '../models/usuario'
 import { type Controller, type UserLogin } from '../types'
 import { encryptPassword } from '../utils/encryptPassword'
 import { generateJWT } from '../utils/generateJWT'
-import { validatePassword } from '../utils/validatePassword'
+// import { validatePassword } from '../utils/validatePassword'
 
 export const AuthRegister: Controller<Usuario | null, UsuarioAttributes> = async (req, res) => {
   try {

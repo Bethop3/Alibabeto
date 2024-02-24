@@ -13,6 +13,7 @@ import entradaRouter from './router/entrada.routes'
 import categoriaRouter from './router/categoria.routes'
 import pedidosRouter from './router/pedido.routes'
 import uploadsRouter from './router/upload.routes'
+import carritoRouter from './router/carrito.routes'
 
 // Base de Datos
 import { getConnection } from './database/conection'
@@ -51,6 +52,7 @@ app.use('/roles', rolesrouter)
 app.use('/entradas', entradaRouter)
 app.use('/pedido', pedidosRouter)
 app.use('/upload', uploadsRouter)
+app.use('/carrito', carritoRouter)
 
 app.post('/upload2', (req: any, res) => {
   try {

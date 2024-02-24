@@ -13,12 +13,12 @@ export interface CarritoAttributes {
   usuarioFK: number
   status: number
   is_deleted: number
-  creado: number
+  is_creado: Date
 }
 
 export type CarritoPk = 'id'
 export type CarritoId = Carrito[CarritoPk]
-export type CarritoOptionalAttributes = 'id' | 'creado'
+export type CarritoOptionalAttributes = 'id' | 'is_creado'
 export type CarritoCreationAttributes = Optional<CarritoAttributes, CarritoOptionalAttributes>
 
 export class Carrito extends Model<CarritoAttributes, CarritoCreationAttributes> implements CarritoAttributes {
@@ -31,7 +31,7 @@ export class Carrito extends Model<CarritoAttributes, CarritoCreationAttributes>
   usuarioFK!: number
   status!: number
   is_deleted!: number
-  creado!: number
+  is_creado!: Date
 
   // Carrito belongsTo Producto via productoFK
   productoFK_producto!: Producto
@@ -92,8 +92,8 @@ export class Carrito extends Model<CarritoAttributes, CarritoCreationAttributes>
         type: DataTypes.INTEGER,
         allowNull: false
       },
-      creado: {
-        type: DataTypes.INTEGER,
+      is_creado: {
+        type: DataTypes.DATE,
         allowNull: false,
         defaultValue: Sequelize.Sequelize.fn('current_timestamp')
       }
