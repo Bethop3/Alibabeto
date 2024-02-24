@@ -5,6 +5,11 @@ import { Router } from 'express'
 
 const router = Router()
 
-router.post('/create', validations.create, handleValidationErrors, CreatePedidoCtrl)
+router.post(
+  '/create',
+  validations.create,
+  handleValidationErrors,
+  CreatePedidoCtrl
+)
 
 export default router

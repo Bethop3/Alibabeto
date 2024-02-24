@@ -164,7 +164,10 @@ export const EliminarProductoCtrl: Controller<string | null, number, any, { id: 
 
     // Busca el producto a eliminar por su 'id'
     const productoAEliminar = await Producto.findOne({
-      where: { id }
+      where: {
+        id,
+        is_deleted: 0
+      }
     })
 
     // Verifica si el producto existe
@@ -178,9 +181,9 @@ export const EliminarProductoCtrl: Controller<string | null, number, any, { id: 
 
     // Elimina el producto de la base de datos
 
-    // productoAEliminar.set({
-    //   is_deleted: 1
-    // })
+    productoAEliminar.set({
+      is_deleted: true
+    })
 
     await productoAEliminar.save()
 

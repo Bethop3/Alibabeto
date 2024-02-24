@@ -76,7 +76,7 @@ export const CreateDireccionUsuarioCtrl: Controller<DireccionEntrega | null, Cre
     }
     const DireccionUsuario = await DireccionEntrega.create({
       ...req.body,
-      usuarioFK: req.payload?.id_usuario
+      usuarioId: req.payload?.id_usuario
     })
 
     return res.status(200).json({

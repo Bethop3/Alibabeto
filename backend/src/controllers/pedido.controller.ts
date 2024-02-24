@@ -1,8 +1,8 @@
-import { type ProductoHasPedido, type CreatePedido } from '../types/Pedido'
+import { PedidoHasProducto } from '../models/pedido_has_producto'
+import { type CreatePedidoHasProducto, type CreatePedido } from '../types/Pedido'
+import { Producto } from '../models/producto'
 import { type Controller } from '../types'
 import { Pedido } from '../models/pedido'
-import { Productopedido } from '../models/productopedido'
-import { Producto } from '../models/producto'
 
 export const CreatePedidoCtrl: Controller<any, CreatePedido> = async (req, res) => {
   try {
@@ -13,30 +13,30 @@ export const CreatePedidoCtrl: Controller<any, CreatePedido> = async (req, res) 
       importe: rest.importe,
       iva: rest.iva,
       total: rest.total,
-      clienteFK: req.payload?.id_usuario,
-      direccionEntregaFK: rest.direccionEntregaFK,
-      estadoPedidoFK: rest.estadoPedidoFK,
+      usuarioID: req.payload?.id_usuario,
+      direccionEntregaID: rest.direccionEntregaID,
+      estadoPedidoID: rest.estadoPedidoID,
       fechaPedido: rest.fechaPedido
     })
 
-    const productosPorPedido: Productopedido[] = []
+    const productosPorPedido: PedidoHasProducto [] = []
 
     for (const producto of productos) {
-      const productoParaPedido = await Productopedido.create({
+      const productoParaPedido = await PedidoHasProducto.create({
         cantidad: producto.cantidad,
-        estadoProductoFK: 1,
+        estadoProductoID: 1,
         iva: producto.iva,
         precio: 1,
         importe: producto.importe,
-        pedidoFK: pedido.id,
-        productoFK: producto.id_producto,
+        pedidoID: pedido.id,
+        productoID: producto.productoID,
         total: producto.total
       })
 
       productosPorPedido.push(productoParaPedido)
     }
 
-    await pedido.setProductopedidos(productosPorPedido)
+    await pedido.setPedido_has_productos(productosPorPedido)
 
     const existenciasDescontadas = await descontarExistenciasCtrl(productos)
 
@@ -62,31 +62,30 @@ export const CreatePedidoCtrl: Controller<any, CreatePedido> = async (req, res) 
     })
   }
 }
-
 interface ResponseDescuentoExistencias {
   status: boolean
   id_producto?: number
 }
 
-const descontarExistenciasCtrl = async (productosPedido: ProductoHasPedido[]): Promise<ResponseDescuentoExistencias> => {
+const descontarExistenciasCtrl = async (productosPedido: CreatePedidoHasProducto[]): Promise<ResponseDescuentoExistencias> => {
   try {
     const descontados: boolean[] = []
     for (const producto of productosPedido) {
       const productoDescontar = await Producto.findOne({
         where: {
-          id: producto.id_producto
+          id: producto.productoID
         }
       })
 
-      if (!productoDescontar || producto.cantidad > productoDescontar?.existencias) {
+      if (!productoDescontar || !producto || producto.cantidad! > productoDescontar?.existencias) {
         return {
           status: false,
-          id_producto: producto.id_producto
+          id_producto: producto.productoID
         }
       }
 
       productoDescontar.set({
-        existencias: productoDescontar?.existencias - producto.cantidad
+        existencias: productoDescontar?.existencias - producto.cantidad!
       })
 
       await productoDescontar.save()
