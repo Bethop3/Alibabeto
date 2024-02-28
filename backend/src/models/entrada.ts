@@ -3,7 +3,6 @@ import { DataTypes, Model, type Optional } from 'sequelize'
 import type { EntradaHasProducto, EntradaHasProductoId } from './entrada_has_producto'
 import type { Producto, ProductoId } from './producto'
 import type { Proveedore, ProveedoreId } from './proveedore'
-import type { Usuario, UsuarioId } from './usuario'
 
 export interface EntradaAttributes {
   id: number
@@ -55,11 +54,6 @@ export class Entrada extends Model<EntradaAttributes, EntradaCreationAttributes>
   getProveedorFK_proveedore!: Sequelize.BelongsToGetAssociationMixin<Proveedore>
   setProveedorFK_proveedore!: Sequelize.BelongsToSetAssociationMixin<Proveedore, ProveedoreId>
   createProveedorFK_proveedore!: Sequelize.BelongsToCreateAssociationMixin<Proveedore>
-  // Entrada belongsTo Usuario via UsuarioFK
-  UsuarioFK_usuario!: Usuario
-  getUsuarioFK_usuario!: Sequelize.BelongsToGetAssociationMixin<Usuario>
-  setUsuarioFK_usuario!: Sequelize.BelongsToSetAssociationMixin<Usuario, UsuarioId>
-  createUsuarioFK_usuario!: Sequelize.BelongsToCreateAssociationMixin<Usuario>
 
   static initModel (sequelize: Sequelize.Sequelize): typeof Entrada {
     return Entrada.init({
@@ -95,11 +89,7 @@ export class Entrada extends Model<EntradaAttributes, EntradaCreationAttributes>
       },
       UsuarioFK: {
         type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'usuarios',
-          key: 'id'
-        }
+        allowNull: false
       },
       ProductoFK: {
         type: DataTypes.INTEGER,

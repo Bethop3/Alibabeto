@@ -4,8 +4,8 @@ import type { Entrada, EntradaId } from './entrada'
 import type { Producto, ProductoId } from './producto'
 
 export interface EntradaHasProductoAttributes {
-  entradaID: number
-  productoID: number
+  EntradaId: number
+  ProductoId: number
   id: number
   cantidad: number
   importe: number
@@ -19,8 +19,8 @@ export type EntradaHasProductoOptionalAttributes = 'id'
 export type EntradaHasProductoCreationAttributes = Optional<EntradaHasProductoAttributes, EntradaHasProductoOptionalAttributes>
 
 export class EntradaHasProducto extends Model<EntradaHasProductoAttributes, EntradaHasProductoCreationAttributes> implements EntradaHasProductoAttributes {
-  entradaID!: number
-  productoID!: number
+  EntradaId!: number
+  ProductoId!: number
   id!: number
   cantidad!: number
   importe!: number
@@ -40,13 +40,21 @@ export class EntradaHasProducto extends Model<EntradaHasProductoAttributes, Entr
 
   static initModel (sequelize: Sequelize.Sequelize): typeof EntradaHasProducto {
     return EntradaHasProducto.init({
-      entradaID: {
+      EntradaId: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: {
+          model: 'entradas',
+          key: 'id'
+        }
       },
-      productoID: {
+      ProductoId: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: {
+          model: 'productos',
+          key: 'id'
+        }
       },
       id: {
         autoIncrement: true,
@@ -87,15 +95,15 @@ export class EntradaHasProducto extends Model<EntradaHasProductoAttributes, Entr
           name: 'EntradaId',
           using: 'BTREE',
           fields: [
-            { name: 'entradaID' },
-            { name: 'productoID' }
+            { name: 'EntradaId' },
+            { name: 'ProductoId' }
           ]
         },
         {
           name: 'ProductoId',
           using: 'BTREE',
           fields: [
-            { name: 'productoID' }
+            { name: 'ProductoId' }
           ]
         }
       ]

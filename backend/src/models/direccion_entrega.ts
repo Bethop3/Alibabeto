@@ -12,11 +12,12 @@ export interface DireccionEntregaAttributes {
   codigoPostal?: string
   pais?: string
   telefono?: string
+  is_deleted?: boolean
 }
 
 export type DireccionEntregaPk = 'id'
 export type DireccionEntregaId = DireccionEntrega[DireccionEntregaPk]
-export type DireccionEntregaOptionalAttributes = 'id' | 'usuarioId' | 'nombreDestinatario' | 'direccion' | 'ciudad' | 'codigoPostal' | 'pais' | 'telefono'
+export type DireccionEntregaOptionalAttributes = 'id' | 'usuarioId' | 'nombreDestinatario' | 'direccion' | 'ciudad' | 'codigoPostal' | 'pais' | 'telefono' | 'is_deleted'
 export type DireccionEntregaCreationAttributes = Optional<DireccionEntregaAttributes, DireccionEntregaOptionalAttributes>
 
 export class DireccionEntrega extends Model<DireccionEntregaAttributes, DireccionEntregaCreationAttributes> implements DireccionEntregaAttributes {
@@ -28,6 +29,7 @@ export class DireccionEntrega extends Model<DireccionEntregaAttributes, Direccio
   codigoPostal?: string
   pais?: string
   telefono?: string
+  is_deleted?: boolean
 
   // DireccionEntrega hasMany Pedido via direccionEntregaID
   pedidos!: Pedido[]
@@ -86,6 +88,11 @@ export class DireccionEntrega extends Model<DireccionEntregaAttributes, Direccio
       telefono: {
         type: DataTypes.STRING(20),
         allowNull: true
+      },
+      is_deleted: {
+        type: 'BIT(2)',
+        allowNull: true,
+        defaultValue: "b'0'"
       }
     }, {
       sequelize,
