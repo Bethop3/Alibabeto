@@ -48,6 +48,7 @@ app.use('/auth', authRouter)
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
 app.use(MiddlewareTokenValidator)// sexo
 app.use('/producto', productosRouter)
+app.use(MiddlewareTokenValidator)
 app.use('/usuario', usuariosRouter)
 app.use('/proveedores', provedoreesRouter)
 app.use('/categoria', categoriaRouter)
