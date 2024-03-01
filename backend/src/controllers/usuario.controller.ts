@@ -3,7 +3,6 @@ import { Usuario, type UsuarioAttributes } from '../models/usuario'
 import { type Controller } from '../types'
 import { type CreateDireccionEntrega } from '../types/DireccionEntrega'
 import { DireccionEntrega } from '../models/direccion_entrega'
-
 /**
  * @controller GetUsuarios
  * @description Controlador para obtener la lista de usuarios.
@@ -50,7 +49,8 @@ export const CreateUsuarioCtrl: Controller<UsuarioAttributes | null, CrearUsuari
       password: req.body.password,
       Imagen: req.body.Imagen,
       nombreUsuario: '',
-      RolFK: 1
+      RolFK: 1,
+      is_deleted: false
     })
 
     return res.status(200).json({
@@ -139,7 +139,7 @@ export const EliminarUsuarioCtrl: Controller<string | null, number, any, { id: s
     }
 
     UsuarioAEliminar.set({
-      is_deleted: 1
+      is_deleted: true
     })
 
     await UsuarioAEliminar.save()
@@ -152,5 +152,26 @@ export const EliminarUsuarioCtrl: Controller<string | null, number, any, { id: s
   } catch (error) {
     console.log(error)
     return res.status(400).json()
+  }
+}
+
+export const GetDireccioneEntrega: Controller<DireccionEntrega[]> = async (req, res) => {
+  try {
+    const idUsuario = req.payload?.id_usuario
+
+    const direccionEntrega = await DireccionEntrega.findAll({
+      where: {
+        is_deleted: 0, usuarioId: idUsuario// pasas el id del usuario
+      }
+    })
+
+    return res.status(200).json({
+      ok: true,
+      data: direccionEntrega
+    })
+  } catch (err) {
+    console.error(err)
+
+    return res.status(400)
   }
 }

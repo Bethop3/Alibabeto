@@ -2,7 +2,6 @@ import type * as Sequelize from 'sequelize'
 import { DataTypes, Model, type Optional } from 'sequelize'
 import type { Carrito, CarritoId } from './carrito'
 import type { DireccionEntrega, DireccionEntregaId } from './direccion_entrega'
-import type { Entrada, EntradaId } from './entrada'
 import type { Pedido, PedidoId } from './pedido'
 import type { Role, RoleId } from './role'
 
@@ -15,12 +14,12 @@ export interface UsuarioAttributes {
   nombreUsuario: string
   Imagen: string
   RolFK: number
-  is_deleted: number
+  is_deleted: boolean
 }
 
 export type UsuarioPk = 'id'
 export type UsuarioId = Usuario[UsuarioPk]
-export type UsuarioOptionalAttributes = 'id' | 'nombre' | 'apellidos' | 'password' | 'is_deleted'
+export type UsuarioOptionalAttributes = 'id' | 'nombre' | 'apellidos' | 'password'
 export type UsuarioCreationAttributes = Optional<UsuarioAttributes, UsuarioOptionalAttributes>
 
 export class Usuario extends Model<UsuarioAttributes, UsuarioCreationAttributes> implements UsuarioAttributes {
@@ -32,7 +31,7 @@ export class Usuario extends Model<UsuarioAttributes, UsuarioCreationAttributes>
   nombreUsuario!: string
   Imagen!: string
   RolFK!: number
-  is_deleted!: number
+  is_deleted!: boolean
 
   // Usuario belongsTo Role via RolFK
   RolFK_role!: Role
@@ -63,18 +62,6 @@ export class Usuario extends Model<UsuarioAttributes, UsuarioCreationAttributes>
   hasDireccion_entrega!: Sequelize.HasManyHasAssociationMixin<DireccionEntrega, DireccionEntregaId>
   hasDireccion_entregas!: Sequelize.HasManyHasAssociationsMixin<DireccionEntrega, DireccionEntregaId>
   countDireccion_entregas!: Sequelize.HasManyCountAssociationsMixin
-  // Usuario hasMany Entrada via UsuarioFK
-  entradas!: Entrada[]
-  getEntradas!: Sequelize.HasManyGetAssociationsMixin<Entrada>
-  setEntradas!: Sequelize.HasManySetAssociationsMixin<Entrada, EntradaId>
-  addEntrada!: Sequelize.HasManyAddAssociationMixin<Entrada, EntradaId>
-  addEntradas!: Sequelize.HasManyAddAssociationsMixin<Entrada, EntradaId>
-  createEntrada!: Sequelize.HasManyCreateAssociationMixin<Entrada>
-  removeEntrada!: Sequelize.HasManyRemoveAssociationMixin<Entrada, EntradaId>
-  removeEntradas!: Sequelize.HasManyRemoveAssociationsMixin<Entrada, EntradaId>
-  hasEntrada!: Sequelize.HasManyHasAssociationMixin<Entrada, EntradaId>
-  hasEntradas!: Sequelize.HasManyHasAssociationsMixin<Entrada, EntradaId>
-  countEntradas!: Sequelize.HasManyCountAssociationsMixin
   // Usuario hasMany Pedido via usuarioID
   pedidos!: Pedido[]
   getPedidos!: Sequelize.HasManyGetAssociationsMixin<Pedido>
@@ -129,9 +116,8 @@ export class Usuario extends Model<UsuarioAttributes, UsuarioCreationAttributes>
         }
       },
       is_deleted: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-        defaultValue: 0
+        type: 'BIT(2)',
+        allowNull: false
       }
     }, {
       sequelize,
