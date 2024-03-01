@@ -20,7 +20,7 @@ export interface UsuarioAttributes {
 
 export type UsuarioPk = 'id'
 export type UsuarioId = Usuario[UsuarioPk]
-export type UsuarioOptionalAttributes = 'id' | 'nombre' | 'apellidos' | 'password' | 'is_deleted'
+export type UsuarioOptionalAttributes = 'id' | 'nombre' | 'apellidos' | 'password'
 export type UsuarioCreationAttributes = Optional<UsuarioAttributes, UsuarioOptionalAttributes>
 
 export class Usuario extends Model<UsuarioAttributes, UsuarioCreationAttributes> implements UsuarioAttributes {
@@ -130,8 +130,7 @@ export class Usuario extends Model<UsuarioAttributes, UsuarioCreationAttributes>
       },
       is_deleted: {
         type: DataTypes.BOOLEAN,
-        allowNull: false,
-        defaultValue: 0
+        allowNull: false
       }
     }, {
       sequelize,

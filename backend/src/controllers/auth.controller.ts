@@ -29,7 +29,7 @@ export const AuthRegister: Controller<boolean | null, AuthRegistroUsuario> = asy
       apellidos: req.body.apellidos,
       nombre: req.body.nombre,
       password: passwordEncrypted,
-      is_deleted: false
+      is_deleted: 0
     })
 
     delete NewUser.password

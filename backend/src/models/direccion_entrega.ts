@@ -12,6 +12,7 @@ export interface DireccionEntregaAttributes {
   codigoPostal?: string
   pais?: string
   telefono?: string
+  is_deleted: number
 }
 
 export type DireccionEntregaPk = 'id'
@@ -28,6 +29,7 @@ export class DireccionEntrega extends Model<DireccionEntregaAttributes, Direccio
   codigoPostal?: string
   pais?: string
   telefono?: string
+  is_deleted!: number
 
   // DireccionEntrega hasMany Pedido via direccionEntregaID
   pedidos!: Pedido[]
@@ -86,6 +88,10 @@ export class DireccionEntrega extends Model<DireccionEntregaAttributes, Direccio
       telefono: {
         type: DataTypes.STRING(20),
         allowNull: true
+      },
+      is_deleted: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false
       }
     }, {
       sequelize,
