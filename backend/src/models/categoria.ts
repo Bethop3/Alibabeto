@@ -16,7 +16,7 @@ export class Categoria extends Model<CategoriaAttributes, CategoriaCreationAttri
   id!: number
   nombre!: string
 
-  // Categoria hasMany Producto via CategoriaFK
+  // Categoria hasMany Producto via categoriaID
   productos!: Producto[]
   getProductos!: Sequelize.HasManyGetAssociationsMixin<Producto>
   setProductos!: Sequelize.HasManySetAssociationsMixin<Producto, ProductoId>

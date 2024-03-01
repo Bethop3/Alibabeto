@@ -4,7 +4,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 export const sequelize = new Sequelize(
-  'alibabeto',
+  'alibabeto2',
   process.env.USERDB ?? '',
   process.env.DBPASSWORD,
   {
