@@ -47,7 +47,6 @@ app.use(express.static('./src/public'))
 app.use('/auth', authRouter)
 // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
-app.use(MiddlewareTokenValidator)// sexo
 app.use('/producto', productosRouter)
 app.use(MiddlewareTokenValidator)
 app.use('/usuario', usuariosRouter)
