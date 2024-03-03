@@ -50,7 +50,7 @@ export const CreateUsuarioCtrl: Controller<UsuarioAttributes | null, CrearUsuari
       Imagen: req.body.Imagen,
       nombreUsuario: '',
       RolFK: 1,
-      is_deleted: false
+      is_deleted: 0
     })
 
     return res.status(200).json({
@@ -139,7 +139,7 @@ export const EliminarUsuarioCtrl: Controller<string | null, number, any, { id: s
     }
 
     UsuarioAEliminar.set({
-      is_deleted: true
+      is_deleted: 1
     })
 
     await UsuarioAEliminar.save()
@@ -161,7 +161,8 @@ export const GetDireccioneEntrega: Controller<DireccionEntrega[]> = async (req, 
 
     const direccionEntrega = await DireccionEntrega.findAll({
       where: {
-        is_deleted: 0, usuarioId: idUsuario// pasas el id del usuario
+        is_deleted: 0,
+        usuarioId: idUsuario// pasas el id del usuario
       }
     })
 

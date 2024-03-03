@@ -130,8 +130,7 @@ export class Usuario extends Model<UsuarioAttributes, UsuarioCreationAttributes>
       },
       is_deleted: {
         type: DataTypes.BOOLEAN,
-        allowNull: false,
-        defaultValue: 0
+        allowNull: false
       }
     }, {
       sequelize,

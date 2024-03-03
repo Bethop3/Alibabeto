@@ -4,7 +4,7 @@ import swaggerUI from 'swagger-ui-express'
 import fileUpload from 'express-fileupload'
 import { ESLint } from 'eslint'
 import dotenv from 'dotenv'
-
+import cors from 'cors'
 // Routers
 import provedoreesRouter from './router/proveedores.routes'
 import categoriaRouter from './router/categoria.routes'
@@ -36,6 +36,7 @@ dotenv.config()
 const port = process.env.PORT ?? 8000
 
 // Middleware para procesar datos en formato JSON
+app.use(cors())
 app.use(express.urlencoded({ extended: true }))
 app.use(fileUpload())
 app.use(express.json())
