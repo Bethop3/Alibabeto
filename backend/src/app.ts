@@ -1,10 +1,12 @@
 // Librerías
+
 import express, { type Application } from 'express'
 import swaggerUI from 'swagger-ui-express'
 import fileUpload from 'express-fileupload'
 import { ESLint } from 'eslint'
 import dotenv from 'dotenv'
 import cors from 'cors'
+
 // Routers
 import provedoreesRouter from './router/proveedores.routes'
 import categoriaRouter from './router/categoria.routes'
@@ -24,8 +26,8 @@ import swaggerDocument from './swagger/conf-3.json'
 import { sequelize } from './database'
 
 // Middlewares
-import { MiddlewareTokenValidator } from './middlewares/middlewareTokenValidator'
 
+import { MiddlewareTokenValidator } from './middlewares/middlewareTokenValidator'
 // Inicialización de la aplicación Express
 const app: Application = express()
 

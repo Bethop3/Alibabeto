@@ -3,6 +3,7 @@ import { Producto, type ProductoAttributes } from '../models/producto'
 import { type Controller } from '../types'
 import { Op } from 'sequelize'
 import { Categoria } from '../models/categoria'
+import { param } from 'express-validator'
 
 // Controlador para obtener todos los productos
 export const GetProductosByQuery: Controller<Producto[], any, null, null, ProductosQuery> = async (req, res) => {
@@ -197,5 +198,31 @@ export const EliminarProductoCtrl: Controller<string | null, number, any, { id: 
     // En caso de error, imprime el error en la consola y retorna un código de estado 400
     console.log(err)
     return res.status(400).json()
+  }
+}
+
+export const ObtenerProductoidctrl: Controller <Producto | null, number, any, { id: string }> = async (req, res) => {
+  try {
+    const { id } = req.params
+
+    const productoABuscar = await Producto.findOne({
+      where: { id, is_deleted: 0 },
+      attributes: {
+        exclude: ['categoriaID', 'CreateDate']
+      }
+    })
+    if (!productoABuscar) {
+      return res.status(400).json({
+        ok: false,
+        msg: 'Producto no encontrado',
+        data: null
+      })
+    }
+    return res.status(200).json({
+      ok: true,
+      data: productoABuscar
+    })
+  } catch (error) {
+
   }
 }
