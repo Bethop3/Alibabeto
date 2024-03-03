@@ -33,7 +33,7 @@ export class Entrada extends Model<EntradaAttributes, EntradaCreationAttributes>
   ProductoFK?: number
   CreatedDate!: Date
 
-  // Entrada hasMany EntradaHasProducto via EntradaId
+  // Entrada hasMany EntradaHasProducto via entradaID
   entrada_has_productos!: EntradaHasProducto[]
   getEntrada_has_productos!: Sequelize.HasManyGetAssociationsMixin<EntradaHasProducto>
   setEntrada_has_productos!: Sequelize.HasManySetAssociationsMixin<EntradaHasProducto, EntradaHasProductoId>

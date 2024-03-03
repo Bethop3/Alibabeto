@@ -27,13 +27,13 @@ export class EntradaHasProducto extends Model<EntradaHasProductoAttributes, Entr
   iva!: number
   total!: number
 
-  // EntradaHasProducto belongsTo Entrada via EntradaId
-  Entrada!: Entrada
+  // EntradaHasProducto belongsTo Entrada via entradaID
+  entrada!: Entrada
   getEntrada!: Sequelize.BelongsToGetAssociationMixin<Entrada>
   setEntrada!: Sequelize.BelongsToSetAssociationMixin<Entrada, EntradaId>
   createEntrada!: Sequelize.BelongsToCreateAssociationMixin<Entrada>
-  // EntradaHasProducto belongsTo Producto via ProductoId
-  Producto!: Producto
+  // EntradaHasProducto belongsTo Producto via productoID
+  producto!: Producto
   getProducto!: Sequelize.BelongsToGetAssociationMixin<Producto>
   setProducto!: Sequelize.BelongsToSetAssociationMixin<Producto, ProductoId>
   createProducto!: Sequelize.BelongsToCreateAssociationMixin<Producto>
@@ -42,11 +42,19 @@ export class EntradaHasProducto extends Model<EntradaHasProductoAttributes, Entr
     return EntradaHasProducto.init({
       entradaID: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: {
+          model: 'entradas',
+          key: 'id'
+        }
       },
       productoID: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: {
+          model: 'productos',
+          key: 'id'
+        }
       },
       id: {
         autoIncrement: true,

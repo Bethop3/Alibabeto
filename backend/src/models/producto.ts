@@ -53,7 +53,7 @@ export class Producto extends Model<ProductoAttributes, ProductoCreationAttribut
   hasCarrito!: Sequelize.HasManyHasAssociationMixin<Carrito, CarritoId>
   hasCarritos!: Sequelize.HasManyHasAssociationsMixin<Carrito, CarritoId>
   countCarritos!: Sequelize.HasManyCountAssociationsMixin
-  // Producto hasMany EntradaHasProducto via ProductoId
+  // Producto hasMany EntradaHasProducto via productoID
   entrada_has_productos!: EntradaHasProducto[]
   getEntrada_has_productos!: Sequelize.HasManyGetAssociationsMixin<EntradaHasProducto>
   setEntrada_has_productos!: Sequelize.HasManySetAssociationsMixin<EntradaHasProducto, EntradaHasProductoId>
