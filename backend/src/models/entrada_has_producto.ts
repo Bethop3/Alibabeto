@@ -4,8 +4,8 @@ import type { Entrada, EntradaId } from './entrada'
 import type { Producto, ProductoId } from './producto'
 
 export interface EntradaHasProductoAttributes {
-  EntradaId: number
-  ProductoId: number
+  entradaID: number
+  productoID: number
   id: number
   cantidad: number
   importe: number
@@ -19,28 +19,28 @@ export type EntradaHasProductoOptionalAttributes = 'id'
 export type EntradaHasProductoCreationAttributes = Optional<EntradaHasProductoAttributes, EntradaHasProductoOptionalAttributes>
 
 export class EntradaHasProducto extends Model<EntradaHasProductoAttributes, EntradaHasProductoCreationAttributes> implements EntradaHasProductoAttributes {
-  EntradaId!: number
-  ProductoId!: number
+  entradaID!: number
+  productoID!: number
   id!: number
   cantidad!: number
   importe!: number
   iva!: number
   total!: number
 
-  // EntradaHasProducto belongsTo Entrada via EntradaId
-  Entrada!: Entrada
+  // EntradaHasProducto belongsTo Entrada via entradaID
+  entrada!: Entrada
   getEntrada!: Sequelize.BelongsToGetAssociationMixin<Entrada>
   setEntrada!: Sequelize.BelongsToSetAssociationMixin<Entrada, EntradaId>
   createEntrada!: Sequelize.BelongsToCreateAssociationMixin<Entrada>
-  // EntradaHasProducto belongsTo Producto via ProductoId
-  Producto!: Producto
+  // EntradaHasProducto belongsTo Producto via productoID
+  producto!: Producto
   getProducto!: Sequelize.BelongsToGetAssociationMixin<Producto>
   setProducto!: Sequelize.BelongsToSetAssociationMixin<Producto, ProductoId>
   createProducto!: Sequelize.BelongsToCreateAssociationMixin<Producto>
 
   static initModel (sequelize: Sequelize.Sequelize): typeof EntradaHasProducto {
     return EntradaHasProducto.init({
-      EntradaId: {
+      entradaID: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
@@ -48,7 +48,7 @@ export class EntradaHasProducto extends Model<EntradaHasProductoAttributes, Entr
           key: 'id'
         }
       },
-      ProductoId: {
+      productoID: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
@@ -95,15 +95,15 @@ export class EntradaHasProducto extends Model<EntradaHasProductoAttributes, Entr
           name: 'EntradaId',
           using: 'BTREE',
           fields: [
-            { name: 'EntradaId' },
-            { name: 'ProductoId' }
+            { name: 'entradaID' },
+            { name: 'productoID' }
           ]
         },
         {
           name: 'ProductoId',
           using: 'BTREE',
           fields: [
-            { name: 'ProductoId' }
+            { name: 'productoID' }
           ]
         }
       ]

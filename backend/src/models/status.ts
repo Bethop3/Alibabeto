@@ -28,17 +28,7 @@ export class Status extends Model<StatusAttributes, StatusCreationAttributes> im
     }, {
       sequelize,
       tableName: 'status',
-      timestamps: false,
-      indexes: [
-        {
-          name: 'PRIMARY',
-          unique: true,
-          using: 'BTREE',
-          fields: [
-            { name: 'id' }
-          ]
-        }
-      ]
+      timestamps: false
     })
   }
 }
