@@ -17,6 +17,7 @@ import carritoRouter from './router/carrito.routes'
 import pedidosRouter from './router/pedido.routes'
 import uploadsRouter from './router/upload.routes'
 import rolesrouter from './router/roles.routes'
+import pagesRouter from './router/pages.routes'
 import authRouter from './router/auth.routes'
 
 // Base de Datos
@@ -49,6 +50,7 @@ app.use(express.static('./src/public'))
 app.use('/auth', authRouter)
 // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
+app.use('/pages', pagesRouter)
 app.use('/producto', productosRouter)
 // app.use(MiddlewareTokenValidator)
 app.use('/usuario', usuariosRouter)
