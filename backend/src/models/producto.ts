@@ -2,7 +2,6 @@ import type * as Sequelize from 'sequelize'
 import { DataTypes, Model, type Optional } from 'sequelize'
 import type { Carrito, CarritoId } from './carrito'
 import type { Categoria, CategoriaId } from './categoria'
-import type { EntradaHasProducto, EntradaHasProductoId } from './entrada_has_producto'
 import type { Entrada, EntradaId } from './entrada'
 import type { PedidoHasProducto, PedidoHasProductoId } from './pedido_has_producto'
 
@@ -53,18 +52,6 @@ export class Producto extends Model<ProductoAttributes, ProductoCreationAttribut
   hasCarrito!: Sequelize.HasManyHasAssociationMixin<Carrito, CarritoId>
   hasCarritos!: Sequelize.HasManyHasAssociationsMixin<Carrito, CarritoId>
   countCarritos!: Sequelize.HasManyCountAssociationsMixin
-  // Producto hasMany EntradaHasProducto via productoID
-  entrada_has_productos!: EntradaHasProducto[]
-  getEntrada_has_productos!: Sequelize.HasManyGetAssociationsMixin<EntradaHasProducto>
-  setEntrada_has_productos!: Sequelize.HasManySetAssociationsMixin<EntradaHasProducto, EntradaHasProductoId>
-  addEntrada_has_producto!: Sequelize.HasManyAddAssociationMixin<EntradaHasProducto, EntradaHasProductoId>
-  addEntrada_has_productos!: Sequelize.HasManyAddAssociationsMixin<EntradaHasProducto, EntradaHasProductoId>
-  createEntrada_has_producto!: Sequelize.HasManyCreateAssociationMixin<EntradaHasProducto>
-  removeEntrada_has_producto!: Sequelize.HasManyRemoveAssociationMixin<EntradaHasProducto, EntradaHasProductoId>
-  removeEntrada_has_productos!: Sequelize.HasManyRemoveAssociationsMixin<EntradaHasProducto, EntradaHasProductoId>
-  hasEntrada_has_producto!: Sequelize.HasManyHasAssociationMixin<EntradaHasProducto, EntradaHasProductoId>
-  hasEntrada_has_productos!: Sequelize.HasManyHasAssociationsMixin<EntradaHasProducto, EntradaHasProductoId>
-  countEntrada_has_productos!: Sequelize.HasManyCountAssociationsMixin
   // Producto hasMany Entrada via ProductoFK
   entradas!: Entrada[]
   getEntradas!: Sequelize.HasManyGetAssociationsMixin<Entrada>

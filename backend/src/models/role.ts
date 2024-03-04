@@ -16,7 +16,7 @@ export class Role extends Model<RoleAttributes, RoleCreationAttributes> implemen
   id!: number
   nombre?: string
 
-  // Role hasMany Usuario via RolFK
+  // Role hasMany Usuario via RolID
   usuarios!: Usuario[]
   getUsuarios!: Sequelize.HasManyGetAssociationsMixin<Usuario>
   setUsuarios!: Sequelize.HasManySetAssociationsMixin<Usuario, UsuarioId>

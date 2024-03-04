@@ -23,6 +23,8 @@ import { Role as _Role } from './role'
 import type { RoleAttributes, RoleCreationAttributes } from './role'
 import { Status as _Status } from './status'
 import type { StatusAttributes, StatusCreationAttributes } from './status'
+import { UserSession as _UserSession } from './user_session'
+import type { UserSessionAttributes, UserSessionCreationAttributes } from './user_session'
 import { Usuario as _Usuario } from './usuario'
 import type { UsuarioAttributes, UsuarioCreationAttributes } from './usuario'
 
@@ -39,6 +41,7 @@ export {
   _Proveedore as Proveedore,
   _Role as Role,
   _Status as Status,
+  _UserSession as UserSession,
   _Usuario as Usuario
 }
 
@@ -67,6 +70,8 @@ export type {
   RoleCreationAttributes,
   StatusAttributes,
   StatusCreationAttributes,
+  UserSessionAttributes,
+  UserSessionCreationAttributes,
   UsuarioAttributes,
   UsuarioCreationAttributes
 }
@@ -84,14 +89,13 @@ export function initModels (sequelize: Sequelize) {
   const Proveedore = _Proveedore.initModel(sequelize)
   const Role = _Role.initModel(sequelize)
   const Status = _Status.initModel(sequelize)
+  const UserSession = _UserSession.initModel(sequelize)
   const Usuario = _Usuario.initModel(sequelize)
 
   Producto.belongsTo(Categoria, { as: 'categorium', foreignKey: 'categoriaID' })
   Categoria.hasMany(Producto, { as: 'productos', foreignKey: 'categoriaID' })
   Pedido.belongsTo(DireccionEntrega, { as: 'direccionEntrega', foreignKey: 'direccionEntregaID' })
   DireccionEntrega.hasMany(Pedido, { as: 'pedidos', foreignKey: 'direccionEntregaID' })
-  EntradaHasProducto.belongsTo(Entrada, { as: 'entrada', foreignKey: 'entradaID' })
-  Entrada.hasMany(EntradaHasProducto, { as: 'entrada_has_productos', foreignKey: 'entradaID' })
   PedidoHasProducto.belongsTo(Estadopedido, { as: 'estadoProducto', foreignKey: 'estadoProductoID' })
   Estadopedido.hasMany(PedidoHasProducto, { as: 'pedido_has_productos', foreignKey: 'estadoProductoID' })
   Pedido.belongsTo(Estadopedido, { as: 'estadoPedido', foreignKey: 'estadoPedidoID' })
@@ -100,16 +104,14 @@ export function initModels (sequelize: Sequelize) {
   Pedido.hasMany(PedidoHasProducto, { as: 'pedido_has_productos', foreignKey: 'pedidoID' })
   Carrito.belongsTo(Producto, { as: 'producto', foreignKey: 'productoID' })
   Producto.hasMany(Carrito, { as: 'carritos', foreignKey: 'productoID' })
-  EntradaHasProducto.belongsTo(Producto, { as: 'producto', foreignKey: 'productoID' })
-  Producto.hasMany(EntradaHasProducto, { as: 'entrada_has_productos', foreignKey: 'productoID' })
   Entrada.belongsTo(Producto, { as: 'ProductoFK_producto', foreignKey: 'ProductoFK' })
   Producto.hasMany(Entrada, { as: 'entradas', foreignKey: 'ProductoFK' })
   PedidoHasProducto.belongsTo(Producto, { as: 'producto', foreignKey: 'productoID' })
   Producto.hasMany(PedidoHasProducto, { as: 'pedido_has_productos', foreignKey: 'productoID' })
   Entrada.belongsTo(Proveedore, { as: 'ProveedorFK_proveedore', foreignKey: 'ProveedorFK' })
   Proveedore.hasMany(Entrada, { as: 'entradas', foreignKey: 'ProveedorFK' })
-  Usuario.belongsTo(Role, { as: 'RolFK_role', foreignKey: 'RolFK' })
-  Role.hasMany(Usuario, { as: 'usuarios', foreignKey: 'RolFK' })
+  Usuario.belongsTo(Role, { as: 'Rol', foreignKey: 'RolID' })
+  Role.hasMany(Usuario, { as: 'usuarios', foreignKey: 'RolID' })
   Carrito.belongsTo(Usuario, { as: 'usuario', foreignKey: 'usuarioID' })
   Usuario.hasMany(Carrito, { as: 'carritos', foreignKey: 'usuarioID' })
   DireccionEntrega.belongsTo(Usuario, { as: 'usuario', foreignKey: 'usuarioId' })
@@ -132,6 +134,7 @@ export function initModels (sequelize: Sequelize) {
     Proveedore,
     Role,
     Status,
+    UserSession,
     Usuario
   }
 }

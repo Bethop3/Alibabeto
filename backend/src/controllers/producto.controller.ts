@@ -112,13 +112,13 @@ export const CrearProductoC: Controller<ProductoAttributes, CrearProducto> = asy
   }
 }
 
-export const agregarComentarioProducto: Controller<any> = async (req, res) => {
-  try {
+// export const agregarComentarioProducto: Controller<any> = async (req, res) => {
+//   try {
 
-  } catch (error) {
+//   } catch (error) {
 
-  }
-}
+//   }
+// }
 
 // Controlador para editar un producto existente
 export const EditarProductoCtrl: Controller<ProductoAttributes | null, EditarProducto> = async (

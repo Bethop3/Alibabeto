@@ -14,7 +14,7 @@ export interface UsuarioAttributes {
   correo: string
   nombreUsuario: string
   Imagen: string
-  RolFK: number
+  RolID: number
   is_deleted: number
 }
 
@@ -31,14 +31,14 @@ export class Usuario extends Model<UsuarioAttributes, UsuarioCreationAttributes>
   correo!: string
   nombreUsuario!: string
   Imagen!: string
-  RolFK!: number
+  RolID!: number
   is_deleted!: number
 
-  // Usuario belongsTo Role via RolFK
-  RolFK_role!: Role
-  getRolFK_role!: Sequelize.BelongsToGetAssociationMixin<Role>
-  setRolFK_role!: Sequelize.BelongsToSetAssociationMixin<Role, RoleId>
-  createRolFK_role!: Sequelize.BelongsToCreateAssociationMixin<Role>
+  // Usuario belongsTo Role via RolID
+  Rol!: Role
+  getRol!: Sequelize.BelongsToGetAssociationMixin<Role>
+  setRol!: Sequelize.BelongsToSetAssociationMixin<Role, RoleId>
+  createRol!: Sequelize.BelongsToCreateAssociationMixin<Role>
   // Usuario hasMany Carrito via usuarioID
   carritos!: Carrito[]
   getCarritos!: Sequelize.HasManyGetAssociationsMixin<Carrito>
@@ -120,7 +120,7 @@ export class Usuario extends Model<UsuarioAttributes, UsuarioCreationAttributes>
         type: DataTypes.TEXT,
         allowNull: false
       },
-      RolFK: {
+      RolID: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
@@ -130,7 +130,8 @@ export class Usuario extends Model<UsuarioAttributes, UsuarioCreationAttributes>
       },
       is_deleted: {
         type: DataTypes.BOOLEAN,
-        allowNull: false
+        allowNull: false,
+        defaultValue: 0
       }
     }, {
       sequelize,
@@ -149,7 +150,7 @@ export class Usuario extends Model<UsuarioAttributes, UsuarioCreationAttributes>
           name: 'RolFK',
           using: 'BTREE',
           fields: [
-            { name: 'RolFK' }
+            { name: 'RolID' }
           ]
         }
       ]

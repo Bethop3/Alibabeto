@@ -1,9 +1,55 @@
+import { Role } from '../models/role'
+import { UserSession } from '../models/user_session'
 import { Usuario } from '../models/usuario'
 import { type Controller, type UserLogin } from '../types'
 import { type AuthRegistroUsuario } from '../types/Usuario'
 import { encryptPassword } from '../utils/encryptPassword'
 import { generateJWT } from '../utils/generateJWT'
 import { validatePassword } from '../utils/validatePassword'
+
+export const AuthValidateSession: Controller<Usuario | null, { id: string }> = async (req, res) => {
+  try {
+    const { id } = req.body
+
+    const exist = await UserSession.findOne({
+      where: {
+        id
+      }
+    })
+
+    if (!exist) {
+      return res.status(401).json({
+        ok: false,
+        msg: 'Sin autorizacion',
+        data: null
+      })
+    }
+
+    const usuarioPerfil = await Usuario.findOne({
+      where: {
+        id: exist.user_id
+      },
+      attributes: {
+        include: ['nombre', 'apellidos', 'correo', 'Imagen'],
+        exclude: ['is_deleted', 'RolID', 'password', 'nombreUsuario']
+      },
+      include: [
+        {
+          model: Role,
+          as: 'Rol'
+        }
+      ]
+    })
+
+    return res.status(200).json({
+      ok: true,
+      data: usuarioPerfil
+    })
+  } catch (err) {
+    console.error(err)
+    return res.status(500)
+  }
+}
 
 export const AuthRegister: Controller<boolean | null, AuthRegistroUsuario> = async (req, res) => {
   try {
@@ -25,7 +71,7 @@ export const AuthRegister: Controller<boolean | null, AuthRegistroUsuario> = asy
       correo,
       Imagen: req.body.Imagen,
       nombreUsuario: req.body.nombreUsuario,
-      RolFK: 1,
+      RolID: 1,
       apellidos: req.body.apellidos,
       nombre: req.body.nombre,
       password: passwordEncrypted,

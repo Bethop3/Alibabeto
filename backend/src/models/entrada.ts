@@ -1,6 +1,5 @@
 import type * as Sequelize from 'sequelize'
 import { DataTypes, Model, type Optional } from 'sequelize'
-import type { EntradaHasProducto, EntradaHasProductoId } from './entrada_has_producto'
 import type { Producto, ProductoId } from './producto'
 import type { Proveedore, ProveedoreId } from './proveedore'
 import type { Usuario, UsuarioId } from './usuario'
@@ -33,18 +32,6 @@ export class Entrada extends Model<EntradaAttributes, EntradaCreationAttributes>
   ProductoFK?: number
   CreatedDate!: Date
 
-  // Entrada hasMany EntradaHasProducto via entradaID
-  entrada_has_productos!: EntradaHasProducto[]
-  getEntrada_has_productos!: Sequelize.HasManyGetAssociationsMixin<EntradaHasProducto>
-  setEntrada_has_productos!: Sequelize.HasManySetAssociationsMixin<EntradaHasProducto, EntradaHasProductoId>
-  addEntrada_has_producto!: Sequelize.HasManyAddAssociationMixin<EntradaHasProducto, EntradaHasProductoId>
-  addEntrada_has_productos!: Sequelize.HasManyAddAssociationsMixin<EntradaHasProducto, EntradaHasProductoId>
-  createEntrada_has_producto!: Sequelize.HasManyCreateAssociationMixin<EntradaHasProducto>
-  removeEntrada_has_producto!: Sequelize.HasManyRemoveAssociationMixin<EntradaHasProducto, EntradaHasProductoId>
-  removeEntrada_has_productos!: Sequelize.HasManyRemoveAssociationsMixin<EntradaHasProducto, EntradaHasProductoId>
-  hasEntrada_has_producto!: Sequelize.HasManyHasAssociationMixin<EntradaHasProducto, EntradaHasProductoId>
-  hasEntrada_has_productos!: Sequelize.HasManyHasAssociationsMixin<EntradaHasProducto, EntradaHasProductoId>
-  countEntrada_has_productos!: Sequelize.HasManyCountAssociationsMixin
   // Entrada belongsTo Producto via ProductoFK
   ProductoFK_producto!: Producto
   getProductoFK_producto!: Sequelize.BelongsToGetAssociationMixin<Producto>

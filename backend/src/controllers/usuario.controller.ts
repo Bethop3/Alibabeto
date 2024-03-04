@@ -49,7 +49,7 @@ export const CreateUsuarioCtrl: Controller<UsuarioAttributes | null, CrearUsuari
       password: req.body.password,
       Imagen: req.body.Imagen,
       nombreUsuario: '',
-      RolFK: 1,
+      RolID: 1,
       is_deleted: 0
     })
 
@@ -161,7 +161,7 @@ export const GetDireccioneEntrega: Controller<DireccionEntrega[]> = async (req, 
 
     const direccionEntrega = await DireccionEntrega.findAll({
       where: {
-        is_deleted: 0,
+        // is_deleted: 0,
         usuarioId: idUsuario// pasas el id del usuario
       }
     })
