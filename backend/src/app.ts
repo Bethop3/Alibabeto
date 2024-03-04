@@ -27,7 +27,7 @@ import { sequelize } from './database'
 
 // Middlewares
 
-import { MiddlewareTokenValidator } from './middlewares/middlewareTokenValidator'
+// import { MiddlewareTokenValidator } from './middlewares/middlewareTokenValidator'
 // Inicialización de la aplicación Express
 const app: Application = express()
 
