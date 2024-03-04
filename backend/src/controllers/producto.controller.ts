@@ -3,7 +3,6 @@ import { Producto, type ProductoAttributes } from '../models/producto'
 import { type Controller } from '../types'
 import { Op } from 'sequelize'
 import { Categoria } from '../models/categoria'
-import { param } from 'express-validator'
 
 // Controlador para obtener todos los productos
 export const GetProductosByQuery: Controller<Producto[], any, null, null, ProductosQuery> = async (req, res) => {
