@@ -1,5 +1,9 @@
 # Proyecto "Alibabeto" - Tienda en Línea
 
+## Link del sitio
+
+[https://alibabeto.netlify.app](https://alibabeto.netlify.app)
+
 ## Descripción del Proyecto
 
 Este repositorio contiene el código fuente del proyecto "Alibabeto", una tienda mayorista ubicada en Cancún que busca expandir su alcance mediante la transición al comercio electrónico. El proyecto se desarrollará utilizando las siguientes tecnologías:
@@ -9,10 +13,6 @@ Este repositorio contiene el código fuente del proyecto "Alibabeto", una tienda
 - **Express.js:** Framework web para construir aplicaciones Node.js robustas.
 - **TypeScript:** Superset de JavaScript que agrega tipado estático opcional.
 - **MySQL:** Sistema de gestión de bases de datos relacional.
-
-## Link del sitio
-
-[https://alibabeto.netlify.app](https://alibabeto.netlify.app)
 
 ## Estructura del Proyecto
 
