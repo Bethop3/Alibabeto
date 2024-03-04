@@ -4,12 +4,7 @@ import { type Controller } from '../types'
 
 export const GetIndexPage: Controller = async (req, res) => {
   try {
-    const celulares = await Producto.findAll({
-      where: {
-        is_deleted: 0,
-        categoriaID: 4
-      },
-      limit: 8,
+    const defaultConfig = {
       attributes: { exclude: ['CreatedDate', 'categoriaID', 'is_deleted'] },
       include: [
         {
@@ -18,6 +13,14 @@ export const GetIndexPage: Controller = async (req, res) => {
           // attributes: ['nombre', 'descripcion'] // Atributos específicos de la tabla relacionada que deseas incluir
         }
       ]
+    }
+    const celulares = await Producto.findAll({
+      where: {
+        is_deleted: 0,
+        categoriaID: 4
+      },
+      limit: 8,
+      ...defaultConfig
     })
 
     const laptops = await Producto.findAll({
@@ -26,23 +29,24 @@ export const GetIndexPage: Controller = async (req, res) => {
         categoriaID: 5
       },
       limit: 8,
-      attributes: {
-        exclude: ['CreatedDate', 'categoriaID', 'is_deleted']
+      ...defaultConfig
+    })
+
+    const audifonos = await Producto.findAll({
+      where: {
+        is_deleted: 0,
+        categoriaID: 7
       },
-      include: [
-        {
-          model: Categoria, // El modelo de la tabla relacionada
-          as: 'categorium' // Renombrar la asociación
-          // attributes: ['nombre', 'descripcion'] // Atributos específicos de la tabla relacionada que deseas incluir
-        }
-      ]
+      limit: 8,
+      ...defaultConfig
     })
 
     return res.status(200).json({
       ok: true,
       data: {
         celulares,
-        laptops
+        laptops,
+        audifonos
       }
     })
   } catch (err) {
