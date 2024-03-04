@@ -20,7 +20,7 @@ export interface UsuarioAttributes {
 
 export type UsuarioPk = 'id'
 export type UsuarioId = Usuario[UsuarioPk]
-export type UsuarioOptionalAttributes = 'id' | 'nombre' | 'apellidos' | 'password'
+export type UsuarioOptionalAttributes = 'id' | 'nombre' | 'apellidos' | 'password' | 'is_deleted'
 export type UsuarioCreationAttributes = Optional<UsuarioAttributes, UsuarioOptionalAttributes>
 
 export class Usuario extends Model<UsuarioAttributes, UsuarioCreationAttributes> implements UsuarioAttributes {
