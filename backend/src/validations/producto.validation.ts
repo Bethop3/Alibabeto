@@ -9,6 +9,6 @@ export const validations = {
     body('descripcion').isString().not().isEmpty().withMessage('El campo descripcion debe ser una cadena de texto y no puede estar vacío.'),
     body('precio').isFloat().not().isEmpty().withMessage('El campo precio debe ser un número de punto flotante y no puede estar vacío.'),
     body('existencias').isInt().not().isEmpty().withMessage('El campo existencias debe ser un número entero y no puede estar vacío.'),
-    body('CategoriaFK').isInt().not().isEmpty().withMessage('El campo CategoriaFK debe ser un número entero y no puede estar vacío.')
+    body('categoriaID').isInt().not().isEmpty().withMessage('El campo CategoriaFK debe ser un número entero y no puede estar vacío.')
   ]
 }
