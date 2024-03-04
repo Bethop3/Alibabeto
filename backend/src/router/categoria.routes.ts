@@ -4,6 +4,6 @@ import Router from 'express'
 
 const router = Router()
 
-router.get('/', GetCategoria)
+router.get('/all', GetCategoria)
 
 export default router
