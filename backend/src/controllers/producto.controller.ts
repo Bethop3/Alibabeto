@@ -42,6 +42,9 @@ export const GetProductosByQuery: Controller<Producto[], any, null, null, Produc
 
     const productos = await Producto.findAll({
       where: whereClause,
+      order: [
+        ['id', 'DESC']
+      ],
       attributes: { exclude: ['CreatedDate', 'categoriaID', 'is_deleted'] },
       include: [
         {
