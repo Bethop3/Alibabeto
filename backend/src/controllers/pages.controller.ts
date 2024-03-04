@@ -7,7 +7,7 @@ export const GetIndexPage: Controller = async (req, res) => {
     const celulares = await Producto.findAll({
       where: {
         is_deleted: 0,
-        categoriaID: 1
+        categoriaID: 4
       },
       limit: 8,
       attributes: { exclude: ['CreatedDate', 'categoriaID', 'is_deleted'] },
