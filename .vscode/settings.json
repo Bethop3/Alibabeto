@@ -10,7 +10,7 @@
     },
     "notebook.lineNumbers": "on",
     "window.commandCenter": false,
-    "window.zoomLevel": 1,
+    "window.zoomLevel": 0,
     "svelte.ask-to-enable-ts-plugin": false,
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": "always"
