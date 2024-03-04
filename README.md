@@ -10,6 +10,10 @@ Este repositorio contiene el código fuente del proyecto "Alibabeto", una tienda
 - **TypeScript:** Superset de JavaScript que agrega tipado estático opcional.
 - **MySQL:** Sistema de gestión de bases de datos relacional.
 
+## Link del sitio
+
+[https://alibabeto.netlify.app](https://alibabeto.netlify.app)
+
 ## Estructura del Proyecto
 
 El proyecto se organizará en varias carpetas y seguirá una estructura modular para facilitar el desarrollo y el mantenimiento:
