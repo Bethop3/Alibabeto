@@ -24,6 +24,7 @@
     "@types/node": "^20.11.7",
     "@types/swagger-ui-express": "^4.1.6",
     "@types/uuid": "^9.0.8",
+    "@types/ws": "^8.5.10",
     "@typescript-eslint/eslint-plugin": "^7.0.2",
     "@typescript-eslint/parser": "^7.0.2",
     "eslint": "^8.56.0",
@@ -38,17 +39,24 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
+    "@apollo/datasource-rest": "^6.2.2",
+    "@apollo/server": "^4.10.1",
+    "@graphql-tools/schema": "^10.0.3",
+    "apollo-server-express": "^3.13.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.1",
     "express": "^4.18.2",
     "express-fileupload": "^1.4.3",
     "express-validator": "^7.0.1",
+    "graphql": "^16.8.1",
+    "graphql-ws": "^5.15.0",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.9.0",
     "sequelize": "^6.35.2",
     "sqlite3": "^5.1.7",
     "swagger-ui-express": "^5.0.0",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "ws": "^8.16.0"
   }
 }

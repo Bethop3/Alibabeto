@@ -3,6 +3,10 @@ import { type IncomingHttpHeaders } from 'http'
 import { type JwtPayload } from 'jsonwebtoken'
 import { type UsuarioAttributes } from '../models/usuario'
 
+export interface ContextApp {
+  authScope: string | null
+}
+
 // Tipo para el payload de JWT que incluye la propiedad 'id'
 export type JWTAuthPayload = JwtPayload & {
   id_usuario: number
