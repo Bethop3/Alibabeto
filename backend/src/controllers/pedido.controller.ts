@@ -5,6 +5,19 @@ import { type Controller } from '../types'
 import { Pedido } from '../models/pedido'
 import { getIo } from '../socket/io'
 
+export const getAllPedidosCtrl: Controller<any, Pedido[]> = async (req, res) => {
+  try {
+    const pedidos = await Pedido.findAll()
+
+    return res.status(200).json(({
+      ok: true,
+      data: pedidos
+    }))
+  } catch (error) {
+
+  }
+}
+
 export const CreatePedidoCtrl: Controller<any, CreatePedido> = async (req, res) => {
   try {
     const { productos, ...rest } = req.body
