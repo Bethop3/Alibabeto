@@ -3,8 +3,20 @@ import { type CreatePedidoHasProducto, type CreatePedido } from '../types/Pedido
 import { Producto } from '../models/producto'
 import { type Controller } from '../types'
 import { Pedido } from '../models/pedido'
+<<<<<<< HEAD
 import { getIo } from '../socket/io'
+=======
+import pubsub from '../graphql/pubsub'
+import { SUBSCRIPTIONS_EVENT } from '../graphql/event'
+>>>>>>> 7406fbd5191b4a6628bfbf2c17a86327f90fe9ee
 
+export const getPedidosCtrl: Controller<any, CreatePedido> = async (req, res) => {
+  const pedidos = Pedido.findAll()
+
+  return res.status(200).json({
+    data: pedidos
+  })
+}
 export const CreatePedidoCtrl: Controller<any, CreatePedido> = async (req, res) => {
   try {
     const { productos, ...rest } = req.body

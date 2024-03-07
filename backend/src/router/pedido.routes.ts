@@ -1,5 +1,5 @@
+import { CreatePedidoCtrl, getPedidosCtrl } from '../controllers/pedido.controller'
 import { handleValidationErrors } from '../utils/handleValidationErrors'
-import { CreatePedidoCtrl } from '../controllers/pedido.controller'
 import { validations } from '../validations/pedidos.validation'
 import { Router } from 'express'
 
@@ -10,6 +10,11 @@ router.post(
   validations.create,
   handleValidationErrors,
   CreatePedidoCtrl
+)
+
+router.get(
+  '/all',
+  getPedidosCtrl
 )
 
 export default router
