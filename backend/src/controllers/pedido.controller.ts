@@ -3,6 +3,7 @@ import { type CreatePedidoHasProducto, type CreatePedido } from '../types/Pedido
 import { Producto } from '../models/producto'
 import { type Controller } from '../types'
 import { Pedido } from '../models/pedido'
+import { getIo } from '../socket/io'
 
 export const CreatePedidoCtrl: Controller<any, CreatePedido> = async (req, res) => {
   try {
@@ -47,6 +48,12 @@ export const CreatePedidoCtrl: Controller<any, CreatePedido> = async (req, res) 
         msg: 'Algun producto no se desconto correctamente ' + existenciasDescontadas?.id_producto
       })
     }
+
+    const io = getIo()
+
+    io.emit('PEDIDO_CREADO', {
+      pedido
+    })
 
     return res.status(200).json({
       ok: true,

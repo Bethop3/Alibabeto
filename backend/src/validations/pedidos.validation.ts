@@ -19,7 +19,7 @@ export const validations = {
     body('fechaPedido').isISO8601().toDate().withMessage('El campo fechaPedido debe ser una fecha en formato ISO 8601.'),
     body('importe').isFloat().withMessage('El campo importe debe ser un número de punto flotante.'),
     body('iva').isFloat().withMessage('El campo iva debe ser un número de punto flotante.'),
-    body('total').isFloat().withMessage('El campo total debe ser un número de punto flotante.'),
-    body('productos').isArray({ min: 1 }).withMessage('El campo productos no puede estar vacío y debe ser un array.')
+    body('total').isFloat().withMessage('El campo total debe ser un número de punto flotante.')
+    // body('productos').isArray({ min: 1 }).withMessage('El campo productos no puede estar vacío y debe ser un array.')
   ]
 }
