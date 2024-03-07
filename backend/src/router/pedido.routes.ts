@@ -1,9 +1,14 @@
-import { CreatePedidoCtrl, getPedidosCtrl } from '../controllers/pedido.controller'
 import { handleValidationErrors } from '../utils/handleValidationErrors'
+import { CreatePedidoCtrl, getAllPedidosCtrl } from '../controllers/pedido.controller'
 import { validations } from '../validations/pedidos.validation'
 import { Router } from 'express'
 
 const router = Router()
+
+router.get(
+  '/all',
+  getAllPedidosCtrl
+)
 
 router.post(
   '/create',
@@ -11,10 +16,4 @@ router.post(
   handleValidationErrors,
   CreatePedidoCtrl
 )
-
-router.get(
-  '/all',
-  getPedidosCtrl
-)
-
 export default router
