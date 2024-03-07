@@ -3,7 +3,16 @@ import { type CreatePedidoHasProducto, type CreatePedido } from '../types/Pedido
 import { Producto } from '../models/producto'
 import { type Controller } from '../types'
 import { Pedido } from '../models/pedido'
+import pubsub from '../graphql/pubsub'
+import { SUBSCRIPTIONS_EVENT } from '../graphql/event'
 
+export const getPedidosCtrl: Controller<any, CreatePedido> = async (req, res) => {
+  const pedidos = Pedido.findAll()
+
+  return res.status(200).json({
+    data: pedidos
+  })
+}
 export const CreatePedidoCtrl: Controller<any, CreatePedido> = async (req, res) => {
   try {
     const { productos, ...rest } = req.body
@@ -47,6 +56,10 @@ export const CreatePedidoCtrl: Controller<any, CreatePedido> = async (req, res) 
         msg: 'Algun producto no se desconto correctamente ' + existenciasDescontadas?.id_producto
       })
     }
+
+    pubsub.publish(SUBSCRIPTIONS_EVENT.PEDIDO_CREADO, {
+      pedidoCreado: pedido
+    })
 
     return res.status(200).json({
       ok: true,

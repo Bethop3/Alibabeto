@@ -1,13 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 // Librerías
 import { ApolloServerPluginLandingPageLocalDefault, ApolloServerPluginLandingPageProductionDefault } from '@apollo/server/plugin/landingPage/default'
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer'
-import { makeExecutableSchema } from '@graphql-tools/schema';
+import { makeExecutableSchema } from '@graphql-tools/schema'
 import { expressMiddleware } from '@apollo/server/express4'
 import express, { type Application } from 'express'
-import { useServer } from 'graphql-ws/lib/use/ws';
+import { useServer } from 'graphql-ws/lib/use/ws'
 import swaggerUI from 'swagger-ui-express'
 import fileUpload from 'express-fileupload'
-import { WebSocketServer } from 'ws';
+import { WebSocketServer } from 'ws'
 import { json } from 'body-parser'
 import { ESLint } from 'eslint'
 import dotenv from 'dotenv'
@@ -40,6 +41,7 @@ import { sequelize } from './database'
 import http from 'http'
 import { type ContextApp } from './types'
 import ContextFn from './context'
+import { MiddlewareTokenValidator } from './middlewares/middlewareTokenValidator'
 
 export async function runESLint (): Promise<void> {
   const eslint = new ESLint()
@@ -61,7 +63,6 @@ export async function runESLint (): Promise<void> {
 // })
 
 const main = async () => {
-  
   // Inicialización de la aplicación Express
   const app: Application = express()
 
@@ -79,22 +80,6 @@ const main = async () => {
   app.use(express.static('public'))
   app.use(express.static('./src/public'))
 
-  // Rutas
-  app.use('/auth', authRouter)
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-  app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
-  app.use('/pages', pagesRouter)
-  app.use('/producto', productosRouter)
-  // app.use(MiddlewareTokenValidator)
-  app.use('/usuario', usuariosRouter)
-  app.use('/proveedores', provedoreesRouter)
-  app.use('/categoria', categoriaRouter)
-  app.use('/roles', rolesrouter)
-  app.use('/entradas', entradaRouter)
-  app.use('/pedido', pedidosRouter)
-  app.use('/upload', uploadsRouter)
-  app.use('/carrito', carritoRouter)
-
   initModels(sequelize)
 
   // Conexión a la base de datos
@@ -107,12 +92,12 @@ const main = async () => {
     server: httpServer,
     // Pass a different path here if app.use
     // serves expressMiddleware at a different path
-    path: '/subscriptions',
-  });
+    path: '/graphql/subscriptions'
+  })
 
-  const schema = makeExecutableSchema({ typeDefs, resolvers });
+  const schema = makeExecutableSchema({ typeDefs, resolvers })
 
-  const serverCleanup = useServer({ schema }, wsServer);
+  const serverCleanup = useServer({ schema }, wsServer)
 
   const server = new ApolloServer<ContextApp>({
     // schema
@@ -121,14 +106,14 @@ const main = async () => {
     plugins: [
       ApolloServerPluginDrainHttpServer({ httpServer }),
       {
-        async serverWillStart() {
+        async serverWillStart () {
           return {
-            async drainServer() {
-              await serverCleanup.dispose();
-            },
-          };
-        },
-      },
+            async drainServer () {
+              await serverCleanup.dispose()
+            }
+          }
+        }
+      }
       // process.env.NODE_ENV === 'production'
       //   ? ApolloServerPluginLandingPageProductionDefault({
       //     graphRef: 'my-graph-id@my-graph-variant',
@@ -148,13 +133,27 @@ const main = async () => {
     })
   )
 
+  // Rutas
+  app.use('/auth', authRouter)
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+  app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
+  app.use('/pages', pagesRouter)
+  app.use('/producto', productosRouter)
+  app.use(MiddlewareTokenValidator)
+  app.use('/usuario', usuariosRouter)
+  app.use('/proveedores', provedoreesRouter)
+  app.use('/categoria', categoriaRouter)
+  app.use('/roles', rolesrouter)
+  app.use('/entradas', entradaRouter)
+  app.use('/pedido', pedidosRouter)
+  app.use('/upload', uploadsRouter)
+  app.use('/carrito', carritoRouter)
 
   await new Promise<void>((resolve) => httpServer.listen({ port }, resolve))
 
   console.log()
   console.log(`Servidor corriendo en http://localhost:${port}`)
   console.log('🚀 Servidor corriendo en http://localhost:3000/graphql')
-
 }
 
 main()
