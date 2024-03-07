@@ -1,5 +1,3 @@
-import { SUBSCRIPTIONS_EVENT } from '../graphql/event'
-import pubsub from '../graphql/pubsub'
 import { Role } from '../models/role'
 import { UserSession } from '../models/user_session'
 import { Usuario } from '../models/usuario'
@@ -80,10 +78,10 @@ export const AuthRegister: Controller<boolean | null, AuthRegistroUsuario> = asy
       is_deleted: 0
     })
 
-    pubsub.publish(SUBSCRIPTIONS_EVENT.USUARIO_CREADO, {
-      ...NewUser,
-      usuarioCreado: [NewUser]
-    })
+    // pubsub.publish(SUBSCRIPTIONS_EVENT.USUARIO_CREADO, {
+    //   ...NewUser,
+    //   usuarioCreado: [NewUser]
+    // })
 
     delete NewUser.password
 

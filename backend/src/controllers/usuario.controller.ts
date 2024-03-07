@@ -3,8 +3,7 @@ import { Usuario, type UsuarioAttributes } from '../models/usuario'
 import { type Controller } from '../types'
 import { type CreateDireccionEntrega } from '../types/DireccionEntrega'
 import { DireccionEntrega } from '../models/direccion_entrega'
-import pubsub from '../graphql/pubsub'
-import { SUBSCRIPTIONS_EVENT } from '../graphql/event'
+
 /**
  * @controller GetUsuarios
  * @description Controlador para obtener la lista de usuarios.
@@ -55,9 +54,9 @@ export const CreateUsuarioCtrl: Controller<UsuarioAttributes | null, CrearUsuari
       is_deleted: 0
     })
 
-    pubsub.publish(SUBSCRIPTIONS_EVENT.USUARIO_CREADO, {
-      USUARIO_CREADO: []
-    })
+    // pubsub.publish(SUBSCRIPTIONS_EVENT.USUARIO_CREADO, {
+    //   USUARIO_CREADO: []
+    // })
 
     return res.status(200).json({
       ok: true,

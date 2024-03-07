@@ -14,7 +14,9 @@ export const getPedidosCtrl: Controller<any, CreatePedido> = async (req, res) =>
 }
 export const getAllPedidosCtrl: Controller<any, Pedido[]> = async (req, res) => {
   try {
-    const pedidos = await Pedido.findAll()
+    const pedidos = await Pedido.findAll({
+      order: [['id', 'DESC']] // Ordenar por la propiedad 'id' de forma descendente
+    })
 
     return res.status(200).json(({
       ok: true,
