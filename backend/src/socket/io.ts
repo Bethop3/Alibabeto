@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 // socket.js
 // import socketIO from 'socket.io'
-const socketIO = require('socket.io')
+import socketIO from 'socket.io'
 
 let io: any
 

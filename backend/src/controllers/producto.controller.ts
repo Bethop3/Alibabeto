@@ -9,6 +9,7 @@ export const GetProductosByQuery: Controller<Producto[], any, null, null, Produc
   try {
     let {
       nombre,
+      categoria,
       precioMaximo,
       categoriaID
     } = req.query
@@ -24,6 +25,12 @@ export const GetProductosByQuery: Controller<Producto[], any, null, null, Produc
         [Op.like]: `%${nombre}%`
       },
       is_deleted: 0
+    }
+
+    if (categoria !== undefined) {
+      whereClause.categoriaID = {
+        [Op.eq]: Number(categoria)
+      }
     }
 
     if (precioMaximo !== undefined) {

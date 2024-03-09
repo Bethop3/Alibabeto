@@ -8,17 +8,5 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@apollo/datasource-rest": "^6.2.2",
-    "@apollo/server": "^4.10.1",
-    "apollo-server-express": "^3.13.0",
-    "express-fileupload": "^1.4.3",
-    "graphql-ws": "^5.15.0",
-    "graphql": "^16.8.1",
-    "swagger-ui-express": "^5.0.0"
-  },
-  "devDependencies": {
-    "@types/express-fileupload": "^1.4.4"
-  }
+  "license": "ISC"
 }
