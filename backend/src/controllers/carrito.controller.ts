@@ -9,6 +9,7 @@ export const ObtenerCarritoUsuarioCtrl: Controller<Carrito[]> = async (req, res)
     const carritoUsuario = await Carrito.findAll({
       where: {
         // usuarioID: req.payload?.id_usuario
+        is_deleted: 0
       },
       attributes: { exclude: ['is_creado', 'is_deleted', 'status', 'usuarioID', 'usuarioID', 'productoID'] },
       include: [
@@ -70,6 +71,43 @@ export const AgregarProductoCarritoCtrl: Controller<ProductoCarrito, AgregarProd
       ok: true,
       data: productoCarrito,
       msg: 'Producto agregado al carrito'
+    })
+  } catch (err) {
+    console.log(err)
+    return res.status(400).json({
+      ok: true,
+      msg: 'Error al agregar al carrito'
+    })
+  }
+}
+
+export const EliminarProductoCarrito: Controller<boolean, null, any, { id: string }> = async (req, res) => {
+  try {
+    const id = req.params.id
+
+    const productoEliminar = await Carrito.findOne({
+      where: {
+        id
+      }
+    })
+
+    if (!productoEliminar) {
+      return res.status(400).json({
+        ok: false,
+        msg: 'Producto invalido al carrito'
+      })
+    }
+
+    productoEliminar.set({
+      is_deleted: 1
+    })
+
+    await productoEliminar.save()
+
+    return res.status(200).json({
+      ok: true,
+      data: true,
+      msg: 'Articulo eliminado del carrito'
     })
   } catch (err) {
     console.log(err)
