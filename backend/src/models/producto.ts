@@ -10,6 +10,7 @@ export interface ProductoAttributes {
   status: number
   imagen: string
   codigo: string
+  titulo?: string
   descripcion: string
   precio: number
   existencias: number
@@ -20,7 +21,7 @@ export interface ProductoAttributes {
 
 export type ProductoPk = 'id'
 export type ProductoId = Producto[ProductoPk]
-export type ProductoOptionalAttributes = 'id' | 'is_deleted'
+export type ProductoOptionalAttributes = 'id' | 'titulo' | 'is_deleted'
 export type ProductoCreationAttributes = Optional<ProductoAttributes, ProductoOptionalAttributes>
 
 export class Producto extends Model<ProductoAttributes, ProductoCreationAttributes> implements ProductoAttributes {
@@ -28,6 +29,7 @@ export class Producto extends Model<ProductoAttributes, ProductoCreationAttribut
   status!: number
   imagen!: string
   codigo!: string
+  titulo?: string
   descripcion!: string
   precio!: number
   existencias!: number
@@ -96,6 +98,10 @@ export class Producto extends Model<ProductoAttributes, ProductoCreationAttribut
       codigo: {
         type: DataTypes.TEXT,
         allowNull: false
+      },
+      titulo: {
+        type: DataTypes.STRING(500),
+        allowNull: true
       },
       descripcion: {
         type: DataTypes.TEXT,

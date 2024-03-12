@@ -29,7 +29,7 @@ import swaggerDocument from './swagger/conf-3.json'
 import { sequelize } from './database'
 import http from 'http'
 import { initSocket } from './socket/io'
-import { MiddlewareTokenValidator } from './middlewares/middlewareTokenValidator'
+// import { MiddlewareTokenValidator } from './middlewares/middlewareTokenValidator'
 
 export async function runESLint (): Promise<void> {
   const eslint = new ESLint()
