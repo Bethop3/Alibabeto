@@ -104,7 +104,9 @@ export const CrearProductoC: Controller<ProductoAttributes, CrearProducto> = asy
     // Crea un nuevo producto utilizando los datos del cuerpo de la solicitud
     const productoNuevo = await Producto.create({
       ...producto,
-      CreatedDate: new Date()
+      status: 0,
+      CreatedDate: new Date(),
+      is_deleted: false
     })
 
     // Retorna la respuesta con el producto recién creado en formato JSON
