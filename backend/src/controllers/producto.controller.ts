@@ -11,16 +11,19 @@ export const GetProductosByQuery: Controller<Producto[], any, null, null, Produc
       nombre,
       categoria,
       precioMaximo,
-      categoriaID
+      categoriaID,
+      landing
     } = req.query
 
+    let limit
+    let offset
     // Consulta todos los productos en la base de datos
     console.log('req.query')
     console.log(req.query)
 
     nombre = nombre ?? ''
 
-    const whereClause: any = {
+    let whereClause: any = {
       descripcion: {
         [Op.like]: `%${nombre}%`
       },
@@ -47,7 +50,21 @@ export const GetProductosByQuery: Controller<Producto[], any, null, null, Produc
       }
     }
 
+    if (landing !== undefined) {
+      limit = 8
+      whereClause = {
+        categoriaID: {
+          [Op.eq]: Number(categoria)
+        },
+        is_deleted: 0
+      }
+      console.log('whereClause')
+      console.log(whereClause)
+    }
+
     const productos = await Producto.findAll({
+      limit,
+      offset,
       where: whereClause,
       order: [
         ['id', 'DESC']

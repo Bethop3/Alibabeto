@@ -9,4 +9,5 @@ export interface ProductosQuery {
   categoriaID: number
   categoria: number
   nombre: string
+  landing: string
 }
