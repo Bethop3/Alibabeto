@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource-variable/onest": "^5.0.3",
     "axios": "^1.6.8",
     "decimal.js": "^10.4.3",
     "flowbite": "^2.3.0",
