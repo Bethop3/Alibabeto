@@ -11,6 +11,7 @@ import { formatter } from "../utils/formatter"
 const useProductoPorId = () => {
 
     const [ producto , setProducto ] = useState<Producto | null>( null )
+    const [ isLoadingCarrito , setLoadingCarrito ] = useState(false)
     const [ maxCantidad , setMaxCantidad ] = useState(0)
     const [ isLoading , setLoading ] = useState(false)
 
@@ -86,7 +87,7 @@ const useProductoPorId = () => {
       try 
       {
 
-        if( isLoading ) return
+        if( isLoading || isLoadingCarrito ) return
         
         // cantidad: number;
         // importe: number;
@@ -94,7 +95,7 @@ const useProductoPorId = () => {
         // total: number;
         // productoID: number;
 
-        setLoading(true)
+        setLoadingCarrito(true)
         
         await AuthAxios.post("/carrito/add/producto", {
           cantidad: cantidadProducto,
@@ -108,7 +109,7 @@ const useProductoPorId = () => {
         
         await new Promise(resolve => setTimeout(resolve, 2000));
         
-        setLoading(false)
+        setLoadingCarrito(false)
 
         // toast.success('¡Articulo agregado al carrito!', {
         //   position: "bottom-center",
@@ -122,6 +123,7 @@ const useProductoPorId = () => {
         // });
 
       } catch (error) {
+        setLoadingCarrito(false)
         console.log();
       }
 
@@ -129,6 +131,7 @@ const useProductoPorId = () => {
 
   return {
     isLoading,
+    isLoadingCarrito,
     producto,
     importe: formatter.format(importe.toNumber()),
     iva: formatter.format(iva.toNumber()),
