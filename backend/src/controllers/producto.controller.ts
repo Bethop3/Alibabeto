@@ -1,4 +1,4 @@
-import { type ProductosQuery, type CrearProducto, type EditarProducto, type ProductoPorIdResponse } from '../types/producto'
+import { type ProductosQuery, type CrearProducto, type EditarProducto, type ProductoPorIdResponse, type ProductoQueryResponse } from '../types/producto'
 import { Producto, type ProductoAttributes } from '../models/producto'
 import { type Controller } from '../types'
 import { Op, QueryTypes } from 'sequelize'
@@ -8,7 +8,7 @@ import { sequelize } from '../database'
 const MAX_ELEMENTS = 16
 
 // Controlador para obtener todos los productos
-export const GetProductosByQuery: Controller<Producto[], any, null, null, ProductosQuery> = async (req, res) => {
+export const GetProductosByQuery: Controller<ProductoQueryResponse, any, null, null, ProductosQuery> = async (req, res) => {
   try {
     let {
       nombre,
@@ -71,6 +71,10 @@ export const GetProductosByQuery: Controller<Producto[], any, null, null, Produc
       console.log(whereClause)
     }
 
+    const totalProductos = await Producto.count({
+      where: whereClause
+    })
+
     const productos = await Producto.findAll({
       limit,
       offset,
@@ -96,10 +100,15 @@ export const GetProductosByQuery: Controller<Producto[], any, null, null, Produc
       // }
     })
 
+    const totalPaginas = Math.ceil(totalProductos / MAX_ELEMENTS)
+
     // Retorna la respuesta con los productos en formato JSON
     return res.status(200).json({
       ok: true,
-      data: productos
+      data: {
+        productos,
+        totalPaginas
+      }
     })
   } catch (err) {
     // En caso de error, imprime el error en la consola y retorna un código de estado 400

@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react'
-import { Producto } from '../types/productos.types';
+import { Producto, ProductoQueryResponse } from '../types/productos.types';
 import { AuthAxios } from '../../global/api/AuthAxios';
 import { BasicResponse } from '../../types';
 
@@ -12,12 +11,17 @@ type QueryState = {
     pagina: number
 }
 
+export type ContextUseBuscadorProductos = ReturnType<typeof useBuscadorProductos>;
+
 const useBuscadorProductos = () => {
 
     const [ isLoading , setLoading ] = useState<boolean>(false)
     const [ productos , setProductos ] = useState<Producto[]>([])
-
-    const [ queryProductos , setQuery ] = useState<QueryState>({
+    const [ pagination , setPagination ] = useState({
+      pagina: 1,
+      totalPaginas: 0
+    })
+    const [ queryProductos ] = useState<QueryState>({
         nombre: '',
         idCategoria: null,
         pagina: 1
@@ -31,48 +35,33 @@ const useBuscadorProductos = () => {
     
     useEffect( () => {
       
-      
-        handleSearchProductos(  )
+        handleSearchProductos()
 
-    }, [queryProductos.idCategoria])
+    }, [queryProductos.idCategoria, pagination.pagina])
 
-    const handleSetParams = async () => {
-        
-        console.log('location');
-        console.log(location);
+    const handleNextPage = () => {
 
-        const url = new URL(window.location.href)
+      setPagination({
+        ...pagination,
+        pagina: pagination.pagina+1
+      })
 
-        debugger
+    }
+   
+    const handlePrevPage = () => {
 
-        const searchParams = new URLSearchParams(url.search);
-        
-        console.log('searchParams');
-        
-        console.log(searchParams);
-        
-        const producto = searchParams.get('producto');
-        const categoria = searchParams.get('categoria');
-        
-        console.log('categoria');
-        console.log(categoria);
+      setPagination({
+        ...pagination,
+        pagina: pagination.pagina-1
+      })
 
-        if( categoria == '' || categoria == null )
-        {
-          alert('nulla')
-        }
-        // debugger
+    }
 
-        setQuery( (prevState) => ({
-            ...prevState,
-            pagina: queryProductos.pagina,
-            nombre: producto,
-            idCategoria: Number(categoria)
-        }))
-
-        // alert("idCategoria" + categoria)
-
-
+    const changePage = ( pagina: number ) => {
+      setPagination({
+        ...pagination,
+        pagina: pagina
+      })
     }
 
     const handleSearchProductos = async () => {
@@ -85,39 +74,28 @@ const useBuscadorProductos = () => {
 
             const searchParams = new URLSearchParams(_url.search);
             
-            console.log('searchParams');
-            
-            console.log(searchParams);
-            
             const categoria = searchParams.get('categoria');
+            const nombre = searchParams.get('nombre');
             
             console.log('categoria');
             console.log(categoria);
 
-            // if( categoria == '' || categoria == null )
-            // {
-            //   alert('nulla')
-            // }
-
-            // handleSetParams()
-
             const params: any = {
-              pagina: queryProductos.pagina  
+              pagina: pagination.pagina  
             };
               
-            if (queryProductos.nombre !== null) 
+            if (nombre !== null) 
             {
-              params.nombre = queryProductos.nombre;
+              params.nombre = nombre;
             }
 
             if (queryProductos.idCategoria !== null && queryProductos.idCategoria !== 0) {
               params.categoria = queryProductos.idCategoria;
             }
             
-            if (categoria !== '' || categoria !== null ) {
+            if (categoria !== '' && categoria !== null ) {
               params.categoria = categoria
             }
-
               
             const query = Object.keys(params)
                 .map((k) => encodeURIComponent(k) + "=" + encodeURIComponent(params[k]))
@@ -125,12 +103,18 @@ const useBuscadorProductos = () => {
               
             const url = `/producto/query?` + query;
               
-            const { data : { data } } = await AuthAxios.get<BasicResponse<Producto[]>>(url)
+            const { data : { data } } = await AuthAxios.get<BasicResponse<ProductoQueryResponse>>(url)
 
             console.log('data')
+            
             console.log(data)
             
-            setProductos(data)
+            setProductos(data.productos)
+
+            setPagination({
+              ...pagination,
+              totalPaginas: data.totalPaginas ?? 0
+            })
 
             setLoading(false)
 
@@ -144,6 +128,11 @@ const useBuscadorProductos = () => {
   return {
     isLoading,
     productos,
+    changePage,
+    handleNextPage,
+    handlePrevPage,
+    pagina: pagination.pagina,
+    totalPaginas: pagination.totalPaginas,
     queryProductos
   }
 

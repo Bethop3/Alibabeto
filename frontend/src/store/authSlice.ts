@@ -24,6 +24,8 @@ const getAuth = () => {
     const usuario = JSON.parse(localStorage.getItem(constansts.AUTH_SESSION_USER)!) as Usuario
     const token = localStorage.getItem(constansts.AUTH_SESSION_TOKEN)! as string
 
+    if( !token ) return null
+    
     return {
         usuario,
         token

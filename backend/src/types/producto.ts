@@ -17,3 +17,8 @@ export interface ProductoPorIdResponse {
   producto: Producto
   productosRelacionados: Producto[]
 }
+
+export interface ProductoQueryResponse {
+  productos: Producto[]
+  totalPaginas?: number
+}
