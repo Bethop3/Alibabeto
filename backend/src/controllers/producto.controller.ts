@@ -4,6 +4,8 @@ import { type Controller } from '../types'
 import { Op } from 'sequelize'
 import { Categoria } from '../models/categoria'
 
+const MAX_ELEMENTS = 16
+
 // Controlador para obtener todos los productos
 export const GetProductosByQuery: Controller<Producto[], any, null, null, ProductosQuery> = async (req, res) => {
   try {
@@ -52,7 +54,8 @@ export const GetProductosByQuery: Controller<Producto[], any, null, null, Produc
     }
 
     if (pagina !== undefined) {
-      limit = Number(pagina)
+      limit = MAX_ELEMENTS
+      offset = (Number(pagina) - 1) * MAX_ELEMENTS
     }
 
     if (landing !== undefined) {
@@ -72,7 +75,7 @@ export const GetProductosByQuery: Controller<Producto[], any, null, null, Produc
       offset,
       where: whereClause,
       order: [
-        ['id', 'DESC']
+        ['id', 'ASC']
       ],
       attributes: { exclude: ['CreatedDate', 'categoriaID', 'is_deleted'] },
       include: [

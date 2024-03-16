@@ -94,3 +94,14 @@ code {
     background-image: url('/Images/hero/bg-4.webp'); 
 }
 }
+
+.custom-grid {
+    grid-template-columns: 1fr 80%;
+    /* padding: 3rem; */
+    gap: 2rem;
+}
+.grid-ficha-producto
+{
+    grid-template-columns: 50% 1fr;
+    gap: 2rem;
+}

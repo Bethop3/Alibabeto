@@ -3,6 +3,7 @@ import { Private } from "./components/PrivateRoute";
 import { routes } from "./routes";
 import NavBar from "../global/components/NavBar/NavBar";
 import Footer from "../global/components/Footer";
+import { Fragment } from "react/jsx-runtime";
 // import MainLayout from "../layouts/MainLayout";
 // import MainLayout from "../layouts/MainLayout";
 
@@ -16,7 +17,7 @@ const Router = () => {
                     <Routes>
                         {
                             routes.map(({ path, Component, _protected }) => (
-                                <>
+                                <Fragment key={path}>
                                     {
                                         _protected
                                             ?
@@ -30,7 +31,7 @@ const Router = () => {
                                                 element={<Component />}
                                             />
                                     }
-                                </>
+                                </Fragment>
                             ))
                         }
                     </Routes>

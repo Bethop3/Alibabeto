@@ -22,22 +22,30 @@ const useBuscadorProductos = () => {
         idCategoria: null,
         pagina: 1
     })
-    const location = useLocation()
 
     useEffect( () => {
 
-        handleSetParams()
-
-        handleSearchProductos()
-
+      // handleSetParams()
+      
     }, [])
+    
+    useEffect( () => {
+      
+      
+        handleSearchProductos(  )
 
-    const handleSetParams = () => {
+    }, [queryProductos.idCategoria])
+
+    const handleSetParams = async () => {
         
         console.log('location');
         console.log(location);
 
-        const searchParams = new URLSearchParams(location.search);
+        const url = new URL(window.location.href)
+
+        debugger
+
+        const searchParams = new URLSearchParams(url.search);
         
         console.log('searchParams');
         
@@ -46,17 +54,23 @@ const useBuscadorProductos = () => {
         const producto = searchParams.get('producto');
         const categoria = searchParams.get('categoria');
         
-        console.log('producto');
-        
-        console.log(producto);
+        console.log('categoria');
+        console.log(categoria);
 
-        debugger
+        if( categoria == '' || categoria == null )
+        {
+          alert('nulla')
+        }
+        // debugger
 
-        setQuery({
-            ...queryProductos,
+        setQuery( (prevState) => ({
+            ...prevState,
+            pagina: queryProductos.pagina,
             nombre: producto,
             idCategoria: Number(categoria)
-        })
+        }))
+
+        // alert("idCategoria" + categoria)
 
 
     }
@@ -67,7 +81,25 @@ const useBuscadorProductos = () => {
             
             setLoading(true)
 
-            handleSetParams()
+            const _url = new URL(window.location.href)
+
+            const searchParams = new URLSearchParams(_url.search);
+            
+            console.log('searchParams');
+            
+            console.log(searchParams);
+            
+            const categoria = searchParams.get('categoria');
+            
+            console.log('categoria');
+            console.log(categoria);
+
+            // if( categoria == '' || categoria == null )
+            // {
+            //   alert('nulla')
+            // }
+
+            // handleSetParams()
 
             const params: any = {
               pagina: queryProductos.pagina  
@@ -77,12 +109,15 @@ const useBuscadorProductos = () => {
             {
               params.nombre = queryProductos.nombre;
             }
-              
+
             if (queryProductos.idCategoria !== null && queryProductos.idCategoria !== 0) {
               params.categoria = queryProductos.idCategoria;
             }
+            
+            if (categoria !== '' || categoria !== null ) {
+              params.categoria = categoria
+            }
 
-            debugger
               
             const query = Object.keys(params)
                 .map((k) => encodeURIComponent(k) + "=" + encodeURIComponent(params[k]))

@@ -44,7 +44,7 @@ const ProductoGridItem: FC<Props> = ({
 
     return (
         <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-            <a href={`/DetalleProducto/${id}`}>
+            <a href={`/producto/${id}`}>
                 <img
                     className={`p-8 rounded-t-lg ${tipo === 'primary' ? 'h-48' : 'h-60'} mx-auto`}
                     src={imagen}
@@ -93,7 +93,7 @@ const ProductoGridItem: FC<Props> = ({
                             {formatarComoMonedaMexicana(precio)}
                         </span>
                         <a
-                            href={`/DetalleProducto/${id}`}
+                            href={`/producto/${id}`}
                             className={`block  ${tipo === 'primary' ? 'bg-alibabeto-1 text-white' : 'transparent text-alibabeto-1'} w-full mt-3 font-medium rounded-md text-xs px-5 py-2.5 text-center`}
                         >
                             Comprar
