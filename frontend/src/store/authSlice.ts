@@ -1,11 +1,13 @@
 import { type Usuario } from '../admin/usuarios/types/usuario.types'
+import { constansts } from '../auth/constants'
 import type { Auth } from '../auth/types/auth.types'
 import { type StateCreator } from 'zustand'
 
 export interface AuthSliceStore {
     isLoading: boolean
-    setAuth: (auth: Auth) => void
+    setAuth: (auth: Auth | null) => void
     setUsuario: (usuario: Usuario) => void
+    usuario: Usuario | null,
     auth: Auth | null
     clientError: string | null
     totalCarrito: number
@@ -17,10 +19,23 @@ export interface AuthSliceStore {
 //     setAuth: (auth: Auth) => set((state) => ({ auth })),
 // }))
 
+const getAuth = () => {
+        
+    const usuario = JSON.parse(localStorage.getItem(constansts.AUTH_SESSION_USER)!) as Usuario
+    const token = localStorage.getItem(constansts.AUTH_SESSION_TOKEN)! as string
+
+    return {
+        usuario,
+        token
+    }
+    
+}
+
 export const createAuthSlice: StateCreator<AuthSliceStore, [], [], AuthSliceStore> = (set) => ({
-    auth: null,
+    auth: getAuth(),
     totalCarrito: 0,
-    setAuth: (auth: Auth) => set(() => ({ auth })),
+    usuario: null,
+    setAuth: (auth: Auth | null) => set(() => ({ auth })),
     setUsuario: (usuario: Usuario) => set((store) => ({ 
         ...store,
         auth: {  

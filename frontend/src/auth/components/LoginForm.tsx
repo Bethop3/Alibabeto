@@ -6,7 +6,7 @@ import useLogin from "../hooks/useLogin"
 
 const LoginForm = () => {
 
-    const { handleSubmit, onInputChange, formState, isLoading } = useLogin()
+    const { handleSubmit, onInputChange, formState, isLoading, errors } = useLogin()
 
     return (
         <>
@@ -49,17 +49,25 @@ const LoginForm = () => {
                         value={formState.password}
                     />
                 </div>
+
+
+                {
+                    errors !== null &&
+                    <p className="mt-2 text-red-500 font-bold text-md dark:text-red-500">
+                        {
+                            errors.msg
+                        }
+                    </p>
+                }
+
                 <div className="flex flex-col mb-3">
-                    {/* <div className="w-full">
-                    <input type="checkbox" name="remeberMe" />
-                    <label htmlFor="remeberMe">Remeber me</label>
-                </div> */}
                     <div className="w-full">
                         <a className="font-bold text-blue-600" href="">
                             ¿Olvidaste tu contraseña?
                         </a>
                     </div>
                 </div>
+
                 <div>
                     <Button
                         isLoading={isLoading}

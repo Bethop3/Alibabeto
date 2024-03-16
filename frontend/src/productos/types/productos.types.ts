@@ -19,3 +19,8 @@ export type InputsCreateProducto = {
     precio: number
     titulo: string
 };
+
+export type ProductoPorIdResponse = {
+    producto: Producto
+    productosRelacionados: Producto[]
+}

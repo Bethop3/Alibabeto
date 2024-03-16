@@ -1,6 +1,13 @@
-import React from 'react'
+/* eslint-disable no-constant-condition */
+import RightSideNoAuth from './RightSideNoAuth'
+import RightSide from './RightSide'
+import BuscadorProductos from './BuscadorProductos'
+import useAuth from '../../../auth/hooks/useAuth'
 
 const NavBar = () => {
+
+    const { usuario } = useAuth()
+
     return (
         <nav className="bg-white w-full flex relative justify-between items-center mx-auto h-20">
             <div className="max-w-[1100px] container mx-auto flex items-center justify-between">
@@ -15,7 +22,6 @@ const NavBar = () => {
                             />
                             <p
                                 style={{
-                                    fontFamily: "Chivo, sans-serif",
                                     color: "black",
                                     transform: "skew(-10deg)"
                                 }}
@@ -44,9 +50,7 @@ const NavBar = () => {
                             type="submit"
                             className="flex items-center flex-grow-0 flex-shrink pl-2 relative w-96 border rounded-full px-4 py-1 outline-none"
                         >
-                            {/* <BuscadorProductos
-                                client:load
-                            /> */}
+                            <BuscadorProductos />
 
                             <div
                                 className="flex items-center justify-center absolute right-0 h-10 w-10"
@@ -77,13 +81,13 @@ const NavBar = () => {
                     </div>
                 </div>
 
-                {/* {
-                    user
+                {
+                    usuario
                         ?
                         <RightSide />
                         :
                         <RightSideNoAuth />
-                } */}
+                }
 
             </div>
 

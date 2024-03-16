@@ -2,7 +2,7 @@ import Container from '../../global/components/Container'
 
 const Banner = () => {
     return (
-        <Container classes='my-8'>
+        <Container classes='my-4'>
             <div className="h-64 rounded-md overflow-hidden bg-cover bg-center" style={{
                 backgroundImage: "url('https://images.unsplash.com/photo-1577655197620-704858b270ac?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1280&q=144')"
             }}>

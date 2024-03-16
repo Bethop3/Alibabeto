@@ -1,8 +1,9 @@
-import { type ProductosQuery, type CrearProducto, type EditarProducto } from '../types/producto'
+import { type ProductosQuery, type CrearProducto, type EditarProducto, type ProductoPorIdResponse } from '../types/producto'
 import { Producto, type ProductoAttributes } from '../models/producto'
 import { type Controller } from '../types'
-import { Op } from 'sequelize'
+import { Op, QueryTypes } from 'sequelize'
 import { Categoria } from '../models/categoria'
+import { sequelize } from '../database'
 
 const MAX_ELEMENTS = 16
 
@@ -245,16 +246,30 @@ export const EliminarProductoCtrl: Controller<string | null, number, any, { id: 
   }
 }
 
-export const ObtenerProductoidctrl: Controller <Producto | null, number, any, { id: string }> = async (req, res) => {
+export const ObtenerProductoidctrl: Controller <ProductoPorIdResponse | null, number, any, { id: string }> = async (req, res) => {
   try {
     const { id } = req.params
 
     const productoABuscar = await Producto.findOne({
       where: { id, is_deleted: 0 },
       attributes: {
-        exclude: ['categoriaID', 'CreateDate']
+        include: [
+          'codigo',
+          'descripcion',
+          'existencias',
+          'id',
+          'imagen',
+          'precio',
+          'titulo'
+        ],
+        exclude: [
+          'CreatedDate',
+          'is_deleted',
+          'status'
+        ]
       }
     })
+
     if (!productoABuscar) {
       return res.status(400).json({
         ok: false,
@@ -262,11 +277,30 @@ export const ObtenerProductoidctrl: Controller <Producto | null, number, any, { 
         data: null
       })
     }
+
+    const categoria = productoABuscar.categoriaID
+
+    console.log('productoABuscar')
+    console.log(productoABuscar)
+
+    const productosRelacionados = await sequelize?.query<Producto>(`
+      SELECT * FROM productos 
+      WHERE categoriaID = ${categoria}
+      ORDER BY RAND() LIMIT 4;
+  `, { type: QueryTypes.SELECT })
+
     return res.status(200).json({
       ok: true,
-      data: productoABuscar
+      data: {
+        producto: productoABuscar,
+        productosRelacionados
+      }
     })
   } catch (error) {
-
+    console.log(error)
+    return res.status(400).json({
+      ok: false,
+      data: null
+    })
   }
 }

@@ -1,17 +1,9 @@
-import { type FC } from 'react'
-import { Producto } from '../../types/productos.types';
-import CarouselImagenes from './CarouselImagenes';
-import useProductoPorId from '../../hooks/useProductoPorId';
-import FichaSkelleton from '../skelleton/FichaSkelleton';
+import { DetalleProductoContext } from '../../context/DetalleProductoContext'
+import FichaSkelleton from '../skelleton/FichaSkelleton'
+import CarouselImagenes from './CarouselImagenes'
+import { useContext, type FC } from 'react'
 
-const imagenesSwiper: string[] = [
-    'https://www.notebookcheck.org/fileadmin/_processed_/5/8/csm_MateBook_X_Pro_MachR_Grey_Front_Angle_RGB_15d67819ca.jpg',
-    'https://www.notebookcheck.org/fileadmin/_processed_/0/2/csm_MateBook_X_Pro_MachR_Grey_Top_IMG_2190_RGB_dab491d4a2.jpg  ',
-    'https://www.notebookcheck.org/fileadmin/_processed_/5/a/csm_MateBook_X_Pro_MachR_Grey_SpecialAngle_Left_Top_Front_2_RGB_4d7c1407a4.jpg',
-    'https://www.notebookcheck.org/fileadmin/_processed_/e/9/csm_MateBook_X_Pro_Green_Front_RGB_6e0d58a1e9.jpg',
-];
-
-const DetalleProductoFicha: FC<Producto> = () => {
+const DetalleProductoFicha: FC = () => {
 
     const {
         producto,
@@ -22,7 +14,7 @@ const DetalleProductoFicha: FC<Producto> = () => {
         handleIncrementCantidad,
         handleDecrementCantidad,
         handleAddProductoCarrito
-    } = useProductoPorId()
+    } = useContext(DetalleProductoContext)!
 
     if (isLoading || producto === null) return <FichaSkelleton />
 
@@ -30,10 +22,8 @@ const DetalleProductoFicha: FC<Producto> = () => {
 
     return (
         <>
-            <div className="w-full h-full">
-                <CarouselImagenes
-                    imagenes={imagenesSwiper}
-                />
+            <div className="w-full h-full p-3 md:p-8">
+                <CarouselImagenes />
             </div>
             <div className="w-full h-full mx-auto">
 

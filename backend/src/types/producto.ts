@@ -1,4 +1,4 @@
-import { type ProductoAttributes } from '../models/producto'
+import { type Producto, type ProductoAttributes } from '../models/producto'
 
 export type CrearProducto = Omit<ProductoAttributes, 'id' | 'CreatedDate'>
 
@@ -11,4 +11,9 @@ export interface ProductosQuery {
   nombre: string
   landing: string
   pagina: number
+}
+
+export interface ProductoPorIdResponse {
+  producto: Producto
+  productosRelacionados: Producto[]
 }

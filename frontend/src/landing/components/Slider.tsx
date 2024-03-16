@@ -10,10 +10,12 @@ const Slider = () => {
     return (
         <div className='w-full custom-background'>
             <Swiper
+                className='custom-swiper-button-next'
                 modules={[Navigation, Pagination, Scrollbar, A11y, FreeMode]}
                 spaceBetween={50}
                 slidesPerView={1}
                 navigation
+                loop={true}
                 pagination={{ clickable: true }}
                 scrollbar={{ draggable: true }}
                 onSwiper={(swiper) => console.log(swiper)}

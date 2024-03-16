@@ -1,38 +1,35 @@
 import MainLayout from '../../layouts/MainLayout'
 import DetalleProductoFicha from '../components/DetalleProducto/DetalleProductoFicha'
-import useProductiPorId from '../hooks/useProductoPorId'
+import ProductosRelacionados from '../components/DetalleProducto/ProductosRelacionados'
+import { DetalleProductoContext } from '../context/DetalleProductoContext'
+import useProductoPorId from '../hooks/useProductoPorId'
 
 const DetalleProductoPorId = () => {
 
-    const { producto } = useProductiPorId()
+    const result = useProductoPorId()
+
     return (
         <MainLayout>
-            <main className="my-8">
-                <div className="container mx-auto px-6">
-                    <div className="md:items-center grid-ficha-producto grid">
-                        <DetalleProductoFicha
-                            {...producto!}
-                        // {...responseData}
-                        />
-                    </div>
-                    {/* <div style="margin-bottom: 50px;"></div> */}
-                    <h3 className="text-gray-600 text-2xl font-medium">
-                        Algo mas que te podria interesar...
-                    </h3>
+            <DetalleProductoContext.Provider value={result}>
+                <main className="my-8">
+                    <div className="container mx-auto px-6">
 
-                    <div
-                        className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6"
-                    >
-                        {/* {
-                            productosFiltrados.slice(0, 4).map((producto: Producto) => (
-                                <div className="mb-4">
-                                    <Sugerencias {...producto} />
-                                </div>
-                            ))
-                        } */}
+                        <div className="md:items-center grid-ficha-producto grid">
+                            <DetalleProductoFicha />
+                        </div>
+
+                        <h3 className="text-gray-900 text-2xl font-bold">
+                            Algo mas que te podria interesar...
+                        </h3>
+
+                        <div
+                            className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6"
+                        >
+                            <ProductosRelacionados />
+                        </div>
                     </div>
-                </div>
-            </main>
+                </main>
+            </DetalleProductoContext.Provider>
         </MainLayout >
     )
 }

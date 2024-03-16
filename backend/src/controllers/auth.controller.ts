@@ -20,7 +20,7 @@ export const AuthValidateSession: Controller<Usuario | null, { id: string }> = a
     if (!exist) {
       return res.status(401).json({
         ok: false,
-        msg: 'Sin autorizacion',
+        msg: 'Usuario o contraseña incorrectos xd',
         data: null
       })
     }
@@ -130,7 +130,7 @@ export const AuthLogin: Controller<any | null, UserLogin> = async (req, res) => 
     if (!isValid) {
       return res.status(401).json({
         ok: false,
-        msg: 'Sin autorizacion',
+        msg: errorAuth,
         data: null
       })
     }
