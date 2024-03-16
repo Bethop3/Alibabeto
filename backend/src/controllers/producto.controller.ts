@@ -12,7 +12,8 @@ export const GetProductosByQuery: Controller<Producto[], any, null, null, Produc
       categoria,
       precioMaximo,
       categoriaID,
-      landing
+      landing,
+      pagina
     } = req.query
 
     let limit
@@ -48,6 +49,10 @@ export const GetProductosByQuery: Controller<Producto[], any, null, null, Produc
       whereClause.categoriaID = {
         [Op.eq]: categoriaID
       }
+    }
+
+    if (pagina !== undefined) {
+      limit = Number(pagina)
     }
 
     if (landing !== undefined) {

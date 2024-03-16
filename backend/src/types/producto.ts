@@ -10,4 +10,5 @@ export interface ProductosQuery {
   categoria: number
   nombre: string
   landing: string
+  pagina: number
 }

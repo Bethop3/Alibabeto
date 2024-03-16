@@ -11,24 +11,26 @@ const IndexPage = () => {
     return (
         <>
             <Slider />
-            <Marcas />
-            <Bento />
-            <ProductosSection
-                idCategoria={4}
-                titulo="Celulares"
-            />
-            <Bento2 />
-            <ProductosSection
-                idCategoria={5}
-                titulo="Laptops"
-            />
-            <Banner />
-            <ProductosSection
-                idCategoria={7}
-                titulo="Audifonos"
-            />
-            <MetodosPago />
-            <Newsletter />
+            <>
+                <Marcas />
+                <Bento />
+                <ProductosSection
+                    idCategoria={4}
+                    titulo="Celulares"
+                />
+                <Bento2 />
+                <ProductosSection
+                    idCategoria={5}
+                    titulo="Laptops"
+                />
+                <Banner />
+                <ProductosSection
+                    idCategoria={7}
+                    titulo="Audifonos"
+                />
+                <MetodosPago />
+                <Newsletter />
+            </>
         </>
     )
 }

@@ -1,6 +1,19 @@
-const MainLayout = ({ children }: any) => {
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+type Props = {
+    size?: 'md' | 'lg'
+    children?: React.ReactNode
+}
+
+const MainLayout = ({ children, size = 'lg' }: Props) => {
+
+    let sizeContainer = 'max-w-[1100px]'
+
+    if (size === 'md') {
+        sizeContainer = 'max-w-[90%]'
+    }
     return (
-        <main className="max-w-[1100px] container mx-auto">
+        <main className={`${sizeContainer} container mx-auto`}>
             {children}
         </main>
     )

@@ -1,0 +1,6 @@
+
+
+export const constansts = {
+    AUTH_SESSION_TOKEN: 'AUTH_SESSION_TOKEN',
+    AUTH_SESSION_USER: 'AUTH_SESSION_USER',
+}
