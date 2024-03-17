@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react"
 import { AuthAxios } from "../../global/api/AuthAxios"
 import { BasicResponse } from "../../types"
-import { Producto } from "../../productos/types/productos.types"
+import { Producto, ProductoQueryResponse } from "../../productos/types/productos.types"
 
 const useProductosGrid = ( idCategoria: number ) => {
 
@@ -21,9 +21,9 @@ const useProductosGrid = ( idCategoria: number ) => {
             
             setLoading(true)
             
-            const { data: { data } } = await AuthAxios.get<BasicResponse<Producto[]>>(`/producto/query?categoria=${idCategoria}&landing=true`)
+            const { data: { data } } = await AuthAxios.get<BasicResponse<ProductoQueryResponse>>(`/producto/query?categoria=${idCategoria}&landing=true`)
             
-            setProductos(data)
+            setProductos(data.productos)
 
             setLoading(false)
             

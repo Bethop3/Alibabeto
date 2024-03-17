@@ -28,5 +28,11 @@ export type ProductoPorIdResponse = {
 export interface ProductoQueryResponse {
     productos: Producto[]
     totalPaginas?: number
-  }
+}
+
+export type Display = 'grid' | 'lista'
+
+export type DisplayInfoState = {
+    display: Display
+}
   

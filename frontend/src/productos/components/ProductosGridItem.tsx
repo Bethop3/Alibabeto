@@ -2,7 +2,7 @@ import type { Producto } from '../types/productos.types'
 import React, { type FC } from 'react'
 
 type ConfigProps = {
-    tipo: 'primary' | 'secondary'
+    tipo: 'primary' | 'secondary' | 'lista'
 }
 
 type Props = ConfigProps & {
@@ -42,8 +42,36 @@ const ProductoGridItem: FC<Props> = ({
         target.src = '/Images/no_image_producto.jpg';
     };
 
+    if (tipo === 'lista') return (
+        <div className="w-full h-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <div className='grid grid-cols-[1fr,85%]'>
+                <a href={`/producto/${id}`}>
+                    <img
+                        className={`px-5 py-10 mx-auto pr-0 rounded-t-lg h-60`}
+                        src={imagen}
+                        alt={`${producto.descripcion} | Alibabeto`}
+                        onError={manejarErrorDeCarga}
+                        loading='lazy'
+                    />
+                </a>
+                <div className='py-6'>
+                    <p className='opacity-50 text-xs'>
+                        {
+                            codigo
+                        }
+                    </p>
+                    <h5 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        {
+                            titulo
+                        }
+                    </h5>
+                </div>
+            </div>
+        </div>
+    )
+
     return (
-        <div className="w-full h-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <div className={`w-full h-full ${tipo === 'primary' && 'flex flex-col justify-between'} max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700`}>
             <a href={`/producto/${id}`}>
                 <img
                     className={`p-8 rounded-t-lg ${tipo === 'primary' ? 'h-48' : 'h-60'} mx-auto`}

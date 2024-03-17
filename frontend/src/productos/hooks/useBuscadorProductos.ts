@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react'
-import { Producto, ProductoQueryResponse } from '../types/productos.types';
+import { DisplayInfoState, Producto, ProductoQueryResponse } from '../types/productos.types';
 import { AuthAxios } from '../../global/api/AuthAxios';
 import { BasicResponse } from '../../types';
 
@@ -21,6 +21,11 @@ const useBuscadorProductos = () => {
       pagina: 1,
       totalPaginas: 0
     })
+
+    const [ displayInfo , setDisplayInfo ] = useState<DisplayInfoState>({
+      display: 'grid'
+    })
+
     const [ queryProductos ] = useState<QueryState>({
         nombre: '',
         idCategoria: null,
@@ -124,12 +129,23 @@ const useBuscadorProductos = () => {
         }
 
     }
+
+    const handleFilterDisplay = ( display: Display ) => {
+
+      setDisplayInfo({
+        ...displayInfo,
+        display: display
+      })
+
+    }
     
   return {
     isLoading,
     productos,
+    displayInfo,
     changePage,
     handleNextPage,
+    handleFilterDisplay,
     handlePrevPage,
     pagina: pagination.pagina,
     totalPaginas: pagination.totalPaginas,

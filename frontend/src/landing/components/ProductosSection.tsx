@@ -19,7 +19,7 @@ const ProductosSection: FC<Props> = ({ idCategoria, titulo }) => {
             </h2>
             <div className="grid grid-cols-1 place-items-center md:grid-cols-4 gap-4">
                 {productos.map((_, index) =>
-                    <div style={{ border: "1px solid #fff" }} className="flicking-panel border-black w-[100%] border-1 " key={index}>
+                    <div style={{ border: "1px solid #fff" }} className="h-full flicking-panel border-black w-[100%] border-1 " key={index}>
                         <ProductoGridItem
                             key={_.id}
                             producto={_}
