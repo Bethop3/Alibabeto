@@ -11,6 +11,8 @@ import { Entrada as _Entrada } from './entrada'
 import type { EntradaAttributes, EntradaCreationAttributes } from './entrada'
 import { Estadopedido as _Estadopedido } from './estadopedido'
 import type { EstadopedidoAttributes, EstadopedidoCreationAttributes } from './estadopedido'
+import { ImagenesProducto as _ImagenesProducto } from './imagenes_producto'
+import type { ImagenesProductoAttributes, ImagenesProductoCreationAttributes } from './imagenes_producto'
 import { PedidoHasProducto as _PedidoHasProducto } from './pedido_has_producto'
 import type { PedidoHasProductoAttributes, PedidoHasProductoCreationAttributes } from './pedido_has_producto'
 import { Pedido as _Pedido } from './pedido'
@@ -35,6 +37,7 @@ export {
   _EntradaHasProducto as EntradaHasProducto,
   _Entrada as Entrada,
   _Estadopedido as Estadopedido,
+  _ImagenesProducto as ImagenesProducto,
   _PedidoHasProducto as PedidoHasProducto,
   _Pedido as Pedido,
   _Producto as Producto,
@@ -58,6 +61,8 @@ export type {
   EntradaCreationAttributes,
   EstadopedidoAttributes,
   EstadopedidoCreationAttributes,
+  ImagenesProductoAttributes,
+  ImagenesProductoCreationAttributes,
   PedidoHasProductoAttributes,
   PedidoHasProductoCreationAttributes,
   PedidoAttributes,
@@ -83,6 +88,7 @@ export function initModels (sequelize: Sequelize) {
   const EntradaHasProducto = _EntradaHasProducto.initModel(sequelize)
   const Entrada = _Entrada.initModel(sequelize)
   const Estadopedido = _Estadopedido.initModel(sequelize)
+  const ImagenesProducto = _ImagenesProducto.initModel(sequelize)
   const PedidoHasProducto = _PedidoHasProducto.initModel(sequelize)
   const Pedido = _Pedido.initModel(sequelize)
   const Producto = _Producto.initModel(sequelize)
@@ -106,6 +112,8 @@ export function initModels (sequelize: Sequelize) {
   Producto.hasMany(Carrito, { as: 'carritos', foreignKey: 'productoID' })
   Entrada.belongsTo(Producto, { as: 'ProductoFK_producto', foreignKey: 'ProductoFK' })
   Producto.hasMany(Entrada, { as: 'entradas', foreignKey: 'ProductoFK' })
+  ImagenesProducto.belongsTo(Producto, { as: 'producto', foreignKey: 'productoID' })
+  Producto.hasMany(ImagenesProducto, { as: 'imagenes_productos', foreignKey: 'productoID' })
   PedidoHasProducto.belongsTo(Producto, { as: 'producto', foreignKey: 'productoID' })
   Producto.hasMany(PedidoHasProducto, { as: 'pedido_has_productos', foreignKey: 'productoID' })
   Entrada.belongsTo(Proveedore, { as: 'ProveedorFK_proveedore', foreignKey: 'ProveedorFK' })
@@ -128,6 +136,7 @@ export function initModels (sequelize: Sequelize) {
     EntradaHasProducto,
     Entrada,
     Estadopedido,
+    ImagenesProducto,
     PedidoHasProducto,
     Pedido,
     Producto,
