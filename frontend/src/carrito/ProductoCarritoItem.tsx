@@ -1,8 +1,8 @@
-import { CarritoContext } from '../../../context/CarritoContext'
-import type { ProdutoCarito } from '../../../types/carrito.type'
 import { useContext } from 'react'
 import type { FC } from 'react'
-import { formatter } from '../../../utils/formatter'
+import { CarritoContext } from './context/CarritoContext'
+import { ProdutoCarito } from './types/carrito.type'
+import { formatter } from '../productos/utils/formatter'
 
 const ProductoCarritoItem: FC<ProdutoCarito> = (props) => {
 
@@ -22,12 +22,12 @@ const ProductoCarritoItem: FC<ProdutoCarito> = (props) => {
     return (
         <article
             className={
-                `item-card grid grid-cols-1 md:grid-cols-4 p-4 grid-columna border border-b-gray-200
+                `item-card grid grid-cols-1 md:grid-cols-4 p-4 grid-columna border border-b-gray-200 border-r-0 border-l-0 border-b-0
                 ${isLoading && 'opacity-40'}
                 `
             }
         >
-            <div className="col flex flex- md:flex-row items-start md:items-center font-bold gap-x-2">
+            <div className="col flex w-full md:flex-row items-start md:items-center font-bold gap-x-2">
                 <img
                     className="w-12 object-contain rounded-md"
                     // src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=634&q=80"

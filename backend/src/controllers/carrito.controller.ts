@@ -1,9 +1,30 @@
 import { type Controller } from '../types'
-import { type ProductoCarrito, type AgregarProductoCarrito } from '../types/Carrito'
+import { type ProductoCarrito, type AgregarProductoCarrito, type CarritoResponse } from '../types/Carrito'
 import { Carrito } from '../models/carrito'
 import { Producto } from '../models/producto'
+import { sequelize } from '../database'
+import { QueryTypes } from 'sequelize'
 
-export const ObtenerCarritoUsuarioCtrl: Controller<Carrito[]> = async (req, res) => {
+export const RecomendarProductosCtrl: Controller = async (req, res) => {
+  try {
+    const productosRelacionados = await sequelize?.query<Producto>(`
+      SELECT * FROM productos 
+      WHERE is_deleted = 0
+      ORDER BY RAND() LIMIT 12;
+  `, { type: QueryTypes.SELECT })
+
+    return res.json({
+      ok: true,
+      data: productosRelacionados
+    })
+  } catch (error) {
+    return res.status(400).json({
+      ok: false
+    })
+  }
+}
+
+export const ObtenerCarritoUsuarioCtrl: Controller<CarritoResponse> = async (req, res) => {
   try {
     console.log(req.payload)
     const carritoUsuario = await Carrito.findAll({
@@ -27,9 +48,18 @@ export const ObtenerCarritoUsuarioCtrl: Controller<Carrito[]> = async (req, res)
       ]
     })
 
+    const productosRelacionados = await sequelize?.query<Producto>(`
+      SELECT * FROM productos 
+      WHERE is_deleted = 0
+      ORDER BY RAND() LIMIT 12;
+  `, { type: QueryTypes.SELECT })
+
     return res.status(200).json({
       ok: false,
-      data: carritoUsuario
+      data: {
+        carrito: carritoUsuario,
+        productosRelacionados
+      }
     })
   } catch (err) {
     console.log(err)
