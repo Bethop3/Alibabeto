@@ -14,4 +14,5 @@ export type CreatePedidoHasProducto = Pick<PedidoHasProductoAttributes, 'cantida
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type CreatePedido = Omit<PedidoAttributes, 'id'> & {
   productos: CreatePedidoHasProducto[]
+  payment_id: string
 }

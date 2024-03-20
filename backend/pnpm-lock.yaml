@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
   '@apollo/datasource-rest':
     specifier: ^6.2.2
@@ -55,6 +59,9 @@ dependencies:
   sqlite3:
     specifier: ^5.1.7
     version: 5.1.7
+  stripe:
+    specifier: ^14.21.0
+    version: 14.21.0
   swagger-ui-express:
     specifier: ^5.0.0
     version: 5.0.0(express@4.18.2)
@@ -3049,6 +3056,7 @@ packages:
 
   /isexe@2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
+    requiresBuild: true
 
   /iterall@1.3.0:
     resolution: {integrity: sha512-QZ9qOMdF+QLHxy1QIpUHUU1D5pS2CG2P69LF6L6CPjPYA/XMOmKV3PZpawHoAjHNyB0swdVTRxdYT4tbBbxqwg==}
@@ -4273,6 +4281,14 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
+  /stripe@14.21.0:
+    resolution: {integrity: sha512-PFmpl35Myn6UDdVLTHcuppdbkPVvlQfkMHOmgGZh5QOdSUxVmvz090Z4obLg8ta1MNs1PNpzr9i7E39iAIv07A==}
+    engines: {node: '>=12.*'}
+    dependencies:
+      '@types/node': 20.11.19
+      qs: 6.11.0
+    dev: false
+
   /supports-color@5.5.0:
     resolution: {integrity: sha512-QjVjwdXIt408MIiAqCX4oUKsgU2EqAGzs2Ppkm4aQYbjm+ZEWEcW4SfFNTr4uMNZma0ey4f5lgLrkB0aX0QMow==}
     engines: {node: '>=4'}
@@ -4759,7 +4775,3 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
-
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false

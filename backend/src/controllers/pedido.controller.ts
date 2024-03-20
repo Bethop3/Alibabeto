@@ -1,9 +1,12 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { PedidoHasProducto } from '../models/pedido_has_producto'
 import { type CreatePedidoHasProducto, type CreatePedido } from '../types/Pedido'
 import { Producto } from '../models/producto'
 import { type Controller } from '../types'
 import { Pedido } from '../models/pedido'
 import { getIo } from '../socket/io'
+import Stripe from 'stripe'
 
 export const getPedidosCtrl: Controller<any, CreatePedido> = async (req, res) => {
   const pedidos = Pedido.findAll()
@@ -29,13 +32,13 @@ export const getAllPedidosCtrl: Controller<any, Pedido[]> = async (req, res) => 
 
 export const CreatePedidoCtrl: Controller<any, CreatePedido> = async (req, res) => {
   try {
-    const { productos, ...rest } = req.body
+    const { productos, total, payment_id, ...rest } = req.body
 
     const pedido = await Pedido.create({
       // ...rest,
       importe: rest.importe,
       iva: rest.iva,
-      total: rest.total,
+      total,
       usuarioID: req.payload?.id_usuario,
       direccionEntregaID: rest.direccionEntregaID,
       estadoPedidoID: rest.estadoPedidoID,

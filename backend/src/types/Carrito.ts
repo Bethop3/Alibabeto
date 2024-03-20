@@ -9,3 +9,9 @@ export interface CarritoResponse {
   productosRelacionados: Producto[]
   carrito: Carrito[]
 }
+
+export interface PaymentIntentDTO {
+  email: string
+  amount: number
+  paymentMethodType: string
+}

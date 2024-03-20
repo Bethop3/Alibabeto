@@ -1,9 +1,49 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { type Controller } from '../types'
-import { type ProductoCarrito, type AgregarProductoCarrito, type CarritoResponse } from '../types/Carrito'
+import { type ProductoCarrito, type AgregarProductoCarrito, type CarritoResponse, type PaymentIntentDTO } from '../types/Carrito'
 import { Carrito } from '../models/carrito'
 import { Producto } from '../models/producto'
 import { sequelize } from '../database'
 import { QueryTypes } from 'sequelize'
+import Stripe from 'stripe'
+
+export const PaymentIntentCtrl: Controller<any, PaymentIntentDTO> = async (req, res) => {
+  try {
+    const { amount } = req.body
+
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? '', {
+      apiVersion: '2023-10-16',
+      typescript: true
+    })
+
+    try {
+      const total = amount * 100
+
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: total,
+        currency: 'mxn'
+      })
+
+      const payment_id = paymentIntent.id
+
+      return res.status(200).json({
+        ok: true,
+        data: {
+          secret_key: payment_id
+        }
+      })
+    } catch (error) {
+      console.log(error)
+      res.status(400).json({
+        ok: false,
+        msg: 'Error del servidor al crear el intento de pago'
+      })
+    }
+    return stripe
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 export const RecomendarProductosCtrl: Controller = async (req, res) => {
   try {
