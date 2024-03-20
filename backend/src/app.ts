@@ -29,6 +29,7 @@ import swaggerDocument from './swagger/conf-3.json'
 import { sequelize } from './database'
 import http from 'http'
 import { initSocket } from './socket/io'
+import { MiddlewareTokenValidator } from './middlewares/middlewareTokenValidator'
 // import { MiddlewareTokenValidator } from './middlewares/middlewareTokenValidator'
 
 export async function runESLint (): Promise<void> {
@@ -74,7 +75,7 @@ const main = async () => {
   app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
   app.use('/pages', pagesRouter)
   app.use('/producto', productosRouter)
-  // app.use(MiddlewareTokenValidator)
+  app.use(MiddlewareTokenValidator)
   app.use('/usuario', usuariosRouter)
   app.use('/proveedores', provedoreesRouter)
   app.use('/categoria', categoriaRouter)

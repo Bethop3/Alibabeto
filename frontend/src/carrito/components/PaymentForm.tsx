@@ -2,9 +2,9 @@ import { CarritoContext } from '../context/CarritoContext'
 import ListaProductos from './ListaProductos'
 import CuentaTotal from './CuentaTotal'
 import useCarrito from '../hooks/useCarrito'
-import { Fragment } from 'react/jsx-runtime'
 import { ProductosGridContainer } from '../../productos/styled'
 import ProductosGrid from '../../productos/components/ProductosGrid'
+import { Fragment } from 'react/jsx-runtime'
 
 const PaymentForm = () => {
 
@@ -21,7 +21,6 @@ const PaymentForm = () => {
             <hr className='mt-10' />
 
             <h2 className='mt-5 text-3xl font-bold mb-7'>Productos que también podrían interesarte...</h2>
-
             <ProductosGridContainer>
                 <ProductosGrid
                     titulo=''

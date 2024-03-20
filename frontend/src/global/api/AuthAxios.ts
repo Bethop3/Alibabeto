@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // import { checkToken } from '../helpers/checkToken'
+import { checkToken } from '../utils/checkToken'
 import axios from 'axios'
 
 export const AuthAxios = axios.create({
@@ -10,15 +11,15 @@ AuthAxios.interceptors.request.use( ( config:any ) => {
 
     try
     {
-        // const token = checkToken()
+        const token = checkToken()
 
-        // if( token )
-        // {
-        //     config.headers = {
-        //         ...config.headers,
-        //         'x-auth-token': token
-        //     }
-        // }
+        if( token )
+        {
+            config.headers = {
+                ...config.headers,
+                'x-auth-token': token
+            }
+        }
     
     }
     catch

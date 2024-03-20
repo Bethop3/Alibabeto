@@ -12,6 +12,8 @@ export interface AuthSliceStore {
     clientError: string | null
     totalCarrito: number
     setTotalCarrito: (total: number) => void
+    setClientSecretStripe: (client:string) => void
+    clientSecret: string | null
 }
 
 // export const createAuthSlice: StateCreator<> = create<AuthSliceStore>()((set) => ({
@@ -45,6 +47,10 @@ export const createAuthSlice: StateCreator<AuthSliceStore, [], [], AuthSliceStor
             usuario, 
         } 
     })),
+    setClientSecretStripe: ( client: string ) => set( () => ({
+        clientSecret: client
+    })),
+    clientSecret: null,
     setTotalCarrito: ( total : number ) => set( () => ({ totalCarrito : total })),
     clientError: null,
     isLoading: false

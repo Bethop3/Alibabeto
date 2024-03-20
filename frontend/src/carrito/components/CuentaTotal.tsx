@@ -2,7 +2,7 @@
 import { CarritoContext } from "../context/CarritoContext"
 import Button from "../../global/components/Button"
 import { useContext } from "react"
-import { CardElement, PaymentElement } from '@stripe/react-stripe-js';
+import { PaymentElement } from '@stripe/react-stripe-js';
 
 // const stripePromise = loadStripe('pk_test_51OwOXeBLBF0dttMQtVfyklMPuP2gFw1xddFySA3DElUfeFUJJ3Miw81vPIfK9NJBP473EViZHhVcWcY4aRVW4Utx00qRnyPmOP');
 
@@ -53,7 +53,7 @@ const CuentaTotal = () => {
             <hr className="mt-3 mb-3" />
 
             {/* <PaymentElement /> */}
-            <CardElement />
+            <PaymentElement />
 
             <Button
                 onClick={handleSubmitCarrito}

@@ -1,27 +1,29 @@
-// import type { AgregarCarrito, ProdutoCarito } from '../types/carrito.type'
-
-// import type { BasicResponse } from '../types/API'
-// import { AgregarCarrito, ProdutoCarito } from '../types/carrito.type'
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { CarritoResponse, ProductoCarrito } from '../types/carrito.type'
-import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
+import { useElements, useStripe } from '@stripe/react-stripe-js'
 import { Producto } from '../../productos/types/productos.types'
 import { AuthAxios } from '../../global/api/AuthAxios'
+import { loadStripe } from '@stripe/stripe-js'
 import { useEffect, useState } from 'react'
 import { BasicResponse } from '../../types'
+import { useStore } from '../../store'
 import Decimal from 'decimal.js'
 import { useMemo } from 'react'
 import Swal from 'sweetalert2'
-import { PaymentElement } from '@stripe/react-stripe-js';
+
+const stripePromise = loadStripe('pk_test_51OwOXeBLBF0dttMQtVfyklMPuP2gFw1xddFySA3DElUfeFUJJ3Miw81vPIfK9NJBP473EViZHhVcWcY4aRVW4Utx00qRnyPmOP');
 
 const useCarrito = () => {
   
   const elements = useElements();
   const stripe = useStripe();
+  
+    const { setClientSecretStripe } = useStore()
 
-    // const handleAddProducto
     const [ productosRelacionados , setProductosRelacionados ] = useState<Producto[]>([])
     const [ carrito , setCarrito ] = useState<ProductoCarrito[]>([])
     const [ isLoading , setIsLoading ] = useState(false)
+    const [ clientSecret , setClientSecret ] = useState<any>('')
 
     useEffect( () => {
 
@@ -103,20 +105,19 @@ const useCarrito = () => {
 
     }
 
-    // const handleAddProducto = async ( producto : AgregarCarrito ) => {
-
-    //   AuthAxios.post('/carrito/add' , {
-
-    //   })
-
-    // }
-
     const handleSubmitCarrito = async () => {
 
       try {
 
+        if( isLoading ) return
+        
         if (elements == null || stripe == null) {
           
+          await Swal.fire({
+            title: 'No se cargo stripe correctamente',
+            icon:"success"
+          })
+
           return;
 
         }
@@ -124,80 +125,95 @@ const useCarrito = () => {
         const { error: submitError } = await elements.submit();
 
         if (submitError?.message) {
-          // Show error to your customer
-          // setErrorMessage(submitError.message);
-          alert("Error del wallet")
+          
+          // await Swal.fire({
+          //   title: submitError?.message,
+          //   icon:"error",
+          // })
+
           return;
         }    
 
         setIsLoading(true)
         
-        // body('direccionEntregaID').isInt().withMessage('El campo direccionEntregaID debe ser un número entero.'),
-        // body('fechaPedido').isISO8601().toDate().withMessage('El campo fechaPedido debe ser una fecha en formato ISO 8601.'),
-        // body('importe').isFloat().withMessage('El campo importe debe ser un número de punto flotante.'),
-        // body('iva').isFloat().withMessage('El campo iva debe ser un número de punto flotante.'),
-        // body('total').isFloat().withMessage('El campo total debe ser un número de punto flotante.'),
-        // body('productos').isArray({ min: 1 }).withMessage('El campo productos no puede estar vacío y debe ser un array.')
-
         const { data : { data:{ secret_key } } } = await AuthAxios.post<BasicResponse<{ secret_key: string }>>('/pedido/payment_intent', {
           total: total.toDP(2).toNumber(),
-          payment_method: {
-            type: 'card',
-            card: elements.getElement(CardElement),
-          },
         })
 
-        debugger
+        setClientSecretStripe(secret_key)
+
+        setClientSecret(secret_key)
 
         if( !secret_key ) return
 
-        const pedidoPagado = await stripe.confirmCardPayment( secret_key, {
-          //`Elements` instance that was used to create the Payment Element
-          // elements,
-
-          // clientSecret: secret_key,
-          // confirmParams: {
-          //   return_url: `${window.location.origin}/success`,
-          // },
+        const { paymentIntent , error:paymentError } = await stripe.confirmPayment({
+          elements,
+          clientSecret: secret_key,
+          redirect: 'if_required',
+          confirmParams: {
+            return_url: `${window.location.origin}/completion`,
+          },
         });
         
-        debugger
+        if( paymentError )
+        {
+          
+          await Swal.fire({
+            title: paymentError.message ?? 'Error al hacer el pago',
+            icon: "warning",
+          })
 
-        console.log(pedidoPagado);
+          return
 
-        const { data : { data } } = await AuthAxios.post('/pedido/create', {
+        }
+
+        const productos = carrito.map( articulo => ({
+          cantidad: articulo.cantidad,
+          importe: articulo.importe,
+          iva: articulo.iva,
+          total: articulo.total,
+          productoID: articulo.producto.id,
+        }))
+
+        const { data:pedidoCreado } = await AuthAxios.post<BasicResponse<any>>('/pedido/create', {
           direccionEntregaID: 1,
           fechaPedido: new Date(),
-          importe,
-          iva,
-          total,
-          productos: [
-            {
-              cantidad: 1,
-              importe: 1,
-              iva: 1,
-              total: 1,
-              productoID: 36,
-            }
-          ]
+          importe: importe.toDP(2).toNumber(),
+          total: total.toDP(2).toNumber(),
+          iva: iva.toDP(2).toNumber(),
+          payment_id: paymentIntent.id,
+          productos: productos
         })
         
-        console.log(data)
+        // console.log(data)
         
-        // setCarrito(data)
         await new Promise(resolve => setTimeout(resolve, 2000));
 
         setIsLoading(false)
 
+        if( pedidoCreado.ok )
+        {
+          
+          await Swal.fire({
+            title: "Pedido creado completamente",
+            icon: "success" ,
+          })
+
+          return 
+
+        }
+
         await Swal.fire({
-          title: 'Pedido creado correctamente',
-          icon: 'success'
+          title: "Error al completar el pedido",
+          icon: "warning",
         })
 
       } catch (error) {
+        
         setIsLoading(false)
-        console.log(error);
-        throw new Error("Error")
+        
+        console.error(error);
+        
       }
 
     }
@@ -211,6 +227,8 @@ const useCarrito = () => {
     
     return {
       isLoading,
+      stripePromise,
+      clientSecret,
       conceptos: carrito,
       productosRelacionados,
       iva: formatter.format(iva.toNumber()),

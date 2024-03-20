@@ -7,10 +7,11 @@ import { sequelize } from '../database'
 import { QueryTypes } from 'sequelize'
 import Decimal from 'decimal.js'
 import Stripe from 'stripe'
+import { Usuario } from '../models/usuario'
 
 export const PaymentIntentCtrl: Controller<any, PaymentIntentDTO> = async (req, res) => {
   try {
-    const { total: _total, payment_method } = req.body
+    const { total: _total } = req.body
 
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? '', {
       apiVersion: '2023-10-16',
@@ -29,21 +30,35 @@ export const PaymentIntentCtrl: Controller<any, PaymentIntentDTO> = async (req, 
       console.log('totalFinal')
       console.log(totalFinal)
 
-      const paymentIntent = await stripe.paymentIntents.create({
-        amount: totalFinal,
-        payment_method,
-        currency: 'mxn',
-        confirm: true
-        // confirm: true // Confirma automáticamente el pago
-        // payment_method: 'card'
+      const usuario = await Usuario.findOne({
+        where: {
+          id: req.payload?.id_usuario ?? 0
+        }
       })
 
-      const payment_id = paymentIntent.id
+      if (!usuario) {
+        return res.status(400).json({
+          ok: false,
+          msg: 'Error al encontrar el usuario'
+        })
+      }
+
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: totalFinal,
+        currency: 'mxn',
+        automatic_payment_methods: {
+          enabled: true,
+          allow_redirects: 'never'
+        }
+        // customer: `${usuario?.nombre} ${usuario?.apellidos}`
+      })
+
+      // const payment_id = paymentIntent.id
 
       return res.status(200).json({
         ok: true,
         data: {
-          secret_key: payment_id
+          secret_key: paymentIntent.client_secret
         }
       })
     } catch (error) {
