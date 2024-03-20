@@ -1,6 +1,7 @@
 import { useRef, useState } from "react"
 import Carrito from "./Carrito"
 import useAuth from "../../../auth/hooks/useAuth";
+import { Link } from "react-router-dom";
 
 const RightSide = () => {
 
@@ -88,6 +89,10 @@ const RightSide = () => {
                                     href="#"
                                     className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
                                 >Perfil</a>
+                                <Link
+                                    to="/mis_pedidos"
+                                    className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                                >Mis Pedidos</Link>
                                 <a
                                     href="#"
                                     className="block px-4 py-2 text-gray-800 hover:bg-gray-200"

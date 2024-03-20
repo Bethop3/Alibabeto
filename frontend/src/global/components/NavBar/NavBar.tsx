@@ -3,6 +3,7 @@ import RightSideNoAuth from './RightSideNoAuth'
 import RightSide from './RightSide'
 import BuscadorProductos from './BuscadorProductos'
 import useAuth from '../../../auth/hooks/useAuth'
+import { Link } from 'react-router-dom'
 
 const NavBar = () => {
 
@@ -13,7 +14,7 @@ const NavBar = () => {
             <div className="max-w-[1100px] container mx-auto flex items-center justify-between">
 
                 <section className="inline-flex">
-                    <a className="_o6689fn" href="/"
+                    <Link className="_o6689fn" to="/"
                     ><div className="hidden md:flex items-center">
                             <img
                                 src="../../Images/Logo.png"
@@ -41,7 +42,7 @@ const NavBar = () => {
                             <img src="Images/Logo.png" className="h-12" alt="Flowbite Logo" />
 
                         </div>
-                    </a>
+                    </Link>
                 </section>
 
                 <div className="hidden md:inline-block">
