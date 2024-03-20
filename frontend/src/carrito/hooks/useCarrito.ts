@@ -3,7 +3,7 @@
 // import type { BasicResponse } from '../types/API'
 // import { AgregarCarrito, ProdutoCarito } from '../types/carrito.type'
 import { CarritoResponse, ProductoCarrito } from '../types/carrito.type'
-import { useElements, useStripe } from '@stripe/react-stripe-js'
+import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
 import { Producto } from '../../productos/types/productos.types'
 import { AuthAxios } from '../../global/api/AuthAxios'
 import { useEffect, useState } from 'react'
@@ -11,6 +11,7 @@ import { BasicResponse } from '../../types'
 import Decimal from 'decimal.js'
 import { useMemo } from 'react'
 import Swal from 'sweetalert2'
+import { PaymentElement } from '@stripe/react-stripe-js';
 
 const useCarrito = () => {
   
@@ -139,38 +140,49 @@ const useCarrito = () => {
         // body('productos').isArray({ min: 1 }).withMessage('El campo productos no puede estar vacío y debe ser un array.')
 
         const { data : { data:{ secret_key } } } = await AuthAxios.post<BasicResponse<{ secret_key: string }>>('/pedido/payment_intent', {
-
+          total: total.toDP(2).toNumber(),
+          payment_method: {
+            type: 'card',
+            card: elements.getElement(CardElement),
+          },
         })
 
-        const pedidoPagado = await stripe.confirmPayment({
+        debugger
+
+        if( !secret_key ) return
+
+        const pedidoPagado = await stripe.confirmCardPayment( secret_key, {
           //`Elements` instance that was used to create the Payment Element
-          elements,
-          clientSecret: secret_key,
-          confirmParams: {
-            return_url: `${window.location.origin}/success`,
-          },
+          // elements,
+
+          // clientSecret: secret_key,
+          // confirmParams: {
+          //   return_url: `${window.location.origin}/success`,
+          // },
         });
+        
+        debugger
 
         console.log(pedidoPagado);
 
-        // const { data : { data } } = await AuthAxios.post('/pedido/create', {
-        //   direccionEntregaID: 1,
-        //   fechaPedido: new Date(),
-        //   importe: 150,
-        //   iva: 25,
-        //   total: 1,
-        //   productos: [
-        //     {
-        //       cantidad: 1,
-        //       importe: 1,
-        //       iva: 1,
-        //       total: 1,
-        //       productoID: 36,
-        //     }
-        //   ]
-        // })
+        const { data : { data } } = await AuthAxios.post('/pedido/create', {
+          direccionEntregaID: 1,
+          fechaPedido: new Date(),
+          importe,
+          iva,
+          total,
+          productos: [
+            {
+              cantidad: 1,
+              importe: 1,
+              iva: 1,
+              total: 1,
+              productoID: 36,
+            }
+          ]
+        })
         
-        // console.log(data)
+        console.log(data)
         
         // setCarrito(data)
         await new Promise(resolve => setTimeout(resolve, 2000));
@@ -184,6 +196,7 @@ const useCarrito = () => {
 
       } catch (error) {
         setIsLoading(false)
+        console.log(error);
         throw new Error("Error")
       }
 

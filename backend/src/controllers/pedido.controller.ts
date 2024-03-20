@@ -6,7 +6,6 @@ import { Producto } from '../models/producto'
 import { type Controller } from '../types'
 import { Pedido } from '../models/pedido'
 import { getIo } from '../socket/io'
-import Stripe from 'stripe'
 
 export const getPedidosCtrl: Controller<any, CreatePedido> = async (req, res) => {
   const pedidos = Pedido.findAll()
@@ -42,7 +41,8 @@ export const CreatePedidoCtrl: Controller<any, CreatePedido> = async (req, res) 
       usuarioID: req.payload?.id_usuario,
       direccionEntregaID: rest.direccionEntregaID,
       estadoPedidoID: rest.estadoPedidoID,
-      fechaPedido: rest.fechaPedido
+      fechaPedido: rest.fechaPedido,
+      payment_id
     })
 
     const productosPorPedido: PedidoHasProducto [] = []

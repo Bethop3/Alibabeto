@@ -11,7 +11,6 @@ export interface CarritoResponse {
 }
 
 export interface PaymentIntentDTO {
-  email: string
-  amount: number
-  paymentMethodType: string
+  total: number
+  payment_method: any
 }

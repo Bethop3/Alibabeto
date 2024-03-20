@@ -14,6 +14,7 @@ export interface PedidoAttributes {
   importe: number
   iva: number
   total?: number
+  payment_id: string
 }
 
 export type PedidoPk = 'id'
@@ -30,6 +31,7 @@ export class Pedido extends Model<PedidoAttributes, PedidoCreationAttributes> im
   importe!: number
   iva!: number
   total?: number
+  payment_id!: string
 
   // Pedido belongsTo DireccionEntrega via direccionEntregaID
   direccionEntrega!: DireccionEntrega
@@ -107,6 +109,10 @@ export class Pedido extends Model<PedidoAttributes, PedidoCreationAttributes> im
       total: {
         type: DataTypes.DECIMAL(10, 2),
         allowNull: true
+      },
+      payment_id: {
+        type: DataTypes.STRING(1000),
+        allowNull: false
       }
     }, {
       sequelize,

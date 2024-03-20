@@ -5,23 +5,37 @@ import { Carrito } from '../models/carrito'
 import { Producto } from '../models/producto'
 import { sequelize } from '../database'
 import { QueryTypes } from 'sequelize'
+import Decimal from 'decimal.js'
 import Stripe from 'stripe'
 
 export const PaymentIntentCtrl: Controller<any, PaymentIntentDTO> = async (req, res) => {
   try {
-    const { amount } = req.body
+    const { total: _total, payment_method } = req.body
 
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? '', {
       apiVersion: '2023-10-16',
       typescript: true
     })
-
+    // stripe.paymentIntents.search
     try {
-      const total = amount * 100
+      const totalPedido = new Decimal(_total)
+
+      const t = totalPedido.times(100)
+
+      t.toDP(2)
+
+      const totalFinal = t.toNumber()
+
+      console.log('totalFinal')
+      console.log(totalFinal)
 
       const paymentIntent = await stripe.paymentIntents.create({
-        amount: total,
-        currency: 'mxn'
+        amount: totalFinal,
+        payment_method,
+        currency: 'mxn',
+        confirm: true
+        // confirm: true // Confirma automáticamente el pago
+        // payment_method: 'card'
       })
 
       const payment_id = paymentIntent.id
@@ -42,6 +56,10 @@ export const PaymentIntentCtrl: Controller<any, PaymentIntentDTO> = async (req, 
     return stripe
   } catch (error) {
     console.log(error)
+    return res.status(400).json({
+      ok: false,
+      msg: 'Error del servidor al crear el intento de pago'
+    })
   }
 }
 

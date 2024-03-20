@@ -1,13 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import PaymentForm from '../components/PaymentForm'
 import { Elements } from '@stripe/react-stripe-js'
 import MainLayout from '../../layouts/MainLayout'
-import ProductosGrid from '../../productos/components/ProductosGrid'
-import { ProductosGridContainer } from '../../productos/styled'
-import CuentaTotal from '../components/CuentaTotal'
-import ListaProductos from '../components/ListaProductos'
-import { CarritoContext } from '../context/CarritoContext'
-import useCarrito from '../hooks/useCarrito'
 import { loadStripe } from '@stripe/stripe-js'
-import PaymentForm from '../components/PaymentForm'
 
 const stripePromise = loadStripe('pk_test_51OwOXeBLBF0dttMQtVfyklMPuP2gFw1xddFySA3DElUfeFUJJ3Miw81vPIfK9NJBP473EViZHhVcWcY4aRVW4Utx00qRnyPmOP');
 
@@ -16,11 +11,12 @@ const CarritoIndexPage = () => {
     const options: any = {
         mode: 'payment',
         amount: 1099,
-        currency: 'usd',
+        currency: 'mxn',
         // Fully customizable with appearance API.
         appearance: {
             /*...*/
         },
+        // clientSecret: 'sk_test_REPLACE_WITH_YOUR_KEY'
     };
 
     return (
