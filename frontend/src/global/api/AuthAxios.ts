@@ -30,3 +30,7 @@ AuthAxios.interceptors.request.use( ( config:any ) => {
     return config
 
 })
+
+// AuthAxios.interceptors.response.use( ( val: any) => {
+//     console.log(val);
+// })

@@ -20,7 +20,7 @@ export const routes: RouteConfig[] = [
     { path: '/' , name: 'Index', Component: IndexPage , _protected: true, hasLayout: false },
     { path: '/login' , name: 'Login', Component: LoginPage , _protected: false, hasLayout: true },
     { path: '/productos' , name: 'Productos', Component: ProductosPage , _protected: false, hasLayout: true },
-    { path: '/carrito' , name: 'Carrito', Component: CarritoIndexPage , _protected: false, hasLayout: true },
+    { path: '/carrito' , name: 'Carrito', Component: CarritoIndexPage , _protected: true, hasLayout: true },
     { path: '/mis_pedidos' , name: 'Pedidos', Component: PedidosPage , _protected: false, hasLayout: true },
     { path: '/producto/:id' , name: 'Producto Por Id', Component: DetalleProductoPorId , _protected: false, hasLayout: true },
 

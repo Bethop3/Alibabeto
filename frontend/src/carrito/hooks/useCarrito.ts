@@ -115,7 +115,7 @@ const useCarrito = () => {
           
           await Swal.fire({
             title: 'No se cargo stripe correctamente',
-            icon:"success"
+            icon:"warning"
           })
 
           return;
