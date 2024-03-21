@@ -1,31 +1,30 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import NavBar from "../global/components/NavBar/NavBar";
+import PrivateAdmin from "../admin/components/PrivateAdmin";
 import { Private } from "./components/PrivateRoute";
-import Footer from "../global/components/Footer";
+import PublicRoute from "./components/PublicRoute";
 import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Fragment } from "react/jsx-runtime";
-import useAuth from "../auth/hooks/useAuth";
+// import useAuth from "../auth/hooks/useAuth";
 import { routes } from "./routes";
 import { useEffect } from "react";
 
 const Router = () => {
 
-    const { validateToken } = useAuth()
+    // const { validateToken } = useAuth()
 
     useEffect(() => {
 
-        validateToken()
+        // validateToken()
 
     }, [])
 
     return (
         <>
-            <NavBar />
             <Routes>
                 {
-                    routes.map(({ path, Component, _protected }) => (
+                    routes.map(({ path, Component, _protected, isAdmin }) => (
                         <Fragment key={path}>
                             {
                                 _protected
@@ -35,19 +34,28 @@ const Router = () => {
                                         element={<Private Component={Component} />}
                                     />
                                     :
-                                    <Route
-                                        path={path}
-                                        element={<Component />}
-                                    />
+                                    <>
+                                        {
+                                            isAdmin
+                                                ?
+                                                <Route
+                                                    path={path}
+                                                    element={<PrivateAdmin Component={Component} />}
+                                                />
+                                                :
+                                                <Route
+                                                    path={path}
+                                                    element={<PublicRoute Component={Component} />}
+                                                />
+                                        }
+                                    </>
                             }
                         </Fragment>
                     ))
                 }
             </Routes>
-            {/* </MainLayout> */}
             <ToastContainer />
-            <Footer />
-        </ >
+        </>
     )
 }
 

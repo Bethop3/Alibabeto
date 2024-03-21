@@ -11,6 +11,7 @@ export interface ProductosQuery {
   nombre: string
   landing: string
   pagina: number
+  orden: string
 }
 
 export interface ProductoPorIdResponse {

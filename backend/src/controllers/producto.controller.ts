@@ -1,7 +1,7 @@
 import { type ProductosQuery, type CrearProducto, type EditarProducto, type ProductoPorIdResponse, type ProductoQueryResponse } from '../types/producto'
 import { Producto, type ProductoAttributes } from '../models/producto'
 import { type Controller } from '../types'
-import { Op, QueryTypes } from 'sequelize'
+import { Op, type Order, QueryTypes } from 'sequelize'
 import { Categoria } from '../models/categoria'
 import { sequelize } from '../database'
 
@@ -16,11 +16,16 @@ export const GetProductosByQuery: Controller<ProductoQueryResponse, any, null, n
       precioMaximo,
       categoriaID,
       landing,
-      pagina
+      pagina,
+      orden
     } = req.query
 
     let limit
     let offset
+
+    const orderBy: Order = [
+
+    ]
     // Consulta todos los productos en la base de datos
     console.log('req.query')
     console.log(req.query)
@@ -59,6 +64,21 @@ export const GetProductosByQuery: Controller<ProductoQueryResponse, any, null, n
       offset = (Number(pagina) - 1) * MAX_ELEMENTS
     }
 
+    switch (orden) {
+      case 'id':
+        console.log('orden')
+        console.log(orden)
+        orderBy.push(['id', 'DESC'])
+        break
+      default:
+        console.log('por defecto')
+        orderBy.push(['id', 'ASC'])
+        break
+    }
+
+    console.log('orderBy')
+    console.log(orderBy)
+
     if (landing !== undefined) {
       limit = 8
       whereClause = {
@@ -79,9 +99,10 @@ export const GetProductosByQuery: Controller<ProductoQueryResponse, any, null, n
       limit,
       offset,
       where: whereClause,
-      order: [
-        ['id', 'ASC']
-      ],
+      order: orderBy,
+      // order: [
+      //   ['id', 'ASC']
+      // ],
       attributes: { exclude: ['CreatedDate', 'categoriaID', 'is_deleted'] },
       include: [
         {
