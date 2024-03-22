@@ -6,6 +6,7 @@ import { Producto } from '../models/producto'
 import { type Controller } from '../types'
 import { Pedido } from '../models/pedido'
 import { getIo } from '../socket/io'
+import { Estadopedido } from '../models/estadopedido'
 
 export const getPedidosCtrl: Controller<any, CreatePedido> = async (req, res) => {
   const pedidos = Pedido.findAll()
@@ -17,7 +18,14 @@ export const getPedidosCtrl: Controller<any, CreatePedido> = async (req, res) =>
 export const getAllPedidosCtrl: Controller<any, Pedido[]> = async (req, res) => {
   try {
     const pedidos = await Pedido.findAll({
-      order: [['id', 'DESC']] // Ordenar por la propiedad 'id' de forma descendente
+      order: [['id', 'DESC']], // Ordenar por la propiedad 'id' de forma descendente
+      include: [
+        {
+          model: Estadopedido, // El modelo de la tabla relacionada
+          as: 'estadoPedido' // Renombrar la asociación
+          // attributes: ['nombre', 'descripcion'] // Atributos específicos de la tabla relacionada que deseas incluir
+        }
+      ]
     })
 
     return res.status(200).json(({

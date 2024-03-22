@@ -13,13 +13,13 @@ const Dashboard = () => {
     </pre> */}
             <div>
                 <div className="-mx-6 px-6 py-4">
-                    <a href="#" title="home">
+                    <Link to="/" title="home">
                         <img
-                            src="https://tailus.io/sources/blocks/stats-cards/preview/images/logo.svg"
-                            className="w-32"
+                            src="/Images/Logo.png"
+                            className="w-24 mx-auto"
                             alt="tailus logo"
                         />
-                    </a>
+                    </Link>
                 </div>
                 <div className="mt-8 text-center">
                     <img
@@ -41,7 +41,12 @@ const Dashboard = () => {
                         <Link
                             to="/admin/dashboard"
                             aria-label="dashboard"
-                            className="relative px-4 py-3 flex items-center space-x-4 rounded-xl text-white bg-gradient-to-r from-sky-600 to-cyan-400"
+                            className={
+                                `
+                                relative px-4 py-3 flex items-center space-x-4 rounded-xl
+                                    ${location.pathname === '/admin/dashboard' ? 'text-white bg-gradient-to-r from-sky-600 to-cyan-400' : 'text-gray-600'}
+                                `
+                            }
                         >
                             <svg className="-ml-1 h-6 w-6" viewBox="0 0 24 24" fill="none">
                                 <path
@@ -63,7 +68,12 @@ const Dashboard = () => {
                     <li>
                         <a
                             href="/admin/categorias"
-                            className="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group"
+                            className={
+                                `
+                                relative px-4 py-3 flex items-center space-x-4 rounded-xl
+                                    ${location.pathname === '/admin/categorias' ? 'text-white bg-gradient-to-r from-sky-600 to-cyan-400' : 'text-gray-600'}
+                                `
+                            }
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -89,7 +99,12 @@ const Dashboard = () => {
                         <Link
 
                             to="/admin/productos"
-                            className="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group"
+                            className={
+                                `
+                                relative px-4 py-3 flex items-center space-x-4 rounded-xl
+                                    ${location.pathname === '/admin/productos' ? 'text-white bg-gradient-to-r from-sky-600 to-cyan-400' : 'text-gray-600'}
+                                `
+                            }
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -112,9 +127,14 @@ const Dashboard = () => {
                         </Link>
                     </li>
                     <li>
-                        <a
-                            href="/admin/pedidos"
-                            className="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group"
+                        <Link
+                            to="/admin/pedidos"
+                            className={
+                                `
+                                relative px-4 py-3 flex items-center space-x-4 rounded-xl
+                                    ${location.pathname === '/admin/pedidos' ? 'text-white bg-gradient-to-r from-sky-600 to-cyan-400' : 'text-gray-600'}
+                                `
+                            }
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -132,7 +152,7 @@ const Dashboard = () => {
                                 />
                             </svg>
                             <span className="group-hover:text-gray-700">Pedidos</span>
-                        </a>
+                        </Link>
                     </li>
                     <li>
                         <a

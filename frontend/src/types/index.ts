@@ -4,3 +4,8 @@ export type BasicResponse<T> = {
     ok: boolean
     msg: string | null
 }
+
+export type Basic = {
+    id: number
+    nombre : string
+}

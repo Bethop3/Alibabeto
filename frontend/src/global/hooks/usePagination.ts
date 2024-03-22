@@ -19,11 +19,17 @@ const usePagination = ({
 
     const handleSiguiente = ( next: number | null = null ) => {
 
-        if( !next )
+        // debugger 
+
+        if( Number(next) === 0 ) return 
+
+        if( !next || next === -1 )
         {
             setPagina(pagina + 1)
             return
         }
+        
+       
 
         setPagina(next)
 
