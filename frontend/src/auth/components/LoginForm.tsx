@@ -8,7 +8,6 @@ const LoginForm = () => {
 
     const { handleSubmit, onInputChange, formState, isLoading, errors } = useLogin()
 
-
     return (
         <>
             <form onSubmit={handleSubmit} method="post" action="/api/login">

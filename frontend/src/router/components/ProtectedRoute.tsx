@@ -1,12 +1,5 @@
-// ProtectedRoute.tsx
-
-import React, { Fragment } from 'react';
-import { Route, Navigate, RouteProps } from 'react-router-dom';
-
-// interface ProtectedRouteProps {
-//     isAuthenticated: boolean;
-//     component: React.ComponentType<any>;
-// }
+import { Route, RouteProps } from 'react-router-dom';
+import React from 'react';
 
 const ProtectedRoute: React.FC<RouteProps> = ({
     Component,

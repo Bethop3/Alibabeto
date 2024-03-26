@@ -10,7 +10,7 @@ export const Private = ({ Component }: any) => {
     if (!isAuthenticaded) return <Navigate to="/login" />
     return (
         <Fragment>
-            PRIVATE ROUTE
+            {/* PRIVATE ROUTE */}
             <Component />
         </Fragment>
     )

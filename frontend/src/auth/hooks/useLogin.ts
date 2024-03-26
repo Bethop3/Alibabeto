@@ -3,10 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useMutation } from '@apollo/client'
 import { useState } from 'react'
 
-import { AuthAxios } from '../../global/api/AuthAxios'
 import { AUTH_LOGIN_MUTATION } from '../graphql'
-import { BasicResponse } from '../../types'
-import { Auth } from '../types/auth.types'
 import useAuth from './useAuth'
 
 const useLogin = () => {
@@ -51,7 +48,7 @@ const useLogin = () => {
       
       formData.append('password', formState.password);
 
-      const { errors } = await authMutate({
+      const { errors , data: { authLogin } } = await authMutate({
         variables: {
           input: {
             correo: formState.correo,
@@ -65,10 +62,14 @@ const useLogin = () => {
       }
       // formData.append('password', 'secreto123');
       
-      const { data: { data } } = await AuthAxios.post<BasicResponse<Auth>>('/auth/login', formData)
+      // const { data: { data } } = await AuthAxios.post<BasicResponse<Auth>>('/auth/login', formData)
       
-      handleSetSession(data.token , data.usuario)
+      handleSetSession(authLogin.token , authLogin.usuario)
 
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      setLoading(false)
+      
       navigate('/')
       // event.currentTarget.submit()
       
@@ -77,6 +78,10 @@ const useLogin = () => {
     }
     catch (err:any) {
       
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      setLoading(false)
+
       if( err?.response?.data)
       {
         const error = err?.response?.data
@@ -90,11 +95,6 @@ const useLogin = () => {
         })
       }
 
-    }
-    finally
-    {
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      setLoading(false)
     }
 
   }

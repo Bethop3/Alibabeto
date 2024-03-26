@@ -11,7 +11,7 @@ const PublicRoute = ({ Component }: Props) => {
     return (
         <Fragment>
             <NavBar />
-            PUBLIC
+            {/* PUBLIC */}
             <Component />
             <Footer />
         </Fragment>
