@@ -1,16 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AuthAxios } from '../../global/api/AuthAxios'
 import { useNavigate } from 'react-router-dom'
+import { useMutation } from '@apollo/client'
+import { useState } from 'react'
+
+import { AuthAxios } from '../../global/api/AuthAxios'
+import { AUTH_LOGIN_MUTATION } from '../graphql'
 import { BasicResponse } from '../../types'
 import { Auth } from '../types/auth.types'
-import { useState } from 'react'
 import useAuth from './useAuth'
+
 const useLogin = () => {
   
   const navigate = useNavigate()
   const [ isLoading , setLoading ] = useState(false)
   const [ errors , setErrors ] = useState<any>(null)
   const { handleSetSession } = useAuth()
+
+  const [ authMutate ] = useMutation(AUTH_LOGIN_MUTATION)
 
   const [formState, setFormState] = useState({
     correo: '',
@@ -32,6 +38,8 @@ const useLogin = () => {
     
     try {
 
+      setErrors(null)
+      
       const formData = new FormData();
       
       // formData.append('correo', 'john.doe@example.com');
@@ -42,13 +50,24 @@ const useLogin = () => {
       formData.append('correo', formState.correo);
       
       formData.append('password', formState.password);
+
+      const { errors } = await authMutate({
+        variables: {
+          input: {
+            correo: formState.correo,
+            password: formState.password
+          }
+        }
+      })
+
+      if( errors !== undefined ){
+        alert("Error")
+      }
       // formData.append('password', 'secreto123');
       
       const { data: { data } } = await AuthAxios.post<BasicResponse<Auth>>('/auth/login', formData)
       
       handleSetSession(data.token , data.usuario)
-
-      setLoading(false)
 
       navigate('/')
       // event.currentTarget.submit()
@@ -63,9 +82,19 @@ const useLogin = () => {
         const error = err?.response?.data
         setErrors(error)
       }
+      if( err?.message)
+      {
+        const error = err?.message
+        setErrors({
+          msg: error
+        })
+      }
 
+    }
+    finally
+    {
+      await new Promise(resolve => setTimeout(resolve, 2000));
       setLoading(false)
-
     }
 
   }
