@@ -49,7 +49,7 @@ const Bento = () => {
                         </h2>
                         <p className="dark:text-gray-300 text-white font-semibold mt-2">Las mejores para juegos y trabajo</p>
                         <a href="/productos?categoria=5" className="w-full p-2 px-1 text-center font-semibold rounded-md mt-3 transition bg-white text-[#C83D44] shadow-xlsm:w-max max-w-[152px]">
-                            Ver relojes
+                            Ver laptops
                         </a>
                     </div>
                     <img
@@ -63,11 +63,13 @@ const Bento = () => {
                 >
                     <div className="content absolute h-full z-10 p-4 flex flex-col justify-end w-3/4">
                         <h2 className="text-3xl font-semibold text-shadow text-black transition group-hover:text-purple-950 dark:text-white">
-                            Laptops de alta gama
+                            Celulares de alta gama
                         </h2>
-                        <p className="dark:text-gray-300 text-black font-semibold mt-2">Las mejores para juegos y trabajo</p>
+                        <p className="dark:text-gray-300 text-black font-semibold mt-2">
+                            Lo ultimo en tecnologia
+                        </p>
                         <a href="/productos?categoria=4" className="w-full p-2 px-1 text-center font-semibold rounded-md mt-3 transition bg-[#6D172A] text-white shadow-xlsm:w-max max-w-[152px]">
-                            Ver relojes
+                            Ver celulares
                         </a>
                     </div>
                     <img

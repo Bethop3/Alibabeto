@@ -1,4 +1,5 @@
 import Banner from '../components/Banner'
+
 import Bento from '../components/Bento'
 import Bento2 from '../components/Bento2'
 import Marcas from '../components/Marcas'

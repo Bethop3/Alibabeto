@@ -19,6 +19,8 @@ router.post(
 
 router.put(
   '/edit',
+  validations.edit,
+  handleValidationErrors,
   EditarProductoCtrl
 )
 

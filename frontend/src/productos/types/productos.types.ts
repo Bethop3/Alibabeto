@@ -9,7 +9,14 @@ export interface Producto {
     existencias: number;
     CategoriaFK: number;
     CreatedDate: Date;
+    imagenes_productos: ImagenProducto[];
 }
+
+export interface ImagenProducto {
+    id: number
+    url: string
+    productoID: number
+  }
 
 export type InputsCreateProducto = {
     descripcion: string

@@ -2,7 +2,10 @@ import { type Producto, type ProductoAttributes } from '../models/producto'
 
 export type CrearProducto = Omit<ProductoAttributes, 'id' | 'CreatedDate'>
 
-export type EditarProducto = ProductoAttributes
+export type EditarProducto = ProductoAttributes & {
+  imagenes: string[]
+  imagenesRemove: number[]
+}
 
 export interface ProductosQuery {
   precioMaximo: number

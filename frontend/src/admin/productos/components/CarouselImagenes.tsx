@@ -1,21 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DetalleProductoContext } from '../../context/DetalleProductoContext';
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { useContext, useState } from 'react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar'
+import { useState } from 'react';
 
+type Props = {
+    imagenes: any[]
+}
 
-const CarouselImagenes = () => {
+const CarouselImagenes = ({ imagenes }: Props) => {
 
-    // const { producto } = useContext(DetalleProductoContext)!
     const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
-    const context = useContext(DetalleProductoContext)!
-
-    const { imagenes_productos } = context.producto!
 
     return (
         <>
@@ -30,11 +28,11 @@ const CarouselImagenes = () => {
                 loop={true}
             >
                 {
-                    imagenes_productos.map(imagen => (
-                        <SwiperSlide key={`${imagen.id}-${Date.now()}`}>
+                    imagenes.map(imagen => (
+                        <SwiperSlide key={`${imagen['data_url'] ?? imagen['url']}`}>
                             <img
-                                src={imagen.url}
-                                className='rounded-lg w-full md:w-[400px] md:h-[400px] object-contain mx-auto'
+                                src={imagen['data_url'] ?? imagen['url']}
+                                className='rounded-lg w-full object-contain mx-auto'
                                 loading='lazy'
                             />
                         </SwiperSlide>
@@ -48,14 +46,15 @@ const CarouselImagenes = () => {
                 freeMode={true}
                 watchSlidesProgress={true}
                 modules={[FreeMode, Navigation, Thumbs]}
-                className="mySwiper mt-10"
+                className="mySwiper mt-3"
             >
                 {
-                    imagenes_productos.map(imagen => (
-                        <SwiperSlide key={imagen.id}>
+                    imagenes.map(imagen => (
+                        <SwiperSlide key={imagen}>
                             <img
-                                src={imagen.url}
-                                className='mx-auto rounded-lg max-h-[100px] object-cover object-center'
+                                src={imagen['data_url'] ?? imagen['url']}
+                                className='rounded-lg w-full object-contain mx-auto'
+                                loading='lazy'
                             />
                         </SwiperSlide>
                     ))

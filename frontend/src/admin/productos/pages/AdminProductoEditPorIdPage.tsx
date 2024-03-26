@@ -1,23 +1,26 @@
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Button from "../../../global/components/Button"
 import SelectCategorias from "../../categorias/components/SelectCategorias"
+import CarouselImagenes from "../components/CarouselImagenes";
 import useProductoEdit from "../hooks/useProductoEdit"
 import ReactImageUploading from "react-images-uploading";
-import { useState } from "react";
-
 const AdminProductoEditPorIdPage = () => {
 
-    const { register, isLoading, errors, handleSubmit, producto } = useProductoEdit()
+    const {
+        register,
+        isLoading,
+        errors,
+        // producto,
+        handleSubmit,
+        formData,
+        onChangeImages,
+        handleRemoveImage,
+        imagenesSeleccionadas
+    } = useProductoEdit()
 
-    const [images, setImages] = useState([]);
-    const maxNumber = 1;
+    const maxNumber = 10;
 
-    const onChange = (imageList: any, addUpdateIndex: any) => {
-        // data for submit
-        console.log(imageList, addUpdateIndex);
-        setImages(imageList);
-        // updateImages(imageList)
-    };
     return (
         <>
             <div className="rounded-lg mx-auto bg-white max-w-[60%] border p-5">
@@ -129,7 +132,7 @@ const AdminProductoEditPorIdPage = () => {
                                     htmlFor="last_name"
                                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                                 >
-                                    Descripcion {producto.descripcion}
+                                    Descripcion
                                 </label>
                                 <input
                                     type="text"
@@ -144,7 +147,7 @@ const AdminProductoEditPorIdPage = () => {
                                     // name='descripcion'
                                     // value={formState.descripcion}
                                     // onChange={onInputChange}
-                                    value={producto.descripcion}
+                                    // value={formData.descripcion}
                                     {...register("descripcion", {
                                         required: {
                                             value: true,
@@ -285,8 +288,8 @@ const AdminProductoEditPorIdPage = () => {
                             <div>
                                 <ReactImageUploading
                                     multiple
-                                    value={images}
-                                    onChange={onChange}
+                                    value={imagenesSeleccionadas}
+                                    onChange={onChangeImages}
                                     maxNumber={maxNumber}
                                     dataURLKey="data_url"
                                 >
@@ -295,8 +298,8 @@ const AdminProductoEditPorIdPage = () => {
                                         isDragging,
                                         dragProps,
                                     }) => (
-                                        // write your building UI
                                         <div className="upload__image-wrapper">
+
                                             <button
                                                 style={isDragging ? { color: 'red' } : undefined}
                                                 type='button'
@@ -307,15 +310,35 @@ const AdminProductoEditPorIdPage = () => {
                                                 Selecciona una imagen para el producto
                                             </button>
 
-                                            &nbsp;
-
-                                            {/* <button className='mt-2' onClick={onImageRemoveAll}>Remove all images</button> */}
+                                            <div className="grid grid-cols-3 gap-3 mt-9 gap-x-10 gap-y-7">
+                                                {imagenesSeleccionadas.map((image: any, index: any) => (
+                                                    <div key={index} className="image-item relative">
+                                                        <img
+                                                            src={image['data_url'] ?? image['url']}
+                                                            alt=""
+                                                            className="w-full max-h-[120px] object-contain"
+                                                        />
+                                                        <div className="image-item__btn-wrapper -top-3 -right-3 absolute">
+                                                            <button
+                                                                onClick={() => handleRemoveImage(index)}
+                                                                className='px-2.5 py-0.5 rounded-lg bg-red-600 text-white font-semibold'
+                                                                type="button"
+                                                            >x</button>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
 
 
 
                                         </div>
                                     )}
                                 </ReactImageUploading>
+                            </div>
+                            <div>
+                                <CarouselImagenes
+                                    imagenes={imagenesSeleccionadas}
+                                />
                             </div>
                             {/* <div>
                                 {images.map((image, index) => (

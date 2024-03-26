@@ -120,9 +120,9 @@ const TableProductos = () => {
                                             <Link to={`/admin/producto/edit/${id}`} className="bg-yellow-300 py-2 px-6 font-bold text-black rounded-md transition-colors duration-200 focus:outline-none">
                                                 Editar
                                             </Link>
-                                            <a href={`/admin/pedidos/${id}`} className="bg-alibabeto-1 py-2 px-6 text-white rounded-lg transition-colors duration-200 focus:outline-none">
+                                            <Link to={`/producto/${id}`} className="bg-alibabeto-1 py-2 px-6 text-white rounded-lg transition-colors duration-200 focus:outline-none">
                                                 Ver
-                                            </a>
+                                            </Link>
                                         </div>
                                     </td>
                                 </tr>

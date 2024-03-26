@@ -4,6 +4,7 @@ import { type Controller } from '../types'
 import { Op, type Order, QueryTypes } from 'sequelize'
 import { Categoria } from '../models/categoria'
 import { sequelize } from '../database'
+import { ImagenesProducto } from '../models/imagenes_producto'
 
 const MAX_ELEMENTS = 16
 
@@ -213,6 +214,27 @@ export const EditarProductoCtrl: Controller<ProductoAttributes | null, EditarPro
       ...rest
     })
 
+    console.log('rest.imagenesRemove')
+    console.log(rest.imagenesRemove)
+
+    for (const imagen of rest.imagenes) {
+      await ImagenesProducto.create({
+        productoID: productoAEditar.id,
+        url: imagen
+      })
+    }
+    for (const imagen of rest.imagenesRemove) {
+      const imagenABorrar = await ImagenesProducto.findOne({
+        where: {
+          id: imagen
+        }
+      })
+
+      await imagenABorrar?.destroy()
+    }
+
+    // productoAEditar.imagenes_productos.push()
+
     // Guarda los cambios en el producto
     await productoAEditar.save()
 
@@ -282,6 +304,13 @@ export const ObtenerProductoidctrl: Controller <ProductoPorIdResponse | null, nu
 
     const productoABuscar = await Producto.findOne({
       where: { id, is_deleted: 0 },
+      include: [
+        {
+          model: ImagenesProducto, // El modelo de la tabla relacionada
+          as: 'imagenes_productos' // Renombrar la asociación
+          // attributes: ['nombre', 'descripcion'] // Atributos específicos de la tabla relacionada que deseas incluir
+        }
+      ],
       attributes: {
         include: [
           'codigo',
