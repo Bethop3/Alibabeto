@@ -9,3 +9,8 @@ export type EditarUsuario = UsuarioAttributes
 export type AuthRegistroUsuario = Omit<UsuarioAttributes, 'id' | 'RolFK' | 'is_deleted'>
 
 export type EditarDireccionEntrega = DireccionEntregaAttributes
+
+export interface AuthUsuario {
+  password: string
+  correo: string
+}

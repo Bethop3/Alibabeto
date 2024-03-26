@@ -1,12 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 // Librerías
+import { ApolloServerPluginLandingPageLocalDefault, ApolloServerPluginLandingPageProductionDefault } from '@apollo/server/plugin/landingPage/default'
+import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer'
+import { expressMiddleware } from '@apollo/server/express4'
 import express, { type Application } from 'express'
-import swaggerUI from 'swagger-ui-express'
+import { ApolloServer } from '@apollo/server'
 import fileUpload from 'express-fileupload'
+import swaggerUI from 'swagger-ui-express'
+import { json } from 'body-parser'
 import { ESLint } from 'eslint'
 import dotenv from 'dotenv'
+import http from 'http'
 import cors from 'cors'
-
 // Routers
 import provedoreesRouter from './router/proveedores.routes'
 import categoriaRouter from './router/categoria.routes'
@@ -23,14 +28,21 @@ import authRouter from './router/auth.routes'
 // import ContextFn from './context'
 
 // Base de Datos
-import { initModels } from './models/init-models'
 import { getConnection } from './database/conection'
 import swaggerDocument from './swagger/conf-3.json'
+import { initModels } from './models/init-models'
 import { sequelize } from './database'
-import http from 'http'
+
+// sockets
 import { initSocket } from './socket/io'
+
+// GRAPHQL
+import typeDefs from './graphql/typeDefs'
+import resolvers from './resolvers'
+
 import { MiddlewareTokenValidator } from './middlewares/middlewareTokenValidator'
-// import { MiddlewareTokenValidator } from './middlewares/middlewareTokenValidator'
+import { type ContextApp } from './types'
+import ContextFn from './context'
 
 export async function runESLint (): Promise<void> {
   const eslint = new ESLint()
@@ -70,11 +82,41 @@ const main = async () => {
   app.use(express.static('./src/public'))
 
   // Rutas
+
+  initModels(sequelize)
+
+  // Conexión a la base de datos
+  await getConnection()
+
+  const httpServer = http.createServer(app)
+
+  const server = new ApolloServer<ContextApp>({
+    resolvers,
+    typeDefs,
+    plugins: [
+      ApolloServerPluginDrainHttpServer({ httpServer }),
+      process.env.NODE_ENV === 'production'
+        ? ApolloServerPluginLandingPageProductionDefault({
+          graphRef: 'my-graph-id@my-graph-variant',
+          footer: false
+        })
+        : ApolloServerPluginLandingPageLocalDefault({ footer: false })
+    ]
+  })
+  await server.start()
+
   app.use('/auth', authRouter)
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
   app.use('/pages', pagesRouter)
   app.use('/producto', productosRouter)
+  app.use(
+    '/graphql',
+    json(),
+    expressMiddleware(server, {
+      context: ContextFn
+    })
+  )
   app.use(MiddlewareTokenValidator)
   app.use('/usuario', usuariosRouter)
   app.use('/proveedores', provedoreesRouter)
@@ -84,13 +126,6 @@ const main = async () => {
   app.use('/pedido', pedidosRouter)
   app.use('/upload', uploadsRouter)
   app.use('/carrito', carritoRouter)
-
-  initModels(sequelize)
-
-  // Conexión a la base de datos
-  await getConnection()
-
-  const httpServer = http.createServer(app)
 
   initSocket(httpServer)
 

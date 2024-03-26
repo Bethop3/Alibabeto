@@ -1,8 +1,13 @@
+import { type StandaloneServerContextFunctionArgument } from '@apollo/server/dist/esm/standalone'
 import { type NextFunction, type Request, type Response } from 'express'
+import { type UsuarioAttributes } from '../models/usuario'
+import { type ContextFunction } from '@apollo/server'
 import { type IncomingHttpHeaders } from 'http'
 import { type JwtPayload } from 'jsonwebtoken'
-import { type UsuarioAttributes } from '../models/usuario'
 
+export interface GenInput<T> {
+  input: T
+}
 export interface ContextApp {
   authScope: string | null
 }
@@ -52,3 +57,5 @@ export interface ResponseAuth extends BasicResponse<null> {
 }
 
 export type UserLogin = Pick<UsuarioAttributes, 'correo' | 'password'>
+
+export type IContext = ContextFunction< [StandaloneServerContextFunctionArgument], ContextApp >
