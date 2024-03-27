@@ -1,9 +1,14 @@
+/* eslint-disable no-debugger */
+/* eslint-disable use-isnan */
+/* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react'
-import { DisplayInfoState, Producto, ProductoQueryResponse } from '../types/productos.types';
+import { Display, DisplayInfoState, Producto, ProductoQueryResponse } from '../types/productos.types';
 import { AuthAxios } from '../../global/api/AuthAxios';
 import { BasicResponse } from '../../types';
+import { useForm } from 'react-hook-form';
+import useCategorias from '../../admin/categorias/hooks/useCategorias';
 
 type QueryState = {
     idCategoria: number | null,
@@ -11,12 +16,21 @@ type QueryState = {
     pagina: number
 }
 
+type InputQueryProductos = {
+  categoria: string
+}
+
 export type ContextUseBuscadorProductos = ReturnType<typeof useBuscadorProductos>;
 
 const useBuscadorProductos = () => {
 
+    const { register , watch , setValue } = useForm<InputQueryProductos>()
+
+    const formData = watch()
+
     const [ isLoading , setLoading ] = useState<boolean>(false)
     const [ productos , setProductos ] = useState<Producto[]>([])
+    const { categorias } = useCategorias()
     const [ pagination , setPagination ] = useState({
       pagina: 1,
       totalPaginas: 0
@@ -40,9 +54,14 @@ const useBuscadorProductos = () => {
     
     useEffect( () => {
       
-        handleSearchProductos()
+      handleSearchProductos()
 
-    }, [queryProductos.idCategoria, pagination.pagina])
+    }, 
+    [
+      // queryProductos.idCategoria, 
+      pagination.pagina,
+      formData.categoria
+    ])
 
     const handleNextPage = () => {
 
@@ -79,9 +98,25 @@ const useBuscadorProductos = () => {
 
             const searchParams = new URLSearchParams(_url.search);
             
-            const categoria = searchParams.get('categoria');
+            debugger 
+            let categoria = formData.categoria ?? searchParams.get('categoria');
             const nombre = searchParams.get('nombre');
-            
+
+            debugger
+            // debugger
+            if( (categoria !== null && categoria !== undefined) && !Number.isNaN(categoria) )
+            {
+              searchParams.set('categoria', categoria as string);
+              setValue("categoria", categoria)
+            }
+
+            // Agregar o actualizar un parámetro de búsqueda
+
+// Crear una nueva URL con los parámetros actualizados
+            const nuevaURL = `${window.location.pathname}?${searchParams.toString()}`;
+
+            window.history.pushState({ path: nuevaURL }, '', nuevaURL);
+                  
             console.log('categoria');
             console.log(categoria);
 
@@ -141,7 +176,10 @@ const useBuscadorProductos = () => {
     
   return {
     isLoading,
+    register,
+    formData,
     productos,
+    categorias,
     displayInfo,
     changePage,
     handleNextPage,
