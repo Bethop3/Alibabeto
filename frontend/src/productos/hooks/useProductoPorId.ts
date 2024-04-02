@@ -64,13 +64,13 @@ const useProductoPorId = () => {
 
     const _importe = _precio.times(_cantidad)
 
-    const iva = _precio.times(0.16)
+    const _iva = _importe.times(0.16)
 
-    const _total = _importe.plus(iva)
+    const _total = _importe.plus(_iva)
 
     return {
       importe: _importe,
-      iva,
+      iva: _iva,
       total: _total
     }
 
@@ -150,8 +150,8 @@ const useProductoPorId = () => {
     isLoadingCarrito,
     productosRelacionados,
     importe: formatter.format(importe.toNumber()),
-    iva: formatter.format(iva.toNumber()),
-    total: formatter.format(total.toNumber()),
+    iva: formatter.format(iva.toNumber() ?? 0),
+    total: formatter.format(total.toNumber() ?? 0),
     cantidadProducto,
     handleDecrementCantidad,
     handleIncrementCantidad,

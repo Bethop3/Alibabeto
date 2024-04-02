@@ -10,6 +10,8 @@ const DetalleProductoFicha: FC = () => {
         isLoadingCarrito,
         isLoading,
         importe,
+        iva,
+        total,
         cantidadProducto,
         handleIncrementCantidad,
         handleDecrementCantidad,
@@ -146,18 +148,18 @@ const DetalleProductoFicha: FC = () => {
                         </li>
                         <li className='font-bold mt-3 flex items-center justify-between border-b-gray-400/50 border border-t-0 border-r-0 border-l-0 pb-3'>
                             <p>
-                                Importe
+                                IVA
                             </p>
                             <p>
-                                {importe}
+                                {iva}
                             </p>
                         </li>
                         <li className='font-bold mt-3 flex items-center justify-between border-b-gray-400/50 border border-t-0 border-r-0 border-l-0 pb-3'>
                             <p>
-                                Importe
+                                Total
                             </p>
                             <p>
-                                {importe}
+                                {total}
                             </p>
                         </li>
                     </ul>

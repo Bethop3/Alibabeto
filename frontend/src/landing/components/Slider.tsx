@@ -23,7 +23,8 @@ const Slider = () => {
             >
                 <SwiperSlide>
                     <div className='relative'>
-                        <img className='w-full' src="/Images/hero/bg-2.webp" alt="" />
+                        <img className='w-full block md:hidden' src="/Images/hero/bg-mobile-1.webp" alt="" />
+                        <img className='w-full hidden md:block' src="/Images/hero/bg-2.webp" alt="" />
                         <div className="container px-5 mx-auto left-0 right-0 bottom-0 absolute top-0 grid grid-cols-1 h-[100%] md:h-auto grid-rows-2 md:grid-rows-1 md:grid-cols-2">
                             <div className="item  flex items-center justify-center flex-col">
                                 <div className="order-last mb-6 space-y-6 md:mb-0 ">
@@ -51,11 +52,12 @@ const Slider = () => {
                 </SwiperSlide>
                 <SwiperSlide>
                     <div className='relative'>
-                        <img src="/Images/hero/bg-1.webp" alt="" />
-                        <div className="container mx-auto left-0 right-0 bottom-0 absolute top-0 grid grid-cols-1 h-[100%] md:h-auto grid-rows-2 md:grid-rows-1 md:grid-cols-2">
+                        <img className='w-full block md:hidden' src="/Images/hero/bg-mobile-2.webp" alt="" />
+                        <img className='w-full hidden md:block' src="/Images/hero/bg-1.webp" alt="" />
+                        <div className="container mx-auto px-5 left-0 right-0 bottom-0 absolute top-0 grid grid-cols-1 h-[100%] md:h-auto grid-rows-2 md:grid-rows-1 md:grid-cols-2">
                             <div className="item  flex items-center justify-center flex-col">
                                 <div className="order-1 mb-6 space-y-6 md:mb-0 ">
-                                    <h1 className="text-4x text-white font-bold md:text-5xl">
+                                    <h1 className="text-4xl text-white font-bold md:text-5xl">
                                         Apple Watch: Una experiencia de otra manera
                                     </h1>
                                     <div className="flex flex-row-reverse flex-wrap justify-center gap-4 md:gap-6 md:justify-end">
@@ -71,7 +73,7 @@ const Slider = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="order-1 md:-order-1 item flex items-start justify-center">
+                            <div className="-order-1 md:-order-1 item flex items-start justify-center">
 
                             </div>
                         </div>
@@ -79,7 +81,8 @@ const Slider = () => {
                 </SwiperSlide>
                 <SwiperSlide>
                     <div className='relative'>
-                        <img src="/Images/hero/bg-4.webp" alt="" />
+                        <img className='w-full block md:hidden' src="/Images/hero/bg-mobile-3.webp" alt="" />
+                        <img className='w-full hidden md:block' src="/Images/hero/bg-4.webp" alt="" />
                         <div className="container mx-auto left-0 right-0 bottom-0 absolute top-0 grid grid-cols-1 h-[100%] md:h-auto grid-rows-2 md:grid-rows-1 md:grid-cols-2">
                             <div className="item  flex items-center justify-center flex-col">
                                 <div className="order-1 mb-6 space-y-6 md:mb-0 ">
@@ -104,12 +107,6 @@ const Slider = () => {
                             </div>
                         </div>
                     </div>
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="/Images/hero/bg-3.webp" alt="" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="/Images/hero/bg-2.webp" alt="" />
                 </SwiperSlide>
             </Swiper>
         </div>
