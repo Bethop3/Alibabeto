@@ -17,11 +17,11 @@ const usePagination = ({
         setMaxPagina(max)
     }
 
-    const handleSiguiente = ( next: number | null = null ) => {
+    const handleSiguiente = ( next: number ) => {
 
         // debugger 
 
-        if( Number(next) === 0 ) return 
+        if( Number(next) === 0 || next > totalPaginas ) return 
 
         if( !next || next === -1 )
         {
