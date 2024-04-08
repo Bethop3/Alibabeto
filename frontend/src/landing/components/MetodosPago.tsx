@@ -22,7 +22,6 @@ const MetodosPago = () => {
                     </h2>
                     <p className="text-base text-gray-700 md:text-lg">
                         En alibabeto puedes pagar con efectivo, tarjeta de crédito, débito o a través de las siguientes plataformas.
-                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque rem aperiam, eaque ipsa quae.
                     </p>
                 </div>
                 <div className="grid gap-8 row-gap-8 lg:grid-cols-3">

@@ -95,7 +95,7 @@ code {
 }
 
 .custom-grid {
-    grid-template-columns: 1fr 80%;
+    /* grid-template-columns: 1fr 80%; */
     /* padding: 3rem; */
     gap: 2rem;
 }

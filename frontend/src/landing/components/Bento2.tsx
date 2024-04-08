@@ -18,7 +18,7 @@ const Bento2 = () => {
                             <div className="px-10 max-w-xl">
                                 <h2 className="text-2xl text-white font-semibold">Electronicos</h2>
                                 {/* <p class="mt-2 text-gray-400">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempore facere provident molestias ipsam sint voluptatum pariatur.</p> */}
-                                <button className="flex items-center mt-4 text-white text-sm uppercase font-medium rounded hover:underline focus:outline-none">
+                                <a href="/productos?categoria=7" className="flex items-center mt-4 text-white text-sm uppercase font-medium rounded hover:underline focus:outline-none">
                                     <span>Comprar Ahora</span>
                                     <svg
                                         className="h-5 w-5 mx-2"
@@ -31,7 +31,7 @@ const Bento2 = () => {
                                     >
                                         <path d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                     </svg>
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -46,7 +46,7 @@ const Bento2 = () => {
                             <div className="px-10 max-w-xl">
                                 <h2 className="text-2xl text-white font-semibold">Videojuegos</h2>
                                 {/* <p class="mt-2 text-gray-400">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempore facere provident molestias ipsam sint voluptatum pariatur.</p> */}
-                                <button className="flex items-center mt-4 text-white text-sm uppercase font-medium rounded hover:underline focus:outline-none">
+                                <a href="/productos?categoria=13" className="flex items-center mt-4 text-white text-sm uppercase font-medium rounded hover:underline focus:outline-none">
                                     <span>Comprar Ahora</span>
                                     <svg
                                         className="h-5 w-5 mx-2"
@@ -59,7 +59,7 @@ const Bento2 = () => {
                                     >
                                         <path d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                     </svg>
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>

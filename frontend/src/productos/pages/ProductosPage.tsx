@@ -12,16 +12,16 @@ const ProductosPage = () => {
     const { productos, displayInfo } = response
 
     return (
-        <MainLayout size='md'>
+        <MainLayout size='lg'>
             <BuscadorProductosContext.Provider value={response}>
-                <div className="p-10">
+
+                <div className="my-5">
 
                     <FiltradorBuscadorProductos />
 
                     <section className="grid custom-grid item-grid gap-4">
 
-                        <div>
-                            {/* <h3> Cambiar </h3> */}
+                        {/* <div>
 
                             <article
                                 className="block max-w-sm p-6 border border-gray-200 rounded-lg bg-blue-50/50"
@@ -59,12 +59,12 @@ const ProductosPage = () => {
 
                             </article>
 
-                        </div>
+                        </div> */}
 
                         <div>
                             <article
                                 className={`
-                                    grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 ${displayInfo.display === 'grid' ? 'xl:grid-cols-4' : 'xl:grid-cols-1'} gap-5 item-grid p- bg-white  border-gray-200 rounded-lg
+                                    grid grid-cols-1 md:grid-cols-5 lg:grid-cols-5 ${displayInfo.display === 'grid' ? 'xl:grid-cols-4' : 'xl:grid-cols-1'} gap-5 item-grid p- bg-white  border-gray-200 rounded-lg
                                 `}
                             >
                                 {
