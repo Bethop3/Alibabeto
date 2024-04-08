@@ -23,8 +23,19 @@ const ProductoGridItem: FC<Props> = ({
         // descripcion,
         precio,
         id,
-        imagen
+        imagen,
+        imagenes_productos
     } = producto
+
+    let imagenPrincipal = ''
+
+    if (imagen.length > 22) {
+
+        imagenPrincipal = imagen
+    }
+    else if (imagenes_productos) {
+        imagenPrincipal = imagenes_productos[0]?.url
+    }
 
     function formatarComoMonedaMexicana(valor: number): string {
         // Opciones de formato para moneda mexicana
@@ -51,7 +62,7 @@ const ProductoGridItem: FC<Props> = ({
                 <Link to={`/producto/${id}`}>
                     <img
                         className={`px-5 py-10 mx-auto pr-0 rounded-t-lg h-60`}
-                        src={imagen}
+                        src={imagenPrincipal}
                         alt={`${producto.descripcion} | Alibabeto`}
                         onError={manejarErrorDeCarga}
                         loading='lazy'
@@ -81,8 +92,8 @@ const ProductoGridItem: FC<Props> = ({
 
             <Link to={`/producto/${id}`}>
                 <img
-                    className={`p-8 rounded-t-lg ${tipo === 'primary' ? 'h-48' : 'h-60'} mx-auto`}
-                    src={imagen}
+                    className={`p-8 rounded-t-lg ${tipo === 'primary' ? 'h-[192px] w-[192px]' : 'h-60'} mx-auto object-contain`}
+                    src={imagenPrincipal}
                     alt={`${producto.descripcion} | Alibabeto`}
                     onError={manejarErrorDeCarga}
                     loading='lazy'

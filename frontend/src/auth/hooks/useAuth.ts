@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Usuario } from '../../admin/usuarios/types/usuario.types'
 import { constansts } from '../constants'
 import { useStore } from '../../store'
 import { useNavigate } from 'react-router-dom'
 import { AuthAxios } from '../../global/api/AuthAxios'
 import { BasicResponse } from '../../types'
+import { AxiosError } from 'axios'
 
 const useAuth = () => {
     
@@ -29,9 +31,15 @@ const useAuth = () => {
                 navigate('/login')
             }
             
-        } catch (error) 
+        }
+         catch (error) 
         {
-            console.log();
+            const axiosError = error as AxiosError<any>;
+            if( axiosError.response?.data.msg )
+            {
+                clearSession()
+                navigate('/login')
+            }
         }
 
     }
@@ -57,13 +65,19 @@ const useAuth = () => {
 
     }
 
+    const clearSession = () => {
+
+        window.localStorage.removeItem(constansts.AUTH_SESSION_TOKEN)
+            
+        window.localStorage.removeItem(constansts.AUTH_SESSION_USER)
+
+    }
+
     const handleLogout = () => {
 
         try {
             
-            window.localStorage.removeItem(constansts.AUTH_SESSION_TOKEN)
-            
-            window.localStorage.removeItem(constansts.AUTH_SESSION_USER)
+            clearSession()
             
             navigate('/login')
 

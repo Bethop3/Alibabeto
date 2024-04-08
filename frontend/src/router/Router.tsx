@@ -6,17 +6,17 @@ import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Fragment } from "react/jsx-runtime";
-// import useAuth from "../auth/hooks/useAuth";
+import useAuth from "../auth/hooks/useAuth";
 import { routes } from "./routes";
 import { useEffect } from "react";
 
 const Router = () => {
 
-    // const { validateToken } = useAuth()
+    const { validateToken } = useAuth()
 
     useEffect(() => {
 
-        // validateToken()
+        validateToken()
 
     }, [])
 
