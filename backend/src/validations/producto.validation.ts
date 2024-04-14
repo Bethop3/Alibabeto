@@ -2,7 +2,7 @@ import { body } from 'express-validator'
 
 export const validations = {
   create: [
-    body('imagen').isString().not().isEmpty().withMessage('El campo imagen debe ser una cadena de texto y no puede estar vacío.'),
+    // body('imagen').isString().not().isEmpty().withMessage('El campo imagen debe ser una cadena de texto y no puede estar vacío.'),
     body('codigo').isString().not().isEmpty().withMessage('El campo codigo debe ser una cadena de texto y no puede estar vacío.'),
     body('titulo').isString().not().isEmpty().withMessage('El campo titulo debe ser una cadena de texto y no puede estar vacío.'),
     body('descripcion').isString().not().isEmpty().withMessage('El campo descripcion debe ser una cadena de texto y no puede estar vacío.'),
@@ -12,7 +12,7 @@ export const validations = {
   ],
   edit: [
     body('id').isNumeric().not().isEmpty().withMessage('El campo id debe ser una número y no puede estar vacío.'),
-    body('imagen').isString().not().isEmpty().withMessage('El campo imagen debe ser una cadena de texto y no puede estar vacío.'),
+    // body('imagen').isString().not().isEmpty().withMessage('El campo imagen debe ser una cadena de texto y no puede estar vacío.'),
     body('codigo').isString().not().isEmpty().withMessage('El campo codigo debe ser una cadena de texto y no puede estar vacío.'),
     body('titulo').isString().not().isEmpty().withMessage('El campo titulo debe ser una cadena de texto y no puede estar vacío.'),
     body('descripcion').isString().not().isEmpty().withMessage('El campo descripcion debe ser una cadena de texto y no puede estar vacío.'),

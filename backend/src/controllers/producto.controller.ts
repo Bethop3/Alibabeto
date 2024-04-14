@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 import { type ProductosQuery, type CrearProducto, type EditarProducto, type ProductoPorIdResponse, type ProductoQueryResponse } from '../types/producto'
 import { Producto, type ProductoAttributes } from '../models/producto'
 import { type Controller } from '../types'
@@ -96,7 +97,7 @@ export const GetProductosByQuery: Controller<ProductoQueryResponse, any, null, n
       where: whereClause
     })
 
-    const productos = await Producto.findAll({
+    const productos: Producto[] = await Producto.findAll({
       limit,
       offset,
       where: whereClause,
@@ -110,6 +111,10 @@ export const GetProductosByQuery: Controller<ProductoQueryResponse, any, null, n
           model: Categoria, // El modelo de la tabla relacionada
           as: 'categorium' // Renombrar la asociación
           // attributes: ['nombre', 'descripcion'] // Atributos específicos de la tabla relacionada que deseas incluir
+        },
+        {
+          model: ImagenesProducto,
+          as: 'imagenes_productos'
         }
       ]
       // where: {
@@ -121,6 +126,11 @@ export const GetProductosByQuery: Controller<ProductoQueryResponse, any, null, n
       //   }
       // }
     })
+
+    // let productosSeleccionados = productos.map(producto => ({
+    //   ...producto,
+    //   imagenes_productos: producto.imagenes_productos.map(img => img.url)
+    // })) as unknown as Producto[]
 
     const totalPaginas = Math.ceil(totalProductos / MAX_ELEMENTS)
 
