@@ -4,7 +4,7 @@ import LoginForm from "../components/LoginForm";
 const LoginPage = () => {
     return (
         <MainLayout>
-            <div className="bg-white relative">
+            <div className="bg-white relative min-h-[90vh]">
                 <div
                     className="flex flex-col items-center justify-between pt-0 pr-10 pb-0 pl-10 mt-0 mr-auto mb-0 ml-auto max-w-7xl xl:px-5 lg:flex-row"
                 >

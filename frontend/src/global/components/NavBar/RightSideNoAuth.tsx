@@ -1,22 +1,24 @@
+import { Link } from "react-router-dom"
+
 const RightSideNoAuth = () => {
     return (
-        <div>
-            <a
-                href="/login"
+        <div className="flex">
+            <Link
+                to="/login"
                 type="button"
                 title="Start buying"
-                className="w-full mr-1 min-w-[120px] py-2 px-x text-sm text-center rounded-md transition bg-white shadow-xl sm:w-max border-blue-100 border"
+                className="mr-2 md:mr-1 px-4 md:min-w-[120px] py-2 md:text-sm text-xs text-center rounded-md transition bg-white shadow-xl sm:w-max border-blue-100 border"
             >
                 <span className="block text-black font-semibold">Iniciar Sesión</span>
-            </a>
-            <a
-                href="/registro"
+            </Link>
+            <Link
+                to="/registro"
                 type="button"
                 title="Start buying"
-                className="w-full  min-w-[120px] text-sm  py-2 px-4 text-center rounded-md transition bg-alibabeto-1 shadow-xl sm:w-max"
+                className="mr-3 max-w-[100px] min-w-[120px] md:text-sm text-xs py-2 md:px-4 text-center rounded-md transition bg-alibabeto-1 shadow-xl sm:w-max"
             >
                 <span className="block text-white font-semibold">Registrarse</span>
-            </a>
+            </Link>
         </div>
     )
 }

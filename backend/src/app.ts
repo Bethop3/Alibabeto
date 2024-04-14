@@ -117,10 +117,10 @@ const main = async () => {
       context: ContextFn
     })
   )
+  app.use('/categoria', categoriaRouter)
   app.use(MiddlewareTokenValidator)
   app.use('/usuario', usuariosRouter)
   app.use('/proveedores', provedoreesRouter)
-  app.use('/categoria', categoriaRouter)
   app.use('/roles', rolesrouter)
   app.use('/entradas', entradaRouter)
   app.use('/pedido', pedidosRouter)

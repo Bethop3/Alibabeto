@@ -6,6 +6,7 @@ export type TipoBotton = 'primary' | 'secondary' | 'carrito' | 'lista'
 
 export type ConfigProps = {
     tipo: TipoBotton
+    requireReload?: boolean
 }
 
 type Props = ConfigProps & {
@@ -14,9 +15,9 @@ type Props = ConfigProps & {
 
 const ProductoGridItem: FC<Props> = ({
     producto,
-    tipo = 'primary'
+    tipo = 'primary',
+    requireReload = false
 }) => {
-
     const {
         codigo,
         titulo,
@@ -24,7 +25,7 @@ const ProductoGridItem: FC<Props> = ({
         precio,
         id,
         imagen,
-        imagenes_productos
+        imagenes_productos,
     } = producto
 
     let imagenPrincipal = ''
@@ -84,13 +85,20 @@ const ProductoGridItem: FC<Props> = ({
         </div>
     )
 
+    const manejarClick = () => {
+        // Forzar la recarga de la página
+        if (requireReload) {
+            window.location.href = `/producto/${id}`;
+        }
+    };
+
     return (
         <div className={`card-producto w-full h-full 
             
             ${(tipo === 'primary' || tipo === 'carrito') && 'flex flex-col justify-between'} 
             max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700`}>
 
-            <Link to={`/producto/${id}`}>
+            <Link onClick={manejarClick} to={`/producto/${id}`}>
                 <img
                     className={`p-8 rounded-t-lg ${tipo === 'primary' ? 'h-[192px] w-[192px]' : 'h-60'} mx-auto object-contain`}
                     src={imagenPrincipal}

@@ -102,7 +102,7 @@ export const ObtenerCarritoUsuarioCtrl: Controller<CarritoResponse> = async (req
     console.log(req.payload)
     const carritoUsuario = await Carrito.findAll({
       where: {
-        usuarioID: req.payload?.id_usuario,
+        // usuarioID: req.payload?.id_usuario
         is_deleted: 0
       },
       attributes: { exclude: ['is_creado', 'is_deleted', 'status', 'usuarioID', 'usuarioID', 'productoID'] },
@@ -163,7 +163,7 @@ export const AgregarProductoCarritoCtrl: Controller<ProductoCarrito, AgregarProd
       importe: rest.importe,
       iva: rest.iva,
       total: rest.total,
-      usuarioID: req.payload?.id_usuario ?? 0,
+      usuarioID: 1,
       cantidad: rest.cantidad,
       productoID: rest.productoID,
       status: 1,

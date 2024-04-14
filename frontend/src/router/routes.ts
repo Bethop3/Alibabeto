@@ -8,12 +8,12 @@ import AdminProductoCreatePage from "../admin/productos/pages/AdminProductoCreat
 import AdminProductoEditPorIdPage from "../admin/productos/pages/AdminProductoEditPorIdPage";
 import AdminProductosIndexPage from "../admin/productos/pages/AdminProductosIndexPage";
 import LoginPage from "../auth/pages/LoginPage";
+import RegisterPage from "../auth/pages/RegisterPage";
 import CarritoIndexPage from "../carrito/pages/CarritoIndexPage";
 import IndexPage from "../landing/pages/IndexPage";
 import PedidosPage from "../pedidos/pages/PedidosPage";
 import DetalleProductoPorId from "../productos/pages/DetalleProductoPorId";
 import ProductosPage from "../productos/pages/ProductosPage";
-import PedidosDescPage from "../pedidos/pages/PedidosDescPage";
 
 interface RouteConfig {
     path: string;
@@ -27,10 +27,10 @@ interface RouteConfig {
 export const routes: RouteConfig[] = [
     { path: '/' , name: 'Index', Component: IndexPage , _protected: false, hasLayout: false },
     { path: '/login' , name: 'Login', Component: LoginPage , _protected: false, hasLayout: true },
+    { path: '/registro' , name: 'Registro', Component: RegisterPage , _protected: false, hasLayout: true },
     { path: '/productos' , name: 'Productos', Component: ProductosPage , _protected: false, hasLayout: true },
     { path: '/carrito' , name: 'Carrito', Component: CarritoIndexPage , _protected: true, hasLayout: true },
     { path: '/mis_pedidos' , name: 'Pedidos', Component: PedidosPage , _protected: false, hasLayout: true },
-    { path: '/mis_pedidos/:id' , name: 'Pedidos', Component: PedidosDescPage , _protected: false, hasLayout: true },
     { path: '/producto/:id' , name: 'Producto Por Id', Component: DetalleProductoPorId , _protected: false, hasLayout: true },
     { path: '/admin/dashboard' , name: 'Admin Dashboard', Component: AdminDashboardPage , _protected: false, hasLayout: true , isAdmin: true },
     { path: '/admin/productos' , name: 'Productos Admin', Component: AdminProductosIndexPage , _protected: false, hasLayout: true , isAdmin: true },

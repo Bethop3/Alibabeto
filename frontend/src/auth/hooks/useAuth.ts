@@ -20,7 +20,7 @@ const useAuth = () => {
 
             if( !auth )
             {
-                navigate('/login')
+                // navigate('/login')
                 return
             }
 
@@ -38,7 +38,7 @@ const useAuth = () => {
             if( axiosError.response?.data.msg )
             {
                 clearSession()
-                navigate('/login')
+                // navigate('/login')
             }
         }
 

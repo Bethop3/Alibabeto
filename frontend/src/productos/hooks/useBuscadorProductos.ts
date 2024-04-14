@@ -98,12 +98,9 @@ const useBuscadorProductos = () => {
 
             const searchParams = new URLSearchParams(_url.search);
             
-            debugger 
             let categoria = formData.categoria ?? searchParams.get('categoria');
             const nombre = searchParams.get('nombre');
 
-            debugger
-            // debugger
             if( (categoria !== null && categoria !== undefined) && !Number.isNaN(categoria) )
             {
               searchParams.set('categoria', categoria as string);
@@ -155,6 +152,8 @@ const useBuscadorProductos = () => {
               ...pagination,
               totalPaginas: data.totalPaginas ?? 0
             })
+            
+            await new Promise(resolve => setTimeout(resolve, 1000));
 
             setLoading(false)
 

@@ -18,6 +18,7 @@ const ProductosRelacionados = () => {
                             productosRelacionados.map((producto) => (
                                 <div className="mb-4" key={producto.id}>
                                     <ProductoGridItem
+                                        requireReload={true}
                                         producto={producto}
                                         tipo='secondary'
                                     />

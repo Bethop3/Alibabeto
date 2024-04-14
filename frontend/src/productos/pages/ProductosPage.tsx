@@ -2,6 +2,7 @@ import MainLayout from '../../layouts/MainLayout'
 import FiltradorBuscadorProductos from '../components/BuscadorProductos/FiltradorBuscadorProductos'
 import Paginacion from '../components/BuscadorProductos/Paginacion'
 import ProductoGridItem from '../components/ProductosGridItem'
+import BuscadorProductosSkeleton from '../components/skelleton/BuscadorProductosSkeleton'
 import { BuscadorProductosContext } from '../context/BuscadorProductosContext'
 import useBuscadorProductos from '../hooks/useBuscadorProductos'
 
@@ -9,7 +10,7 @@ const ProductosPage = () => {
 
     const response = useBuscadorProductos()
 
-    const { productos, displayInfo } = response
+    const { productos, displayInfo, isLoading } = response
 
     return (
         <MainLayout size='lg'>
@@ -19,70 +20,38 @@ const ProductosPage = () => {
 
                     <FiltradorBuscadorProductos />
 
-                    <section className="grid custom-grid item-grid gap-4">
+                    {
+                        isLoading
+                            ?
+                            <BuscadorProductosSkeleton />
+                            :
+                            <section className="grid custom-grid item-grid gap-4">
 
-                        {/* <div>
-
-                            <article
-                                className="block max-w-sm p-6 border border-gray-200 rounded-lg bg-blue-50/50"
-                            >
-                                <h5
-                                    className="mb-2 text-md font-bold tracking-tight text-gray-900 dark:text-white"
-                                >
-                                    Categorias
-                                </h5>
-                                <hr className="mb-3" />
-                                <ul>
-                                    <li className="mb-1">
-                                        <a href=""> Camisas</a>
-                                    </li>
-                                    <li className="mb-1">
-                                        <a href=""> Telefonos Y Celulares</a>
-                                    </li>
-                                    <li className="mb-1">
-                                        <a href=""> Laptops</a>
-                                    </li>
-                                    <li className="mb-1">
-                                        <a href=""> Laptops</a>
-                                    </li>
-                                    <li className="mb-1">
-                                        <a href=""> Laptops</a>
-                                    </li>
-                                    <li className="mb-1">
-                                        <a href=""> Laptops</a>
-                                    </li>
-                                    <li className="mb-1">
-                                        <a href=""> Laptops</a>
-                                    </li>
-
-                                </ul>
-
-                            </article>
-
-                        </div> */}
-
-                        <div>
-                            <article
-                                className={`
+                                <div>
+                                    <article
+                                        className={`
                                     grid grid-cols-1 md:grid-cols-5 lg:grid-cols-5 ${displayInfo.display === 'grid' ? 'xl:grid-cols-4' : 'xl:grid-cols-1'} gap-5 item-grid p- bg-white  border-gray-200 rounded-lg
                                 `}
-                            >
-                                {
-                                    productos?.map((producto) => (
-                                        <ProductoGridItem
-                                            key={producto.id}
-                                            producto={producto}
-                                            tipo={displayInfo.display === 'grid' ? "secondary" : 'lista'}
-                                        />
-                                    ))
-                                }
-                            </article>
+                                    >
+                                        {
+                                            productos?.map((producto) => (
+                                                <ProductoGridItem
+                                                    key={producto.id}
+                                                    producto={producto}
+                                                    tipo={displayInfo.display === 'grid' ? "secondary" : 'lista'}
+                                                />
+                                            ))
+                                        }
+                                    </article>
 
-                            <Paginacion />
+                                    <Paginacion />
 
-                        </div>
+                                </div>
 
-                    </section>
+                            </section>
+                    }
+
+
 
                 </div>
             </BuscadorProductosContext.Provider>

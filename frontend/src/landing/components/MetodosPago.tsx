@@ -27,39 +27,30 @@ const MetodosPago = () => {
                 <div className="grid gap-8 row-gap-8 lg:grid-cols-3">
                     <div className="sm:text-center">
                         <div className="flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-indigo-50 sm:mx-auto sm:w-24 sm:h-24">
-                            <svg className="w-12 h-12 text-deep-purple-accent-400 sm:w-20 sm:h-20" stroke="currentColor" viewBox="0 0 52 52">
-                                <polygon stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none" points="29 13 14 29 25 29 23 39 38 23 27 23"></polygon>
-                            </svg>
+                            <img className='w-[45px]' src="/Images/visa.svg" alt="" />
                         </div>
-                        <h6 className="mb-2 font-semibold leading-5">The good cheese</h6>
+                        <h6 className="mb-2 font-semibold leading-5">Paga después con tu tarjeta de crédito</h6>
                         <p className="max-w-md mb-3 text-sm text-gray-900 sm:mx-auto">
-                            Cheese on toast airedale the big cheese. Danish fontina cheesy grin airedale danish
+                            Haz tus compras con tu tarjeta de crédito y paga más tarde en Alibabeto.
                         </p>
-                        <a href="/" aria-label="" className="inline-flex items-center font-semibold transition-colors duration-200 text-deep-purple-accent-400 hover:text-deep-purple-800">Learn more</a>
                     </div>
                     <div className="sm:text-center">
                         <div className="flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-indigo-50 sm:mx-auto sm:w-24 sm:h-24">
-                            <svg className="w-12 h-12 text-deep-purple-accent-400 sm:w-20 sm:h-20" stroke="currentColor" viewBox="0 0 52 52">
-                                <polygon stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none" points="29 13 14 29 25 29 23 39 38 23 27 23"></polygon>
-                            </svg>
+                            <img className='w-[35px]' src="/Images/paypal.svg" alt="" />
                         </div>
-                        <h6 className="mb-2 font-semibold leading-5">Chainsaw foal hay</h6>
+                        <h6 className="mb-2 font-semibold leading-5">Paga de forma rápida y segura con PayPal</h6>
                         <p className="max-w-md mb-3 text-sm text-gray-900 sm:mx-auto">
-                            Satoshi Nakamoto launched lots of decentralisation when Litecoin required
+                            Realiza pagos rápidos y seguros en Alibabeto utilizando tu cuenta PayPal.
                         </p>
-                        <a href="/" aria-label="" className="inline-flex items-center font-semibold transition-colors duration-200 text-deep-purple-accent-400 hover:text-deep-purple-800">Learn more</a>
                     </div>
                     <div className="sm:text-center">
                         <div className="flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-indigo-50 sm:mx-auto sm:w-24 sm:h-24">
-                            <svg className="w-12 h-12 text-deep-purple-accent-400 sm:w-20 sm:h-20" stroke="currentColor" viewBox="0 0 52 52">
-                                <polygon stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none" points="29 13 14 29 25 29 23 39 38 23 27 23"></polygon>
-                            </svg>
+                            <img className='w-[42px]' src="/Images/transfer.svg" alt="" />
                         </div>
-                        <h6 className="mb-2 font-semibold leading-5">Pick up truck</h6>
+                        <h6 className="mb-2 font-semibold leading-5">Pago directo por transferencia</h6>
                         <p className="max-w-md mb-3 text-sm text-gray-900 sm:mx-auto">
-                            Bavaria ipsum dolor sit amet Radler Schneid vui huift vui ognudelt i mechad
+                            Realiza pagos directos desde tu cuenta bancaria al comprar en Alibabeto.
                         </p>
-                        <a href="/" aria-label="" className="inline-flex items-center font-semibold transition-colors duration-200 text-deep-purple-accent-400 hover:text-deep-purple-800">Learn more</a>
                     </div>
                 </div>
             </div>

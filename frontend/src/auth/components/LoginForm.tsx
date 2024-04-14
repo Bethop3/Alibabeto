@@ -1,6 +1,7 @@
 // import useLogin from '../../hooks/useLogin'
 // import WrapperApp from './WrapperApp'
 
+import { Link } from "react-router-dom"
 import Button from "../../global/components/Button"
 import useLogin from "../hooks/useLogin"
 
@@ -76,7 +77,16 @@ const LoginForm = () => {
                         Iniciar Sesión
                     </Button>
                 </div>
-            </form>
+
+                <div className="flex flex-col mt-3 mb-3">
+                    <div className="w-full">
+                        ¿Aún no tienes una cuenta?
+                        <Link className="font-bold ml-2 text-blue-600" to="/registro">
+                            <strong>Registrate Aqui</strong>
+                        </Link>
+                    </div>
+                </div>
+            </form >
 
         </>
 
