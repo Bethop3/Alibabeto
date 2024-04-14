@@ -15,14 +15,52 @@ export const getPedidosCtrl: Controller<any, CreatePedido> = async (req, res) =>
     data: pedidos
   })
 }
+export const getIdPedidosCtrl: Controller<any, CreatePedido> = async (req, res) => {
+  const idPedido = req.params.id
+  const pedidos = await Pedido.findOne({
+    where: {
+      id: idPedido
+    },
+    include: [
+      {
+        model: PedidoHasProducto,
+        as: 'pedido_has_productos',
+        include: [
+          {
+            model: Producto, as: 'producto'
+          }
+        ]
+      }
+    ]
+  })
+  console.log(pedidos)
+  return res.status(200).json({
+    data: pedidos
+  })
+}
+
 export const getAllPedidosCtrl: Controller<any, Pedido[]> = async (req, res) => {
   try {
     const pedidos = await Pedido.findAll({
+      where: {
+        usuarioID: req.payload?.id_usuario
+      },
       order: [['id', 'DESC']], // Ordenar por la propiedad 'id' de forma descendente
       include: [
         {
           model: Estadopedido, // El modelo de la tabla relacionada
           as: 'estadoPedido' // Renombrar la asociación
+          // attributes: ['nombre', 'descripcion'] // Atributos específicos de la tabla relacionada que deseas incluir
+        },
+        {
+          model: PedidoHasProducto, // El modelo de la tabla relacionada
+          as: 'pedido_has_productos', // Renombrar la asociación
+          include: [
+            {
+              model: Producto,
+              as: 'producto'
+            }
+          ]
           // attributes: ['nombre', 'descripcion'] // Atributos específicos de la tabla relacionada que deseas incluir
         }
       ]

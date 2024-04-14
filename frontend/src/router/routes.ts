@@ -14,6 +14,7 @@ import IndexPage from "../landing/pages/IndexPage";
 import PedidosPage from "../pedidos/pages/PedidosPage";
 import DetalleProductoPorId from "../productos/pages/DetalleProductoPorId";
 import ProductosPage from "../productos/pages/ProductosPage";
+import PedidosDescPage from "../pedidos/pages/PedidosDescPage";
 
 interface RouteConfig {
     path: string;
@@ -31,6 +32,7 @@ export const routes: RouteConfig[] = [
     { path: '/productos' , name: 'Productos', Component: ProductosPage , _protected: false, hasLayout: true },
     { path: '/carrito' , name: 'Carrito', Component: CarritoIndexPage , _protected: true, hasLayout: true },
     { path: '/mis_pedidos' , name: 'Pedidos', Component: PedidosPage , _protected: false, hasLayout: true },
+    { path: '/mis_pedidos/:id' , name: 'Pedidos', Component: PedidosDescPage , _protected: false, hasLayout: true },
     { path: '/producto/:id' , name: 'Producto Por Id', Component: DetalleProductoPorId , _protected: false, hasLayout: true },
     { path: '/admin/dashboard' , name: 'Admin Dashboard', Component: AdminDashboardPage , _protected: false, hasLayout: true , isAdmin: true },
     { path: '/admin/productos' , name: 'Productos Admin', Component: AdminProductosIndexPage , _protected: false, hasLayout: true , isAdmin: true },
