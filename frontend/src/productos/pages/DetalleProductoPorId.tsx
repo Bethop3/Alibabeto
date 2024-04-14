@@ -1,3 +1,4 @@
+import { useParams } from 'react-router-dom'
 import MainLayout from '../../layouts/MainLayout'
 import DetalleProductoFicha from '../components/DetalleProducto/DetalleProductoFicha'
 import ProductosRelacionados from '../components/DetalleProducto/ProductosRelacionados'
@@ -7,6 +8,9 @@ import useProductoPorId from '../hooks/useProductoPorId'
 const DetalleProductoPorId = () => {
 
     const result = useProductoPorId()
+
+    const { id } = useParams()
+
 
     return (
         <MainLayout>
