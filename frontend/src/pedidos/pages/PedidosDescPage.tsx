@@ -1,24 +1,13 @@
+import MainLayout from "../../layouts/MainLayout";
 import useObtenerPedidoPorId from "../hooks/UsePedidoId";
-
 
 const AdminPedidosIndexPage = () => {
 
-    function calcularProgreso(estado?: number) {
-        return estado * 25;
-    }
-
-    const { pedido } = useObtenerPedidoPorId();
-
-    const estadoPedidoID = pedido?.estadoPedidoID;
-
-    const progreso = calcularProgreso(estadoPedidoID);
-
-
-
+    const { pedido, progreso } = useObtenerPedidoPorId();
 
     return (
-        <div style={{ backgroundColor: '#F7F7F7', padding: '20px' }}>
-            <div className="container mx-auto my-10">
+        <MainLayout size="lg">
+            <div className="container mx-auto my-10 min-h-[100vh]">
                 {/* component */}
                 {/* This is an example component */}
                 <div className="mx-auto grid grid-cols-2 gap-10">
@@ -38,7 +27,7 @@ const AdminPedidosIndexPage = () => {
                                         <div className="flex items-center space-x-4">
                                             <div className="flex-shrink-0">
                                                 <img
-                                                    className="w-8 h-8 rounded-full"
+                                                    className="w-16 h-16 rounded object-contain"
                                                     src={producto_producto.producto.imagen}
                                                     alt={producto_producto.producto.descripcion}
                                                 />
@@ -63,6 +52,9 @@ const AdminPedidosIndexPage = () => {
                     <article>
 
                         <div className="p-4 w-full bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                            <h3 className="text-xl mb-3 font-bold leading-none text-gray-900 dark:text-white">
+                                Estado del pedido
+                            </h3>
                             <div style={{ display: "flex" }}>
                                 <div
                                     style={{ flex: 1, textAlign: "center", border: "1px solid transparent", padding: 10, display: "flex", flexDirection: "column", alignItems: "center" }}>
@@ -115,7 +107,7 @@ const AdminPedidosIndexPage = () => {
                     </article>
                 </div>
             </div>
-        </div>
+        </MainLayout>
     );
 };
 

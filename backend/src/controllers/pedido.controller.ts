@@ -2,11 +2,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { PedidoHasProducto } from '../models/pedido_has_producto'
 import { type CreatePedidoHasProducto, type CreatePedido } from '../types/Pedido'
+import { Estadopedido } from '../models/estadopedido'
 import { Producto } from '../models/producto'
 import { type Controller } from '../types'
 import { Pedido } from '../models/pedido'
 import { getIo } from '../socket/io'
-import { Estadopedido } from '../models/estadopedido'
 
 export const getPedidosCtrl: Controller<any, CreatePedido> = async (req, res) => {
   const pedidos = Pedido.findAll()
@@ -72,6 +72,52 @@ export const getAllPedidosCtrl: Controller<any, Pedido[]> = async (req, res) => 
     }))
   } catch (error) {
 
+  }
+}
+
+interface ActualizarEstadoPedidoT {
+  id_pedido: number
+  status: number
+}
+
+export const ActualizarEstadoPedido: Controller<any, ActualizarEstadoPedidoT> = async (req, res) => {
+  try {
+    const pedido = await Pedido.findOne({
+      where: {
+        id: req.body.id_pedido
+      }
+    })
+
+    if (!pedido) {
+      return res.status(404).json({
+        ok: false,
+        msg: 'Pedido invalido'
+      })
+    }
+
+    pedido.set({
+      estadoPedidoID: req.body.status
+    })
+
+    await pedido.save()
+
+    const io = getIo()
+
+    const canal = `PEDIDO_ESTADO_ACTUALIZADO_${pedido.id}`
+
+    io.emit(canal, {
+      status: pedido.estadoPedidoID
+    })
+
+    return res.status(201).json({
+      ok: true
+    })
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json({
+      ok: false,
+      msg: 'Error del servidor'
+    })
   }
 }
 

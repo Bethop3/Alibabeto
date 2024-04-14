@@ -21,5 +21,10 @@ export const validations = {
     body('iva').isFloat().withMessage('El campo iva debe ser un número de punto flotante.'),
     body('total').isFloat().withMessage('El campo total debe ser un número de punto flotante.')
     // body('productos').isArray({ min: 1 }).withMessage('El campo productos no puede estar vacío y debe ser un array.')
+  ],
+  actualizarEstado: [
+    body('id_pedido').isFloat().withMessage('id pedido'),
+    body('status').isFloat().withMessage('falta estatus')
+    // body('productos').isArray({ min: 1 }).withMessage('El campo productos no puede estar vacío y debe ser un array.')
   ]
 }

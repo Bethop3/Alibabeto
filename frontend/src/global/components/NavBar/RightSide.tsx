@@ -85,18 +85,14 @@ const RightSide = () => {
                                 ref={dropdowRef}
                                 className="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-[100]"
                             >
-                                <a
-                                    href="#"
+                                <Link
+                                    to="/admin/dashboard"
                                     className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                                >Perfil</a>
+                                >Panel Admin</Link>
                                 <Link
                                     to="/mis_pedidos"
                                     className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
                                 >Mis Pedidos</Link>
-                                <a
-                                    href="#"
-                                    className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                                >Configuración</a>
                                 <p
                                     onClick={handleLogout}
                                     className="block cursor-pointer px-4 py-2 text-gray-800 hover:bg-gray-200"

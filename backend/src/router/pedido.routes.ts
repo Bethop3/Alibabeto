@@ -1,5 +1,5 @@
 import { handleValidationErrors } from '../utils/handleValidationErrors'
-import { CreatePedidoCtrl, getAllPedidosCtrl, getIdPedidosCtrl } from '../controllers/pedido.controller'
+import { ActualizarEstadoPedido, CreatePedidoCtrl, getAllPedidosCtrl, getIdPedidosCtrl } from '../controllers/pedido.controller'
 import { validations } from '../validations/pedidos.validation'
 import { Router } from 'express'
 import { PaymentIntentCtrl } from '../controllers/carrito.controller'
@@ -20,6 +20,13 @@ router.post(
   validations.create,
   handleValidationErrors,
   CreatePedidoCtrl
+)
+
+router.patch(
+  '/estado_pedido',
+  validations.actualizarEstado,
+  handleValidationErrors,
+  ActualizarEstadoPedido
 )
 
 router.post(

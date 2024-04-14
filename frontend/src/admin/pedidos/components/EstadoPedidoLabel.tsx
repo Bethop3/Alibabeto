@@ -21,14 +21,25 @@ const SendIcon = () => (
     </svg>
 
 )
+const DeliverIcon = () => (
+    <svg className="w-5 h-5 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
+    </svg>
+
+
+)
 
 const CheckIcon = ({ id }: any) => {
+
+    if (id == null) return "Sin estado";
 
     if (id === 1) return <ClockIcon />;
 
     if (id === 2) return <RefoundIcon />
 
     if (id === 3) return <SendIcon />
+
+    if (id === 4) return <DeliverIcon />
 
     return <p>Nada</p>
 
@@ -53,6 +64,12 @@ const EstadoPedidoLabel = ({ estadoPedido }: any) => {
         }
         if (estadoPedido?.id === 3) {
             sertClasses('bg-blue-400 text-white')
+        }
+        if (estadoPedido?.id === 4) {
+            sertClasses('bg-green-400 text-white')
+        }
+        if (estadoPedido === null) {
+            sertClasses('bg-red-800 text-white')
         }
     }
 
