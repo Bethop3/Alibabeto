@@ -15,6 +15,7 @@ import cors from 'cors'
 // Routers
 import provedoreesRouter from './router/proveedores.routes'
 import categoriaRouter from './router/categoria.routes'
+import dashboardRouter from './router/dashboard.routes'
 import productosRouter from './router/producto.routes'
 import usuariosRouter from './router/usuarios.routes'
 import entradaRouter from './router/entrada.routes'
@@ -119,6 +120,7 @@ const main = async () => {
   )
   app.use('/categoria', categoriaRouter)
   app.use(MiddlewareTokenValidator)
+  app.use('/dashboard', dashboardRouter)
   app.use('/usuario', usuariosRouter)
   app.use('/proveedores', provedoreesRouter)
   app.use('/roles', rolesrouter)
