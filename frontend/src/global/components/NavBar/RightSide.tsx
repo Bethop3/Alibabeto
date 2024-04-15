@@ -7,7 +7,7 @@ const RightSide = () => {
 
     const [isOpen, setIsOpen] = useState(false)
     const dropdowRef = useRef<HTMLDivElement>(null);
-    const { handleLogout } = useAuth()
+    const { handleLogout, usuario } = useAuth()
 
     const handleToggle = () => {
 
@@ -85,10 +85,14 @@ const RightSide = () => {
                                 ref={dropdowRef}
                                 className="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-[100]"
                             >
-                                <Link
-                                    to="/admin/dashboard"
-                                    className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                                >Panel Admin</Link>
+                                {
+                                    usuario?.Rol.id === 2
+                                    &&
+                                    <Link
+                                        to="/admin/dashboard"
+                                        className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                                    >Panel Admin</Link>
+                                }
                                 <Link
                                     to="/mis_pedidos"
                                     className="block px-4 py-2 text-gray-800 hover:bg-gray-200"

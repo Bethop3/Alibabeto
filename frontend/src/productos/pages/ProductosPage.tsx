@@ -1,10 +1,10 @@
-import MainLayout from '../../layouts/MainLayout'
 import FiltradorBuscadorProductos from '../components/BuscadorProductos/FiltradorBuscadorProductos'
-import Paginacion from '../components/BuscadorProductos/Paginacion'
-import ProductoGridItem from '../components/ProductosGridItem'
 import BuscadorProductosSkeleton from '../components/skelleton/BuscadorProductosSkeleton'
 import { BuscadorProductosContext } from '../context/BuscadorProductosContext'
+import Paginacion from '../components/BuscadorProductos/Paginacion'
 import useBuscadorProductos from '../hooks/useBuscadorProductos'
+import ProductoGridItem from '../components/ProductosGridItem'
+import MainLayout from '../../layouts/MainLayout'
 
 const ProductosPage = () => {
 

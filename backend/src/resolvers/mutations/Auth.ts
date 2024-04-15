@@ -12,6 +12,7 @@ import { generateJWT } from '../../utils/generateJWT'
 import { type GenInput } from '../../types'
 import { Usuario } from '../../models/usuario'
 import { type AuthUsuario } from '../../types/Usuario'
+import { Role } from '../../models/role'
 // import { type GenInput } from 'types'
 
 const authLogin = async (_: any, { input }: GenInput<AuthUsuario>) => {
@@ -19,7 +20,15 @@ const authLogin = async (_: any, { input }: GenInput<AuthUsuario>) => {
 
   const { correo, password } = input
 
-  const usuario = await Usuario.findOne({ where: { correo } })
+  const usuario = await Usuario.findOne({
+    where: { correo },
+    include: [
+      {
+        model: Role,
+        as: 'Rol'
+      }
+    ]
+  })
 
   if (!usuario) {
     return handleError({

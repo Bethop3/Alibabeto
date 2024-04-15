@@ -1,7 +1,7 @@
 import useCarrito from "../../../hooks/useCarrito"
 import Button from "../buttons/Button"
 import { CarritoContext } from "../../../context/CarritoContext"
-import ProductoCarritoItem from "./ProductoCarritoItem"
+import ProductoCarritoItem from "./components/ProductoCarritoItem"
 
 const ProductosCarrito = () => {
 

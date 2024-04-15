@@ -48,6 +48,8 @@ const useAuth = () => {
 
         try {
             
+            usuario.Rol.id = Number(usuario.Rol.id)
+
             setAuth({
                 token,
                 usuario

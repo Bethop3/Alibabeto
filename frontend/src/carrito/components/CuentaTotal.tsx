@@ -12,6 +12,7 @@ const CuentaTotal = () => {
         iva,
         total,
         importe,
+        conceptos,
         isLoading,
         handleSubmitCarrito,
     } = useContext(CarritoContext)!
@@ -53,14 +54,20 @@ const CuentaTotal = () => {
             <hr className="mt-3 mb-3" />
 
             {/* <PaymentElement /> */}
-            <PaymentElement />
+            {
+                conceptos.length > 0
+                &&
+                <>
+                    <PaymentElement />
 
-            <Button
-                onClick={handleSubmitCarrito}
-                isLoading={isLoading}
-                text="Pagar"
-                className="mt-3"
-            />
+                    <Button
+                        onClick={handleSubmitCarrito}
+                        isLoading={isLoading}
+                        text="Pagar"
+                        className="mt-3"
+                    />
+                </>
+            }
 
             <div className="mt-3">
                 <p className="font-semibold opacity-70 text-gray-500">Aceptamos</p>
