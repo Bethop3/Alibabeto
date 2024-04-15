@@ -15,6 +15,8 @@ import PedidosPage from "../pedidos/pages/PedidosPage";
 import DetalleProductoPorId from "../productos/pages/DetalleProductoPorId";
 import ProductosPage from "../productos/pages/ProductosPage";
 import PedidosDescPage from "../pedidos/pages/PedidosDescPage";
+import PoliticasPage from "../Footer/pages/PoliticasPage"
+import TerminosPage from "../Footer/pages/TerminosPage"
 
 interface RouteConfig {
     path: string;
@@ -31,6 +33,8 @@ export const routes: RouteConfig[] = [
     { path: '/registro' , name: 'Registro', Component: RegisterPage , _protected: false, hasLayout: true },
     { path: '/productos' , name: 'Productos', Component: ProductosPage , _protected: false, hasLayout: true },
     { path: '/carrito' , name: 'Carrito', Component: CarritoIndexPage , _protected: true, hasLayout: true },
+    { path: '/Politicas' , name: 'Politicas', Component: PoliticasPage , _protected: false, hasLayout: true },
+    { path: '/Terminos' , name: 'TerminosYCondiciones', Component: TerminosPage , _protected: false, hasLayout: true },
     { path: '/mis_pedidos' , name: 'Pedidos', Component: PedidosPage , _protected: false, hasLayout: true },
     { path: '/mis_pedidos/:id' , name: 'Pedidos', Component: PedidosDescPage , _protected: false, hasLayout: true },
     { path: '/producto/:id' , name: 'Producto Por Id', Component: DetalleProductoPorId , _protected: false, hasLayout: true },

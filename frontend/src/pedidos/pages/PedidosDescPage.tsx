@@ -1,20 +1,33 @@
 import MainLayout from "../../layouts/MainLayout";
 import useObtenerPedidoPorId from "../hooks/UsePedidoId";
 
+
 const AdminPedidosIndexPage = () => {
 
     const { pedido, progreso } = useObtenerPedidoPorId();
+    // Crear un objeto formateador de fecha y hora
+    const formatter = new Intl.DateTimeFormat('es-ES', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+    });
+
+    // Formatear la fecha y la hora
+    const fechaFormateada = formatter.format(new Date(pedido?.fechaPedido ?? new Date()));
+
 
     return (
         <MainLayout size="lg">
             <div className="container mx-auto my-10 min-h-[100vh]">
                 {/* component */}
                 {/* This is an example component */}
-                <div className="mx-auto grid grid-cols-2 gap-10">
+                <div className="mx-auto grid grid-cols-1 sm:grid-cols-2 gap-10">
                     <div className="p-4 w-full bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                         <div className="flex justify-between items-center mb-4">
-                            <h3 className="text-xl font-bold leading-none text-gray-900 dark:text-white">
-                                Productos
+                            <h3 className="text-xl font-bold leading-none text-gray-900 dark:text-white text-center">
+                                {fechaFormateada}
                             </h3>
                         </div>
                         <div className="flow-root">
@@ -47,9 +60,45 @@ const AdminPedidosIndexPage = () => {
                                     </li>
                                 ))}
                             </ul>
+                            <div className="grid grid-cols-2 mt-10 gap-4">
+                                <div>
+                                    <h3 className="text-xl font-bold leading-none text-gray-900 dark:text-white">
+                                        Importe de Compra:
+                                    </h3>
+                                </div>
+                                <div className="text-right">
+                                    <h3 className="text-xl font-bold leading-none text-gray-900 dark:text-white">
+                                        ${pedido?.importe}
+                                    </h3>
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-2 mt-5 gap-4">
+                                <div>
+                                    <h3 className="text-xl font-bold leading-none text-gray-900 dark:text-white">
+                                        IVA:
+                                    </h3>
+                                </div>
+                                <div className="text-right">
+                                    <h3 className="text-xl font-bold leading-none text-gray-900 dark:text-white">
+                                        ${pedido?.iva}
+                                    </h3>
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-2 mt-5 gap-4">
+                                <div>
+                                    <h3 className="text-xl font-bold leading-none text-gray-900 dark:text-white">
+                                        Total:
+                                    </h3>
+                                </div>
+                                <div className="text-right">
+                                    <h3 className="text-xl font-bold leading-none text-gray-900 dark:text-white">
+                                        ${pedido?.total}
+                                    </h3>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <article>
+                    <article className="p-4 w-full bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
 
                         <div className="p-4 w-full bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                             <h3 className="text-xl mb-3 font-bold leading-none text-gray-900 dark:text-white">
@@ -103,8 +152,27 @@ const AdminPedidosIndexPage = () => {
                                 </div>
                             </div>
                         </div>
-
+                        <div className="p-4 w-full bg-white  mt-6 rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                            <div className="flex justify-between items-center mb-4">
+                                <h3 className="text-xl font-bold leading-none text-gray-900 dark:text-white">
+                                    Detalles Del Envio
+                                </h3>
+                            </div>
+                            <p className="text-sm text-gray-500 truncate dark:text-gray-400">
+                                {pedido?.direccionEntrega.nombreDestinatario}
+                            </p>
+                            <p className="text-sm text-gray-500 truncate dark:text-gray-400">
+                                {pedido?.direccionEntrega.direccion}, {pedido?.direccionEntrega.codigoPostal}
+                            </p>
+                            <p className="text-sm text-gray-500 truncate dark:text-gray-400">
+                                {pedido?.direccionEntrega.ciudad}, {pedido?.direccionEntrega.pais}
+                            </p>
+                            <p className="text-sm text-gray-500 truncate dark:text-gray-400">
+                                {pedido?.direccionEntrega.telefono}
+                            </p>
+                        </div>
                     </article>
+
                 </div>
             </div>
         </MainLayout>

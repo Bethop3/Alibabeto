@@ -23,6 +23,7 @@ import { Basic } from "."
     total:                number;
     payment_id:           string;
     pedido_has_productos: PedidoHasProducto[];
+    direccionEntrega:    direccion_entrega;
 }
 
 export interface PedidoHasProducto {
@@ -50,6 +51,16 @@ export interface Producto {
     categoriaID: number;
     CreatedDate: Date;
     is_deleted:  IsDeleted;
+}
+
+export interface direccion_entrega{
+    id: number;
+    nombreDestinatario: string;
+    direccion: string;
+    ciudad: string;
+    codigoPostal: string;
+    pais: string;
+    telefono: string;
 }
 
 export interface IsDeleted {

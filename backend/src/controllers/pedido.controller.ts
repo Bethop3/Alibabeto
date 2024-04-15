@@ -7,6 +7,7 @@ import { Producto } from '../models/producto'
 import { type Controller } from '../types'
 import { Pedido } from '../models/pedido'
 import { getIo } from '../socket/io'
+import { DireccionEntrega } from '../models/direccion_entrega'
 
 export const getPedidosCtrl: Controller<any, CreatePedido> = async (req, res) => {
   const pedidos = Pedido.findAll()
@@ -30,6 +31,10 @@ export const getIdPedidosCtrl: Controller<any, CreatePedido> = async (req, res) 
             model: Producto, as: 'producto'
           }
         ]
+      },
+      {
+        model: DireccionEntrega, // El modelo de la tabla relacionada
+        as: 'direccionEntrega' // Renombrar la asociación
       }
     ]
   })
