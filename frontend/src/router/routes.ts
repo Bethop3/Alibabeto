@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 // import IndexCarritoPage from "../carrito/pages";
+import CreateCategoriaPage from "../admin/categorias/pages/AdminCreateCategoriaPage";
+import adminCategorias from "../admin/categorias/pages/adminCategorias";
+import EditCategoriaPage from "../admin/categorias/pages/adminEditCategoriaspage";
 import AdminDashboardPage from "../admin/dashboard/pages/AdminDashboardPage";
 import AdminPedidosIndexPage from "../admin/pedidos/pages/AdminPedidosIndexPage";
 import AdminViewPedidoPage from "../admin/pedidos/pages/AdminViewPedidoPage";
@@ -38,6 +41,9 @@ export const routes: RouteConfig[] = [
     { path: '/mis_pedidos/:id' , name: 'Pedidos', Component: PedidosDescPage , _protected: false, hasLayout: true },
     { path: '/producto/:id' , name: 'Producto Por Id', Component: DetalleProductoPorId , _protected: false, hasLayout: true },
     { path: '/admin/dashboard' , name: 'Admin Dashboard', Component: AdminDashboardPage , _protected: false, hasLayout: true , isAdmin: true },
+    { path: '/admin/categorias' , name: 'Admin Dashboard', Component: adminCategorias , _protected: false, hasLayout: true , isAdmin: true },
+    { path: '/admin/categorias/create' , name: 'Create category', Component: CreateCategoriaPage , _protected: false, hasLayout: true , isAdmin: true },
+    { path: '/admin/categoria/edit/:id' , name: 'edit category', Component: EditCategoriaPage , _protected: false, hasLayout: true , isAdmin: true },
     { path: '/admin/productos' , name: 'Productos Admin', Component: AdminProductosIndexPage , _protected: false, hasLayout: true , isAdmin: true },
     { path: '/admin/producto/edit/:id' , name: 'Producto Edit Admin', Component: AdminProductoEditPorIdPage , _protected: false, hasLayout: true , isAdmin: true },
     { path: '/admin/producto/create' , name: 'Producto Crear Admin', Component: AdminProductoCreatePage , _protected: false, hasLayout: true , isAdmin: true },
