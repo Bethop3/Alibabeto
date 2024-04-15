@@ -80,6 +80,39 @@ export const getAllPedidosCtrl: Controller<any, Pedido[]> = async (req, res) => 
   }
 }
 
+export const getAllPedidosAdminCtrl: Controller<any, Pedido[]> = async (req, res) => {
+  try {
+    const pedidos = await Pedido.findAll({
+      order: [['id', 'DESC']], // Ordenar por la propiedad 'id' de forma descendente
+      include: [
+        {
+          model: Estadopedido, // El modelo de la tabla relacionada
+          as: 'estadoPedido' // Renombrar la asociación
+          // attributes: ['nombre', 'descripcion'] // Atributos específicos de la tabla relacionada que deseas incluir
+        },
+        {
+          model: PedidoHasProducto, // El modelo de la tabla relacionada
+          as: 'pedido_has_productos', // Renombrar la asociación
+          include: [
+            {
+              model: Producto,
+              as: 'producto'
+            }
+          ]
+          // attributes: ['nombre', 'descripcion'] // Atributos específicos de la tabla relacionada que deseas incluir
+        }
+      ]
+    })
+
+    return res.status(200).json(({
+      ok: true,
+      data: pedidos
+    }))
+  } catch (error) {
+
+  }
+}
+
 interface ActualizarEstadoPedidoT {
   id_pedido: number
   status: number

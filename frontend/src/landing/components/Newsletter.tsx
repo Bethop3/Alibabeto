@@ -1,7 +1,7 @@
 const Newsletter = () => {
     return (
         <section className="bg-[#013695] dark:bg-gray-900">
-            <div className="container px-4 py-16 mx-auto lg:flex lg:items-center lg:justify-between">
+            <div className="container max-w-[1100px] container mx-auto px-10 py-16 mx-auto lg:flex lg:items-center lg:justify-between">
                 <h2 className="text-2xl font-semibold tracking-tight text-white xl:text-3xl dark:text-white">
                     Suscríbete a nuestro newsletter
                 </h2>

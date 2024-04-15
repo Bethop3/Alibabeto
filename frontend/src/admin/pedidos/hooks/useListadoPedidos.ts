@@ -70,7 +70,7 @@ const useListadoPedidos = () => {
   
         setLoading(true)
         
-        const { data: { data } } = await AuthAxios.get<BasicResponse<Pedido[]>>("/pedido/all")
+        const { data: { data } } = await AuthAxios.get<BasicResponse<Pedido[]>>("/pedido/all/admin")
         
         setPedidos(data)
   

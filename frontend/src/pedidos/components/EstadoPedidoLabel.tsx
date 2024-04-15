@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { useEffect, useState } from "react"
+import { DeliverIcon } from "../../admin/pedidos/components/EstadoPedidoLabel"
 
 const RefoundIcon = () => (
     <svg className="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
@@ -30,6 +31,8 @@ const CheckIcon = ({ id }: any) => {
 
     if (id === 3) return <SendIcon />
 
+    if (id === 4) return <DeliverIcon />
+
     return <p>Nada</p>
 
 }
@@ -53,6 +56,12 @@ const EstadoPedidoLabel = ({ estadoPedido }: any) => {
         }
         if (estadoPedido?.id === 3) {
             sertClasses('bg-blue-400 text-white')
+        }
+        if (estadoPedido?.id === 4) {
+            sertClasses('bg-green-400 text-white')
+        }
+        if (estadoPedido === null) {
+            sertClasses('bg-red-800 text-white')
         }
     }
 

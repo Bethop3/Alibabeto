@@ -34,7 +34,7 @@ const Slider = () => {
                                     </h1>
                                     <div className="flex flex-row-reverse flex-wrap justify-center gap-4 md:gap-6 md:justify-end">
                                         <Link
-                                            to={'/productos'}
+                                            to={'/productos?categoria=12'}
                                             className="w-full py-3 px-6 text-center rounded-xl transition bg-red-600 shadow-xl  sm:w-max"
                                         >
                                             <span className="block text-white font-semibold">
@@ -62,7 +62,7 @@ const Slider = () => {
                                     </h1>
                                     <div className="flex flex-row-reverse flex-wrap justify-center gap-4 md:gap-6 md:justify-end">
                                         <Link
-                                            to={'/productos'}
+                                            to={'/productos?categoria=5'}
                                             className="w-full py-3 px-6 text-center rounded-xl transition bg-red-600 shadow-xl  sm:w-max"
                                         >
                                             <span className="block text-white font-semibold">
@@ -90,7 +90,7 @@ const Slider = () => {
                                     </h1>
                                     <div className="flex flex-row-reverse flex-wrap justify-center gap-4 md:gap-6 md:justify-end">
                                         <Link
-                                            to={'/productos'}
+                                            to={'/productos?categoria=4'}
                                             className="w-full py-3 px-6 text-center rounded-xl transition bg-red-600 shadow-xl  sm:w-max"
                                         >
                                             <span className="block text-white font-semibold">
