@@ -6,10 +6,12 @@ import { AuthAxios } from '../../global/api/AuthAxios';
 import { BasicResponse } from '../../types';
 import { Pedido } from '../../types/PedidoUser.types';
 import { useParams } from 'react-router-dom';
-import { socket } from '../../global/socket/socket';
+import { io } from 'socket.io-client';
 
 
 const useObtenerPedidoPorId = () => {
+    
+    const socket = io('http://localhost:3000');
     const [isLoading, setLoading] = useState<boolean>(false);
     const [pedido, setPedido] = useState<Pedido | null>(null);
     const [ progreso , setProgreso ] = useState(0)
@@ -49,7 +51,11 @@ const useObtenerPedidoPorId = () => {
         
         const canal = `PEDIDO_ESTADO_ACTUALIZADO_${idPedido}`
         
+        // alert(canal)
+
         socket.on(canal, (datos:any) => {
+
+            // alert("dentro del on")
 
             calcularProgreso(datos.status)
 
@@ -57,6 +63,7 @@ const useObtenerPedidoPorId = () => {
 
         return () => {
         
+            // alert('desconectado')
             // Desconectar el socket al desmontar el componente
           
           socket.disconnect();

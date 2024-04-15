@@ -147,6 +147,8 @@ export const ActualizarEstadoPedido: Controller<any, ActualizarEstadoPedidoT> = 
       status: pedido.estadoPedidoID
     })
 
+    console.log(canal)
+
     return res.status(201).json({
       ok: true
     })
