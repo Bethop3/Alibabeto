@@ -176,6 +176,11 @@ export const CrearProductoC: Controller<ProductoAttributes, CrearProducto> = asy
       is_deleted: false
     })
 
+    await ImagenesProducto.create({
+      url: productoNuevo.imagen,
+      productoID: productoNuevo.id
+    })
+
     // Retorna la respuesta con el producto recién creado en formato JSON
     return res.status(200).json({
       ok: true,

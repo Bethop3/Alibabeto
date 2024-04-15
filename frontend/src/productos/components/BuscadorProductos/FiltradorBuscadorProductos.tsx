@@ -4,7 +4,7 @@ import { useContext } from "react"
 
 const FiltradorBuscadorProductos = () => {
 
-    const { register, categorias } = useContext(BuscadorProductosContext)!
+    const { register, categorias, handleChangeCategoria } = useContext(BuscadorProductosContext)!
 
     return (
         <div
@@ -33,7 +33,9 @@ const FiltradorBuscadorProductos = () => {
                             //     value: 1
                             // }
                         })}
+                        onChange={handleChangeCategoria}
                     >
+                        <option selected value={''}>Todos los productos</option>
                         {
                             categorias.map((categoria, i) => (
                                 <option selected={i === 0} value={categoria.id}>{categoria.nombre}</option>
@@ -59,7 +61,7 @@ const FiltradorBuscadorProductos = () => {
             <div>
                 <FilterDisplay />
             </div>
-        </div>
+        </div >
     )
 }
 

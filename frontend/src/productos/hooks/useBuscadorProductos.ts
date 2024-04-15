@@ -63,11 +63,43 @@ const useBuscadorProductos = () => {
       formData.categoria
     ])
 
+    // useEffect( () => {
+      
+    //   setPagination({
+    //     ...pagination,
+    //     pagina: 1
+    //   })
+
+    // }, 
+    // [
+    //   formData.categoria
+    // ])
+
     const handleNextPage = () => {
 
       setPagination({
         ...pagination,
         pagina: pagination.pagina+1
+      })
+
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth' // La opción 'smooth' proporciona un desplazamiento suave
+      });
+
+    }
+
+    const handleChangeCategoria = (event:any) => {
+      
+      // debugger
+      
+      const categoria = event.target.value
+
+      setValue("categoria", categoria)
+
+      setPagination({
+        ...pagination,
+        pagina: 1
       })
 
     }
@@ -79,6 +111,11 @@ const useBuscadorProductos = () => {
         pagina: pagination.pagina-1
       })
 
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth' // La opción 'smooth' proporciona un desplazamiento suave
+      });
+
     }
 
     const changePage = ( pagina: number ) => {
@@ -86,6 +123,10 @@ const useBuscadorProductos = () => {
         ...pagination,
         pagina: pagina
       })
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth' // La opción 'smooth' proporciona un desplazamiento suave
+      });
     }
 
     const handleSearchProductos = async () => {
@@ -101,7 +142,8 @@ const useBuscadorProductos = () => {
             let categoria = formData.categoria ?? searchParams.get('categoria');
             const nombre = searchParams.get('nombre');
 
-            if( (categoria !== null && categoria !== undefined) && !Number.isNaN(categoria) )
+            // debugger
+            if( (categoria !== null && categoria !== undefined && categoria !== '') && !Number.isNaN(categoria) )
             {
               searchParams.set('categoria', categoria as string);
               setValue("categoria", categoria)
@@ -182,8 +224,9 @@ const useBuscadorProductos = () => {
     displayInfo,
     changePage,
     handleNextPage,
-    handleFilterDisplay,
     handlePrevPage,
+    handleFilterDisplay,
+    handleChangeCategoria,
     pagina: pagination.pagina,
     totalPaginas: pagination.totalPaginas,
     queryProductos

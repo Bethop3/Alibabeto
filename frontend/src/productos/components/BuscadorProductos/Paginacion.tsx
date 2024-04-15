@@ -11,8 +11,8 @@ const Paginacion = () => {
         elementos.push(
             <li onClick={() => changePage(i + 1)}>
                 <a
-                    className={`cursor-pointer flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-30
-                        ${(i + 1) === pagina ? "bg-gray-400 text-white" : ""}
+                    className={`cursor-pointer flex items-center justify-center font-bold px-4 h-10 leading-tight text-gray-500 border border-gray-30
+                        ${(i + 1) === pagina ? "bg-alibabeto-1 text-white" : "text-black "}
                     `}
                 >
                     {i + 1}

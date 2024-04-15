@@ -1,10 +1,10 @@
+import { type ProductoCarrito } from '../types/carrito.type'
+import { CarritoContext } from '../context/CarritoContext'
+import { formatter } from '../../productos/utils/formatter'
 import { useContext } from 'react'
 import type { FC } from 'react'
-import { CarritoContext } from './context/CarritoContext'
-import { ProdutoCarito } from './types/carrito.type'
-import { formatter } from '../productos/utils/formatter'
 
-const ProductoCarritoItem: FC<ProdutoCarito> = (props) => {
+const ProductoCarritoItem: FC<ProductoCarrito> = (props) => {
 
     const {
         handleDeleteArticulo,
@@ -22,7 +22,7 @@ const ProductoCarritoItem: FC<ProdutoCarito> = (props) => {
     return (
         <article
             className={
-                `item-card grid grid-cols-1 md:grid-cols-4 p-4 grid-columna border border-b-gray-200 border-r-0 border-l-0 border-b-0
+                `item-card grid grid-cols-1 md:grid-cols-4 gap-3 p-4 grid-columna border border-b-gray-200 border-r-0 border-l-0 border-b-0
                 ${isLoading && 'opacity-40'}
                 `
             }

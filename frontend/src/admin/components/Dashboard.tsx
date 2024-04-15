@@ -22,13 +22,13 @@ const Dashboard = () => {
                     </Link>
                 </div>
                 <div className="mt-8 text-center">
-                    <img
+                    {/* <img
                         src={usuario!.Imagen}
                         alt=""
                         className="w-10 h-10 m-auto rounded-full object-cover lg:w-28 lg:h-28"
-                    />
+                    /> */}
                     <h5 className="hidden mt-4 text-xl font-semibold text-gray-600 lg:block">
-                        {usuario?.nombre}
+                        Hola, {usuario?.nombre}
                     </h5>
                     <span className="hidden text-gray-400 lg:block">
                         {
@@ -157,7 +157,12 @@ const Dashboard = () => {
                     <li>
                         <Link
                             to="/admin/usuarios"
-                            className="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group"
+                            className={
+                                `
+                                relative px-4 py-3 flex items-center space-x-4 rounded-xl
+                                    ${location.pathname === '/admin/usuarios' ? 'text-white bg-gradient-to-r from-sky-600 to-cyan-400' : 'text-gray-600'}
+                                `
+                            }
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -197,7 +202,7 @@ const Dashboard = () => {
                             d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
                         />
                     </svg>
-                    <span className="group-hover:text-gray-700">Logout</span>
+                    <span className="group-hover:text-gray-700">Cerrar Sesión</span>
                 </button>
             </div>
         </aside>

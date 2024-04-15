@@ -63,6 +63,8 @@ const useCarrito = () => {
 
       try {
         
+        setIsLoading(true)
+
         const { data : { data } } = await AuthAxios.get<BasicResponse<CarritoResponse>>('/carrito')
 
         console.log(data)
@@ -71,8 +73,16 @@ const useCarrito = () => {
 
         setCarrito(data.carrito)
         
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        
+        setIsLoading(false)
+
       } catch (error) {
-        throw new Error("Error")
+        console.log(error);
+        await Swal.fire({
+          title: 'Error del servidor al obtener el carrito',
+          icon:"error"
+        })
       }
 
     }
@@ -187,9 +197,9 @@ const useCarrito = () => {
         
         // console.log(data)
         
-        await new Promise(resolve => setTimeout(resolve, 2000));
-
         setIsLoading(false)
+        
+        await new Promise(resolve => setTimeout(resolve, 2000));
 
         if( pedidoCreado.ok )
         {
