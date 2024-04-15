@@ -155,8 +155,8 @@ const Dashboard = () => {
                         </Link>
                     </li>
                     <li>
-                        <a
-                            href="/admin/usuarios"
+                        <Link
+                            to="/admin/usuarios"
                             className="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group"
                         >
                             <svg
@@ -177,7 +177,7 @@ const Dashboard = () => {
                                 />
                             </svg>
                             <span className="group-hover:text-gray-700">Usuarios</span>
-                        </a>
+                        </Link>
                     </li>
                 </ul>
             </div>

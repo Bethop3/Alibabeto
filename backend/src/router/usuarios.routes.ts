@@ -3,6 +3,7 @@ import {
   CreateUsuarioCtrl,
   EditUsuarioCtrl,
   EliminarUsuarioCtrl,
+  getUsuarioPorID,
   GetUsuarios
 } from '../controllers/usuario.controller'
 import { Router } from 'express'
@@ -12,6 +13,8 @@ import { handleValidationErrors } from '../utils/handleValidationErrors'
 const router = Router()
 // Crea un enrutador Express
 router.get('/all', GetUsuarios)
+
+router.get('/findone/:id', getUsuarioPorID)
 
 router.post(
   '/create',
@@ -34,6 +37,9 @@ router.put(
   EditUsuarioCtrl
 )
 
-router.delete('/delete/:id', EliminarUsuarioCtrl)
+router.delete(
+  '/delete/:id',
+  EliminarUsuarioCtrl
+)
 
 export default router

@@ -15,6 +15,9 @@ import PedidosPage from "../pedidos/pages/PedidosPage";
 import DetalleProductoPorId from "../productos/pages/DetalleProductoPorId";
 import ProductosPage from "../productos/pages/ProductosPage";
 import PedidosDescPage from "../pedidos/pages/PedidosDescPage";
+import AdminUsuariosIndexPage from "../admin/usuarios/pages/AdminUsuariosIndexPage";
+import AdminUsuariosCreatePage from "../admin/usuarios/pages/AdminUsuariosCreatePage";
+import AdminUsuariosEditPage from "../admin/usuarios/pages/AdminUsuariosEditPage";
 
 interface RouteConfig {
     path: string;
@@ -40,5 +43,8 @@ export const routes: RouteConfig[] = [
     { path: '/admin/producto/create' , name: 'Producto Crear Admin', Component: AdminProductoCreatePage , _protected: false, hasLayout: true , isAdmin: true },
     { path: '/admin/pedidos' , name: 'Pedidos Admin', Component: AdminPedidosIndexPage , _protected: false, hasLayout: true , isAdmin: true },
     { path: '/admin/pedido/view/:id' , name: 'Pedido View Admin', Component: AdminViewPedidoPage , _protected: false, hasLayout: true , isAdmin: true },
+    { path: '/admin/usuarios' , name: 'Usuarios Admin', Component: AdminUsuariosIndexPage , _protected: false, hasLayout: true , isAdmin: true },
+    { path: '/admin/usuarios/create' , name: 'Usuarios Admin', Component: AdminUsuariosCreatePage , _protected: false, hasLayout: true , isAdmin: true },
+    { path: '/admin/usuarios/edit/:id' , name: 'Usuarios Editar Admin', Component: AdminUsuariosEditPage , _protected: false, hasLayout: true , isAdmin: true },
 
 ]
