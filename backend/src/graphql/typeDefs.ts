@@ -1,11 +1,18 @@
 const typeDefs = `#graphql
 
+  type Rol {
+    id: ID
+    nombre: String
+  }
+
   type Usuario {
     id: ID
     nombre: String
     apellidos: String
     email: String
     creado: String
+    RolID: Int
+    Rol: Rol
   }
 
   type Pedido {

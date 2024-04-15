@@ -7,8 +7,12 @@ mutation AuthUsuario($input: AuthLogin!) {
         usuario {
             id
             nombre
+            RolID
+            Rol {
+              id
+              nombre
+            }
         }
     }
 }
-
 `
