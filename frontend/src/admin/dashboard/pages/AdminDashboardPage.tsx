@@ -26,7 +26,7 @@ ChartJS.register(
 
 const AdminDashboardPage = () => {
 
-    const { clientes, ventasHoy, productos } = useVentasHoy()
+    const { clientes, ventasHoy, productos, datosGenerales } = useVentasHoy()
     const options = {
         responsive: true,
         plugins: {
@@ -52,8 +52,12 @@ const AdminDashboardPage = () => {
                 <div className='border p-5 border-gray-300 rounded-lg shadow-md'>
                     <Bar options={options} data={clientes} />
                 </div>
-                <div className='border p-5 border-gray-300 rounded-lg shadow-md max-h-[600px] flex items-center justify-center'>
+                <div className='border p-5 flex-col border-gray-300 rounded-lg shadow-md max-h-[500px] flex items-center justify-center'>
                     <Pie data={productos} />
+                </div>
+                <div className='border p-5 flex-col border-gray-300 rounded-lg shadow-md max-h-[500px] flex items-center justify-center'>
+
+                    <h2 className='text-3xl font-bold'>Ingresos Totales: ${datosGenerales.ingresosTotales} </h2>
                 </div>
             </section>
         </div>

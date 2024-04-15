@@ -6,7 +6,7 @@ import { PedidoHasProducto } from '../models/pedido_has_producto'
 import { sequelize } from '../database'
 import { Producto } from '../models/producto'
 
-interface DashboardResponse { ventasHoy: Pedido[], mejoresClientes: Usuario[], productosMasVendidos: any[] }
+interface DashboardResponse { ventasHoy: Pedido[], mejoresClientes: Usuario[], productosMasVendidos: any[], ingresosTotales: any }
 
 export const getDashboard: Controller<DashboardResponse> = async (req, res) => {
   try {
@@ -46,9 +46,17 @@ export const getDashboard: Controller<DashboardResponse> = async (req, res) => {
       limit: 7 // Limitar la cantidad de resultados a 7
     })
 
+    const ingresosTotales = await Pedido.sum('total', {
+      where: {
+        fechaPedido: {
+          [Op.gte]: fechaHoy
+        }
+      }
+    })
+
     // Enviar los datos como respuesta
     return res.json({
-      data: { ventasHoy, mejoresClientes, productosMasVendidos }
+      data: { ventasHoy, mejoresClientes, productosMasVendidos, ingresosTotales }
     })
   } catch (error) {
     console.log(error)
