@@ -80,6 +80,7 @@ export class Pedido extends Model<PedidoAttributes, PedidoCreationAttributes> im
       estadoPedidoID: {
         type: DataTypes.INTEGER,
         allowNull: true,
+        defaultValue: 1,
         references: {
           model: 'estadopedido',
           key: 'id'
@@ -99,15 +100,15 @@ export class Pedido extends Model<PedidoAttributes, PedidoCreationAttributes> im
         defaultValue: Sequelize.Sequelize.fn('current_timestamp')
       },
       importe: {
-        type: DataTypes.DECIMAL(10, 0),
+        type: DataTypes.DOUBLE,
         allowNull: false
       },
       iva: {
-        type: DataTypes.DECIMAL(10, 0),
+        type: DataTypes.DOUBLE,
         allowNull: false
       },
       total: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: DataTypes.DOUBLE,
         allowNull: true
       },
       payment_id: {

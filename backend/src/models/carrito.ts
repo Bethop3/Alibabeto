@@ -57,15 +57,15 @@ export class Carrito extends Model<CarritoAttributes, CarritoCreationAttributes>
         allowNull: false
       },
       importe: {
-        type: DataTypes.DOUBLE,
+        type: DataTypes.DECIMAL(10, 0),
         allowNull: false
       },
       iva: {
-        type: DataTypes.DOUBLE,
+        type: DataTypes.DECIMAL(10, 0),
         allowNull: false
       },
       total: {
-        type: DataTypes.DOUBLE,
+        type: DataTypes.DECIMAL(10, 0),
         allowNull: false
       },
       productoID: {
