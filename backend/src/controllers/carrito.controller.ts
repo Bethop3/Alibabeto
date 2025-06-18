@@ -1,14 +1,109 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { type Controller } from '../types'
-import { type ProductoCarrito, type AgregarProductoCarrito } from '../types/Carrito'
+import { type ProductoCarrito, type AgregarProductoCarrito, type CarritoResponse, type PaymentIntentDTO } from '../types/Carrito'
 import { Carrito } from '../models/carrito'
 import { Producto } from '../models/producto'
+import { sequelize } from '../database'
+import { QueryTypes } from 'sequelize'
+import Decimal from 'decimal.js'
+import Stripe from 'stripe'
+import { Usuario } from '../models/usuario'
 
-export const ObtenerCarritoUsuarioCtrl: Controller<Carrito[]> = async (req, res) => {
+export const PaymentIntentCtrl: Controller<any, PaymentIntentDTO> = async (req, res) => {
+  try {
+    const { total: _total } = req.body
+
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? '', {
+      apiVersion: '2023-10-16',
+      typescript: true
+    })
+    // stripe.paymentIntents.search
+    try {
+      const totalPedido = new Decimal(_total)
+
+      const t = totalPedido.times(100)
+
+      t.toDP(2)
+
+      const totalFinal = t.toNumber()
+
+      console.log('totalFinal')
+      console.log(totalFinal)
+
+      const usuario = await Usuario.findOne({
+        where: {
+          id: req.payload?.id_usuario ?? 0
+        }
+      })
+
+      if (!usuario) {
+        return res.status(400).json({
+          ok: false,
+          msg: 'Error al encontrar el usuario'
+        })
+      }
+
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: totalFinal,
+        currency: 'mxn',
+        automatic_payment_methods: {
+          enabled: true,
+          allow_redirects: 'never'
+        }
+        // customer: `${usuario?.nombre} ${usuario?.apellidos}`
+      })
+
+      // const payment_id = paymentIntent.id
+
+      return res.status(200).json({
+        ok: true,
+        data: {
+          secret_key: paymentIntent.client_secret
+        }
+      })
+    } catch (error) {
+      console.log(error)
+      res.status(400).json({
+        ok: false,
+        msg: 'Error del servidor al crear el intento de pago'
+      })
+    }
+    return stripe
+  } catch (error) {
+    console.log(error)
+    return res.status(400).json({
+      ok: false,
+      msg: 'Error del servidor al crear el intento de pago'
+    })
+  }
+}
+
+export const RecomendarProductosCtrl: Controller = async (req, res) => {
+  try {
+    const productosRelacionados = await sequelize?.query<Producto>(`
+      SELECT * FROM productos 
+      WHERE is_deleted = 0
+      ORDER BY RAND() LIMIT 12;
+  `, { type: QueryTypes.SELECT })
+
+    return res.json({
+      ok: true,
+      data: productosRelacionados
+    })
+  } catch (error) {
+    return res.status(400).json({
+      ok: false
+    })
+  }
+}
+
+export const ObtenerCarritoUsuarioCtrl: Controller<CarritoResponse> = async (req, res) => {
   try {
     console.log(req.payload)
     const carritoUsuario = await Carrito.findAll({
       where: {
-        usuarioID: req.payload?.id_usuario
+        usuarioID: req.payload?.id_usuario,
+        is_deleted: 0
       },
       attributes: { exclude: ['is_creado', 'is_deleted', 'status', 'usuarioID', 'usuarioID', 'productoID'] },
       include: [
@@ -26,9 +121,18 @@ export const ObtenerCarritoUsuarioCtrl: Controller<Carrito[]> = async (req, res)
       ]
     })
 
+    const productosRelacionados = await sequelize?.query<Producto>(`
+      SELECT * FROM productos 
+      WHERE is_deleted = 0
+      ORDER BY RAND() LIMIT 12;
+  `, { type: QueryTypes.SELECT })
+
     return res.status(200).json({
       ok: false,
-      data: carritoUsuario
+      data: {
+        carrito: carritoUsuario,
+        productosRelacionados
+      }
     })
   } catch (err) {
     console.log(err)
@@ -59,7 +163,7 @@ export const AgregarProductoCarritoCtrl: Controller<ProductoCarrito, AgregarProd
       importe: rest.importe,
       iva: rest.iva,
       total: rest.total,
-      usuarioID: req.payload?.id_usuario!,
+      usuarioID: req.payload?.id_usuario ?? 0,
       cantidad: rest.cantidad,
       productoID: rest.productoID,
       status: 1,
@@ -70,6 +174,43 @@ export const AgregarProductoCarritoCtrl: Controller<ProductoCarrito, AgregarProd
       ok: true,
       data: productoCarrito,
       msg: 'Producto agregado al carrito'
+    })
+  } catch (err) {
+    console.log(err)
+    return res.status(400).json({
+      ok: true,
+      msg: 'Error al agregar al carrito'
+    })
+  }
+}
+
+export const EliminarProductoCarrito: Controller<boolean, null, any, { id: string }> = async (req, res) => {
+  try {
+    const id = req.params.id
+
+    const productoEliminar = await Carrito.findOne({
+      where: {
+        id
+      }
+    })
+
+    if (!productoEliminar) {
+      return res.status(400).json({
+        ok: false,
+        msg: 'Producto invalido al carrito'
+      })
+    }
+
+    productoEliminar.set({
+      is_deleted: 1
+    })
+
+    await productoEliminar.save()
+
+    return res.status(200).json({
+      ok: true,
+      data: true,
+      msg: 'Articulo eliminado del carrito'
     })
   } catch (err) {
     console.log(err)

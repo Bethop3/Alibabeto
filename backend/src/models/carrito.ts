@@ -111,17 +111,17 @@ export class Carrito extends Model<CarritoAttributes, CarritoCreationAttributes>
           ]
         },
         {
-          name: 'productoFK',
-          using: 'BTREE',
-          fields: [
-            { name: 'productoID' }
-          ]
-        },
-        {
           name: 'usuarioFK',
           using: 'BTREE',
           fields: [
             { name: 'usuarioID' }
+          ]
+        },
+        {
+          name: 'productoFK',
+          using: 'BTREE',
+          fields: [
+            { name: 'productoID' }
           ]
         }
       ]

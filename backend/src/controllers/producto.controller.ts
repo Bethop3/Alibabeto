@@ -1,29 +1,50 @@
-import { type ProductosQuery, type CrearProducto, type EditarProducto } from '../types/producto'
+/* eslint-disable prefer-const */
+import { type ProductosQuery, type CrearProducto, type EditarProducto, type ProductoPorIdResponse, type ProductoQueryResponse } from '../types/producto'
 import { Producto, type ProductoAttributes } from '../models/producto'
 import { type Controller } from '../types'
-import { Op } from 'sequelize'
+import { Op, type Order, QueryTypes } from 'sequelize'
 import { Categoria } from '../models/categoria'
+import { sequelize } from '../database'
+import { ImagenesProducto } from '../models/imagenes_producto'
+
+const MAX_ELEMENTS = 16
 
 // Controlador para obtener todos los productos
-export const GetProductosByQuery: Controller<Producto[], any, null, null, ProductosQuery> = async (req, res) => {
+export const GetProductosByQuery: Controller<ProductoQueryResponse, any, null, null, ProductosQuery> = async (req, res) => {
   try {
     let {
       nombre,
+      categoria,
       precioMaximo,
-      categoriaID
+      categoriaID,
+      landing,
+      pagina,
+      orden
     } = req.query
 
+    let limit
+    let offset
+
+    const orderBy: Order = [
+
+    ]
     // Consulta todos los productos en la base de datos
     console.log('req.query')
     console.log(req.query)
 
     nombre = nombre ?? ''
 
-    const whereClause: any = {
+    let whereClause: any = {
       descripcion: {
         [Op.like]: `%${nombre}%`
       },
       is_deleted: 0
+    }
+
+    if (categoria !== undefined) {
+      whereClause.categoriaID = {
+        [Op.eq]: Number(categoria)
+      }
     }
 
     if (precioMaximo !== undefined) {
@@ -40,14 +61,60 @@ export const GetProductosByQuery: Controller<Producto[], any, null, null, Produc
       }
     }
 
-    const productos = await Producto.findAll({
+    if (pagina !== undefined) {
+      limit = MAX_ELEMENTS
+      offset = (Number(pagina) - 1) * MAX_ELEMENTS
+    }
+
+    switch (orden) {
+      case 'id':
+        console.log('orden')
+        console.log(orden)
+        orderBy.push(['id', 'DESC'])
+        break
+      default:
+        console.log('por defecto')
+        orderBy.push(['id', 'ASC'])
+        break
+    }
+
+    console.log('orderBy')
+    console.log(orderBy)
+
+    if (landing !== undefined) {
+      limit = 8
+      whereClause = {
+        categoriaID: {
+          [Op.eq]: Number(categoria)
+        },
+        is_deleted: 0
+      }
+      console.log('whereClause')
+      console.log(whereClause)
+    }
+
+    const totalProductos = await Producto.count({
+      where: whereClause
+    })
+
+    const productos: Producto[] = await Producto.findAll({
+      limit,
+      offset,
       where: whereClause,
+      order: orderBy,
+      // order: [
+      //   ['id', 'ASC']
+      // ],
       attributes: { exclude: ['CreatedDate', 'categoriaID', 'is_deleted'] },
       include: [
         {
           model: Categoria, // El modelo de la tabla relacionada
           as: 'categorium' // Renombrar la asociación
           // attributes: ['nombre', 'descripcion'] // Atributos específicos de la tabla relacionada que deseas incluir
+        },
+        {
+          model: ImagenesProducto,
+          as: 'imagenes_productos'
         }
       ]
       // where: {
@@ -60,10 +127,20 @@ export const GetProductosByQuery: Controller<Producto[], any, null, null, Produc
       // }
     })
 
+    // let productosSeleccionados = productos.map(producto => ({
+    //   ...producto,
+    //   imagenes_productos: producto.imagenes_productos.map(img => img.url)
+    // })) as unknown as Producto[]
+
+    const totalPaginas = Math.ceil(totalProductos / MAX_ELEMENTS)
+
     // Retorna la respuesta con los productos en formato JSON
     return res.status(200).json({
       ok: true,
-      data: productos
+      data: {
+        productos,
+        totalPaginas
+      }
     })
   } catch (err) {
     // En caso de error, imprime el error en la consola y retorna un código de estado 400
@@ -94,7 +171,14 @@ export const CrearProductoC: Controller<ProductoAttributes, CrearProducto> = asy
     // Crea un nuevo producto utilizando los datos del cuerpo de la solicitud
     const productoNuevo = await Producto.create({
       ...producto,
-      CreatedDate: new Date()
+      status: 0,
+      CreatedDate: new Date(),
+      is_deleted: false
+    })
+
+    await ImagenesProducto.create({
+      url: productoNuevo.imagen,
+      productoID: productoNuevo.id
     })
 
     // Retorna la respuesta con el producto recién creado en formato JSON
@@ -109,13 +193,13 @@ export const CrearProductoC: Controller<ProductoAttributes, CrearProducto> = asy
   }
 }
 
-export const agregarComentarioProducto: Controller<any> = async (req, res) => {
-  try {
+// export const agregarComentarioProducto: Controller<any> = async (req, res) => {
+//   try {
 
-  } catch (error) {
+//   } catch (error) {
 
-  }
-}
+//   }
+// }
 
 // Controlador para editar un producto existente
 export const EditarProductoCtrl: Controller<ProductoAttributes | null, EditarProducto> = async (
@@ -144,6 +228,27 @@ export const EditarProductoCtrl: Controller<ProductoAttributes | null, EditarPro
     productoAEditar.set({
       ...rest
     })
+
+    console.log('rest.imagenesRemove')
+    console.log(rest.imagenesRemove)
+
+    for (const imagen of rest.imagenes) {
+      await ImagenesProducto.create({
+        productoID: productoAEditar.id,
+        url: imagen
+      })
+    }
+    for (const imagen of rest.imagenesRemove) {
+      const imagenABorrar = await ImagenesProducto.findOne({
+        where: {
+          id: imagen
+        }
+      })
+
+      await imagenABorrar?.destroy()
+    }
+
+    // productoAEditar.imagenes_productos.push()
 
     // Guarda los cambios en el producto
     await productoAEditar.save()
@@ -205,5 +310,71 @@ export const EliminarProductoCtrl: Controller<string | null, number, any, { id: 
     // En caso de error, imprime el error en la consola y retorna un código de estado 400
     console.log(err)
     return res.status(400).json()
+  }
+}
+
+export const ObtenerProductoidctrl: Controller <ProductoPorIdResponse | null, number, any, { id: string }> = async (req, res) => {
+  try {
+    const { id } = req.params
+
+    const productoABuscar = await Producto.findOne({
+      where: { id, is_deleted: 0 },
+      include: [
+        {
+          model: ImagenesProducto, // El modelo de la tabla relacionada
+          as: 'imagenes_productos' // Renombrar la asociación
+          // attributes: ['nombre', 'descripcion'] // Atributos específicos de la tabla relacionada que deseas incluir
+        }
+      ],
+      attributes: {
+        include: [
+          'codigo',
+          'descripcion',
+          'existencias',
+          'id',
+          'imagen',
+          'precio',
+          'titulo'
+        ],
+        exclude: [
+          'CreatedDate',
+          'is_deleted',
+          'status'
+        ]
+      }
+    })
+
+    if (!productoABuscar) {
+      return res.status(400).json({
+        ok: false,
+        msg: 'Producto no encontrado',
+        data: null
+      })
+    }
+
+    const categoria = productoABuscar.categoriaID
+
+    console.log('productoABuscar')
+    console.log(productoABuscar)
+
+    const productosRelacionados = await sequelize?.query<Producto>(`
+      SELECT * FROM productos 
+      WHERE categoriaID = ${categoria}
+      ORDER BY RAND() LIMIT 4;
+  `, { type: QueryTypes.SELECT })
+
+    return res.status(200).json({
+      ok: true,
+      data: {
+        producto: productoABuscar,
+        productosRelacionados
+      }
+    })
+  } catch (error) {
+    console.log(error)
+    return res.status(400).json({
+      ok: false,
+      data: null
+    })
   }
 }

@@ -14,6 +14,7 @@ export const MiddlewareTokenValidator: Middleware<JWTAuthPayload> = (req, res, n
 
   const result = validateJWT(token)
 
+  console.log('validateJWT')
   console.log(result)
 
   if (result === null) {

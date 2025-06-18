@@ -3,6 +3,8 @@ import { Usuario, type UsuarioAttributes } from '../models/usuario'
 import { type Controller } from '../types'
 import { type CreateDireccionEntrega } from '../types/DireccionEntrega'
 import { DireccionEntrega } from '../models/direccion_entrega'
+import { Role } from '../models/role'
+
 /**
  * @controller GetUsuarios
  * @description Controlador para obtener la lista de usuarios.
@@ -16,7 +18,16 @@ export const GetUsuarios: Controller<Usuario[]> = async (req, res) => {
     const usuariosFromModel = await Usuario.findAll({
       where: {
         is_deleted: 0
-      }
+      },
+      order: [
+        ['id', 'DESC']
+      ],
+      include: [
+        {
+          model: Role,
+          as: 'Rol'
+        }
+      ]
     })
 
     return res.status(200).json({
@@ -26,6 +37,32 @@ export const GetUsuarios: Controller<Usuario[]> = async (req, res) => {
   } catch (err) {
     console.error(err)
 
+    return res.status(400)
+  }
+}
+
+export const getUsuarioPorID: Controller<Usuario | null, any, any, { id: string }> = async (req, res) => {
+  try {
+    // Consulta a la base de datos usando el modelo Sequelize Usuario
+    const id = req.params.id
+    const usuarioPorId = await Usuario.findOne({
+      where: {
+        id
+      },
+      include: [
+        {
+          model: Role,
+          as: 'Rol'
+        }
+      ]
+    })
+
+    return res.status(200).json({
+      ok: true,
+      data: usuarioPorId
+    })
+  } catch (err) {
+    console.error(err)
     return res.status(400)
   }
 }
@@ -49,9 +86,13 @@ export const CreateUsuarioCtrl: Controller<UsuarioAttributes | null, CrearUsuari
       password: req.body.password,
       Imagen: req.body.Imagen,
       nombreUsuario: '',
-      RolFK: 1,
+      RolID: 1,
       is_deleted: 0
     })
+
+    // pubsub.publish(SUBSCRIPTIONS_EVENT.USUARIO_CREADO, {
+    //   USUARIO_CREADO: []
+    // })
 
     return res.status(200).json({
       ok: true,
@@ -161,7 +202,7 @@ export const GetDireccioneEntrega: Controller<DireccionEntrega[]> = async (req, 
 
     const direccionEntrega = await DireccionEntrega.findAll({
       where: {
-        is_deleted: 0,
+        // is_deleted: 0,
         usuarioId: idUsuario// pasas el id del usuario
       }
     })

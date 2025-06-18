@@ -1,9 +1,14 @@
-import { AuthLogin, AuthRegister } from '../controllers/auth.controller'
+import { AuthLogin, AuthRegister, AuthValidateSession } from '../controllers/auth.controller'
 import { handleValidationErrors } from '../utils/handleValidationErrors'
 import { validations } from '../validations/auth.validation'
 import { Router } from 'express'
 
 const router = Router()
+
+router.post(
+  '/validate-session',
+  AuthValidateSession
+)
 
 router.post(
   '/login',

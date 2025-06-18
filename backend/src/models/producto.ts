@@ -2,8 +2,8 @@ import type * as Sequelize from 'sequelize'
 import { DataTypes, Model, type Optional } from 'sequelize'
 import type { Carrito, CarritoId } from './carrito'
 import type { Categoria, CategoriaId } from './categoria'
-import type { EntradaHasProducto, EntradaHasProductoId } from './entrada_has_producto'
 import type { Entrada, EntradaId } from './entrada'
+import type { ImagenesProducto, ImagenesProductoId } from './imagenes_producto'
 import type { PedidoHasProducto, PedidoHasProductoId } from './pedido_has_producto'
 
 export interface ProductoAttributes {
@@ -11,6 +11,7 @@ export interface ProductoAttributes {
   status: number
   imagen: string
   codigo: string
+  titulo?: string
   descripcion: string
   precio: number
   existencias: number
@@ -21,7 +22,7 @@ export interface ProductoAttributes {
 
 export type ProductoPk = 'id'
 export type ProductoId = Producto[ProductoPk]
-export type ProductoOptionalAttributes = 'id' | 'is_deleted'
+export type ProductoOptionalAttributes = 'id' | 'titulo' | 'is_deleted'
 export type ProductoCreationAttributes = Optional<ProductoAttributes, ProductoOptionalAttributes>
 
 export class Producto extends Model<ProductoAttributes, ProductoCreationAttributes> implements ProductoAttributes {
@@ -29,6 +30,7 @@ export class Producto extends Model<ProductoAttributes, ProductoCreationAttribut
   status!: number
   imagen!: string
   codigo!: string
+  titulo?: string
   descripcion!: string
   precio!: number
   existencias!: number
@@ -53,18 +55,6 @@ export class Producto extends Model<ProductoAttributes, ProductoCreationAttribut
   hasCarrito!: Sequelize.HasManyHasAssociationMixin<Carrito, CarritoId>
   hasCarritos!: Sequelize.HasManyHasAssociationsMixin<Carrito, CarritoId>
   countCarritos!: Sequelize.HasManyCountAssociationsMixin
-  // Producto hasMany EntradaHasProducto via productoID
-  entrada_has_productos!: EntradaHasProducto[]
-  getEntrada_has_productos!: Sequelize.HasManyGetAssociationsMixin<EntradaHasProducto>
-  setEntrada_has_productos!: Sequelize.HasManySetAssociationsMixin<EntradaHasProducto, EntradaHasProductoId>
-  addEntrada_has_producto!: Sequelize.HasManyAddAssociationMixin<EntradaHasProducto, EntradaHasProductoId>
-  addEntrada_has_productos!: Sequelize.HasManyAddAssociationsMixin<EntradaHasProducto, EntradaHasProductoId>
-  createEntrada_has_producto!: Sequelize.HasManyCreateAssociationMixin<EntradaHasProducto>
-  removeEntrada_has_producto!: Sequelize.HasManyRemoveAssociationMixin<EntradaHasProducto, EntradaHasProductoId>
-  removeEntrada_has_productos!: Sequelize.HasManyRemoveAssociationsMixin<EntradaHasProducto, EntradaHasProductoId>
-  hasEntrada_has_producto!: Sequelize.HasManyHasAssociationMixin<EntradaHasProducto, EntradaHasProductoId>
-  hasEntrada_has_productos!: Sequelize.HasManyHasAssociationsMixin<EntradaHasProducto, EntradaHasProductoId>
-  countEntrada_has_productos!: Sequelize.HasManyCountAssociationsMixin
   // Producto hasMany Entrada via ProductoFK
   entradas!: Entrada[]
   getEntradas!: Sequelize.HasManyGetAssociationsMixin<Entrada>
@@ -77,6 +67,18 @@ export class Producto extends Model<ProductoAttributes, ProductoCreationAttribut
   hasEntrada!: Sequelize.HasManyHasAssociationMixin<Entrada, EntradaId>
   hasEntradas!: Sequelize.HasManyHasAssociationsMixin<Entrada, EntradaId>
   countEntradas!: Sequelize.HasManyCountAssociationsMixin
+  // Producto hasMany ImagenesProducto via productoID
+  imagenes_productos!: ImagenesProducto[]
+  getImagenes_productos!: Sequelize.HasManyGetAssociationsMixin<ImagenesProducto>
+  setImagenes_productos!: Sequelize.HasManySetAssociationsMixin<ImagenesProducto, ImagenesProductoId>
+  addImagenes_producto!: Sequelize.HasManyAddAssociationMixin<ImagenesProducto, ImagenesProductoId>
+  addImagenes_productos!: Sequelize.HasManyAddAssociationsMixin<ImagenesProducto, ImagenesProductoId>
+  createImagenes_producto!: Sequelize.HasManyCreateAssociationMixin<ImagenesProducto>
+  removeImagenes_producto!: Sequelize.HasManyRemoveAssociationMixin<ImagenesProducto, ImagenesProductoId>
+  removeImagenes_productos!: Sequelize.HasManyRemoveAssociationsMixin<ImagenesProducto, ImagenesProductoId>
+  hasImagenes_producto!: Sequelize.HasManyHasAssociationMixin<ImagenesProducto, ImagenesProductoId>
+  hasImagenes_productos!: Sequelize.HasManyHasAssociationsMixin<ImagenesProducto, ImagenesProductoId>
+  countImagenes_productos!: Sequelize.HasManyCountAssociationsMixin
   // Producto hasMany PedidoHasProducto via productoID
   pedido_has_productos!: PedidoHasProducto[]
   getPedido_has_productos!: Sequelize.HasManyGetAssociationsMixin<PedidoHasProducto>
@@ -109,6 +111,10 @@ export class Producto extends Model<ProductoAttributes, ProductoCreationAttribut
       codigo: {
         type: DataTypes.TEXT,
         allowNull: false
+      },
+      titulo: {
+        type: DataTypes.STRING(500),
+        allowNull: true
       },
       descripcion: {
         type: DataTypes.TEXT,

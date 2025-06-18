@@ -11,6 +11,8 @@ import { Entrada as _Entrada } from './entrada'
 import type { EntradaAttributes, EntradaCreationAttributes } from './entrada'
 import { Estadopedido as _Estadopedido } from './estadopedido'
 import type { EstadopedidoAttributes, EstadopedidoCreationAttributes } from './estadopedido'
+import { ImagenesProducto as _ImagenesProducto } from './imagenes_producto'
+import type { ImagenesProductoAttributes, ImagenesProductoCreationAttributes } from './imagenes_producto'
 import { PedidoHasProducto as _PedidoHasProducto } from './pedido_has_producto'
 import type { PedidoHasProductoAttributes, PedidoHasProductoCreationAttributes } from './pedido_has_producto'
 import { Pedido as _Pedido } from './pedido'
@@ -23,6 +25,8 @@ import { Role as _Role } from './role'
 import type { RoleAttributes, RoleCreationAttributes } from './role'
 import { Status as _Status } from './status'
 import type { StatusAttributes, StatusCreationAttributes } from './status'
+import { UserSession as _UserSession } from './user_session'
+import type { UserSessionAttributes, UserSessionCreationAttributes } from './user_session'
 import { Usuario as _Usuario } from './usuario'
 import type { UsuarioAttributes, UsuarioCreationAttributes } from './usuario'
 
@@ -33,12 +37,14 @@ export {
   _EntradaHasProducto as EntradaHasProducto,
   _Entrada as Entrada,
   _Estadopedido as Estadopedido,
+  _ImagenesProducto as ImagenesProducto,
   _PedidoHasProducto as PedidoHasProducto,
   _Pedido as Pedido,
   _Producto as Producto,
   _Proveedore as Proveedore,
   _Role as Role,
   _Status as Status,
+  _UserSession as UserSession,
   _Usuario as Usuario
 }
 
@@ -55,6 +61,8 @@ export type {
   EntradaCreationAttributes,
   EstadopedidoAttributes,
   EstadopedidoCreationAttributes,
+  ImagenesProductoAttributes,
+  ImagenesProductoCreationAttributes,
   PedidoHasProductoAttributes,
   PedidoHasProductoCreationAttributes,
   PedidoAttributes,
@@ -67,6 +75,8 @@ export type {
   RoleCreationAttributes,
   StatusAttributes,
   StatusCreationAttributes,
+  UserSessionAttributes,
+  UserSessionCreationAttributes,
   UsuarioAttributes,
   UsuarioCreationAttributes
 }
@@ -78,20 +88,20 @@ export function initModels (sequelize: Sequelize) {
   const EntradaHasProducto = _EntradaHasProducto.initModel(sequelize)
   const Entrada = _Entrada.initModel(sequelize)
   const Estadopedido = _Estadopedido.initModel(sequelize)
+  const ImagenesProducto = _ImagenesProducto.initModel(sequelize)
   const PedidoHasProducto = _PedidoHasProducto.initModel(sequelize)
   const Pedido = _Pedido.initModel(sequelize)
   const Producto = _Producto.initModel(sequelize)
   const Proveedore = _Proveedore.initModel(sequelize)
   const Role = _Role.initModel(sequelize)
   const Status = _Status.initModel(sequelize)
+  const UserSession = _UserSession.initModel(sequelize)
   const Usuario = _Usuario.initModel(sequelize)
 
   Producto.belongsTo(Categoria, { as: 'categorium', foreignKey: 'categoriaID' })
   Categoria.hasMany(Producto, { as: 'productos', foreignKey: 'categoriaID' })
   Pedido.belongsTo(DireccionEntrega, { as: 'direccionEntrega', foreignKey: 'direccionEntregaID' })
   DireccionEntrega.hasMany(Pedido, { as: 'pedidos', foreignKey: 'direccionEntregaID' })
-  EntradaHasProducto.belongsTo(Entrada, { as: 'entrada', foreignKey: 'entradaID' })
-  Entrada.hasMany(EntradaHasProducto, { as: 'entrada_has_productos', foreignKey: 'entradaID' })
   PedidoHasProducto.belongsTo(Estadopedido, { as: 'estadoProducto', foreignKey: 'estadoProductoID' })
   Estadopedido.hasMany(PedidoHasProducto, { as: 'pedido_has_productos', foreignKey: 'estadoProductoID' })
   Pedido.belongsTo(Estadopedido, { as: 'estadoPedido', foreignKey: 'estadoPedidoID' })
@@ -100,16 +110,16 @@ export function initModels (sequelize: Sequelize) {
   Pedido.hasMany(PedidoHasProducto, { as: 'pedido_has_productos', foreignKey: 'pedidoID' })
   Carrito.belongsTo(Producto, { as: 'producto', foreignKey: 'productoID' })
   Producto.hasMany(Carrito, { as: 'carritos', foreignKey: 'productoID' })
-  EntradaHasProducto.belongsTo(Producto, { as: 'producto', foreignKey: 'productoID' })
-  Producto.hasMany(EntradaHasProducto, { as: 'entrada_has_productos', foreignKey: 'productoID' })
   Entrada.belongsTo(Producto, { as: 'ProductoFK_producto', foreignKey: 'ProductoFK' })
   Producto.hasMany(Entrada, { as: 'entradas', foreignKey: 'ProductoFK' })
+  ImagenesProducto.belongsTo(Producto, { as: 'producto', foreignKey: 'productoID' })
+  Producto.hasMany(ImagenesProducto, { as: 'imagenes_productos', foreignKey: 'productoID' })
   PedidoHasProducto.belongsTo(Producto, { as: 'producto', foreignKey: 'productoID' })
   Producto.hasMany(PedidoHasProducto, { as: 'pedido_has_productos', foreignKey: 'productoID' })
   Entrada.belongsTo(Proveedore, { as: 'ProveedorFK_proveedore', foreignKey: 'ProveedorFK' })
   Proveedore.hasMany(Entrada, { as: 'entradas', foreignKey: 'ProveedorFK' })
-  Usuario.belongsTo(Role, { as: 'RolFK_role', foreignKey: 'RolFK' })
-  Role.hasMany(Usuario, { as: 'usuarios', foreignKey: 'RolFK' })
+  Usuario.belongsTo(Role, { as: 'Rol', foreignKey: 'RolID' })
+  Role.hasMany(Usuario, { as: 'usuarios', foreignKey: 'RolID' })
   Carrito.belongsTo(Usuario, { as: 'usuario', foreignKey: 'usuarioID' })
   Usuario.hasMany(Carrito, { as: 'carritos', foreignKey: 'usuarioID' })
   DireccionEntrega.belongsTo(Usuario, { as: 'usuario', foreignKey: 'usuarioId' })
@@ -126,12 +136,14 @@ export function initModels (sequelize: Sequelize) {
     EntradaHasProducto,
     Entrada,
     Estadopedido,
+    ImagenesProducto,
     PedidoHasProducto,
     Pedido,
     Producto,
     Proveedore,
     Role,
     Status,
+    UserSession,
     Usuario
   }
 }

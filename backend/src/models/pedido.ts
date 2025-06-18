@@ -14,6 +14,7 @@ export interface PedidoAttributes {
   importe: number
   iva: number
   total?: number
+  payment_id: string
 }
 
 export type PedidoPk = 'id'
@@ -30,6 +31,7 @@ export class Pedido extends Model<PedidoAttributes, PedidoCreationAttributes> im
   importe!: number
   iva!: number
   total?: number
+  payment_id!: string
 
   // Pedido belongsTo DireccionEntrega via direccionEntregaID
   direccionEntrega!: DireccionEntrega
@@ -78,6 +80,7 @@ export class Pedido extends Model<PedidoAttributes, PedidoCreationAttributes> im
       estadoPedidoID: {
         type: DataTypes.INTEGER,
         allowNull: true,
+        defaultValue: 1,
         references: {
           model: 'estadopedido',
           key: 'id'
@@ -97,16 +100,20 @@ export class Pedido extends Model<PedidoAttributes, PedidoCreationAttributes> im
         defaultValue: Sequelize.Sequelize.fn('current_timestamp')
       },
       importe: {
-        type: DataTypes.DECIMAL(10, 0),
+        type: DataTypes.DOUBLE,
         allowNull: false
       },
       iva: {
-        type: DataTypes.DECIMAL(10, 0),
+        type: DataTypes.DOUBLE,
         allowNull: false
       },
       total: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: DataTypes.DOUBLE,
         allowNull: true
+      },
+      payment_id: {
+        type: DataTypes.STRING(1000),
+        allowNull: false
       }
     }, {
       sequelize,
