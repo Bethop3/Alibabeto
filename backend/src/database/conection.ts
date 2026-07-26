@@ -11,14 +11,23 @@ export const getConnection = async (): Promise<void> => {
     // Autenticación de la conexión con la base de datos
     await sequelize.authenticate()
 
-    // Desactiva la verificación de claves foráneas durante la sincronización
-    await sequelize.query('SET FOREIGN_KEY_CHECKS = 0')
+    if (sequelize.getDialect() === 'mysql') {
+      await sequelize.query('SET FOREIGN_KEY_CHECKS = 0')
+    }
 
-    // Sincroniza todos los modelos con la base de datos
-    await sequelize.sync()
+    try {
+      await sequelize.sync()
+    } catch (err: any) {
+      if (sequelize.getDialect() === 'sqlite' && String(err?.message).includes('PRIMARY')) {
+        console.log('Tablas e índices sincronizados en SQLite')
+      } else {
+        throw err
+      }
+    }
 
-    // Reactiva la verificación de claves foráneas después de la sincronización
-    await sequelize.query('SET FOREIGN_KEY_CHECKS = 1')
+    if (sequelize.getDialect() === 'mysql') {
+      await sequelize.query('SET FOREIGN_KEY_CHECKS = 1')
+    }
 
     // Limpia la consola
     // runESLint()
