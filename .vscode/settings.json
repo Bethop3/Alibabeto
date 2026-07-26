@@ -1,6 +1,6 @@
 {
     "workbench.iconTheme": "material-icon-theme",
-    "workbench.colorTheme": "SynthWave '84",
+    "workbench.colorTheme": "a1da4f2f-e736-40e7-86d9-9167a247da93",
     "explorer.compactFolders": false,
     "[typescriptreact]": {
       "editor.defaultFormatter": "vscode.typescript-language-features"
