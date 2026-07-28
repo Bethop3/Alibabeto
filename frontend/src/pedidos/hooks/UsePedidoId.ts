@@ -11,7 +11,7 @@ import { io } from 'socket.io-client';
 
 const useObtenerPedidoPorId = () => {
     
-    const socket = io('http://localhost:3000');
+    const socket = io(import.meta.env.VITE_API_URL ?? 'http://localhost:3000');
     const [isLoading, setLoading] = useState<boolean>(false);
     const [pedido, setPedido] = useState<Pedido | null>(null);
     const [ progreso , setProgreso ] = useState(0)

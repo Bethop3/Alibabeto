@@ -11,7 +11,7 @@ const useListadoPedidos = () => {
     const [ isLoading , setLoading ] = useState<boolean>(false)
     const [ pedidos , setPedidos ] = useState<Pedido[]>([])
   
-    const socket = io('http://localhost:3000');
+    const socket = io(import.meta.env.VITE_API_URL ?? 'http://localhost:3000');
   
     useEffect(() => {
   

@@ -135,7 +135,7 @@ const main = async () => {
 
   console.log()
   console.log(`Servidor corriendo en http://localhost:${port}`)
-  console.log('🚀 Servidor corriendo en http://localhost:3000/graphql')
+  console.log(`🚀 Servidor corriendo en http://localhost:${port}/graphql`)
 }
 
 main()
