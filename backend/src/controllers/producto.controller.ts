@@ -360,9 +360,9 @@ export const ObtenerProductoidctrl: Controller <ProductoPorIdResponse | null, nu
     const randomFunc = sequelize?.getDialect() === 'sqlite' ? 'RANDOM()' : 'RAND()'
     const productosRelacionados = await sequelize?.query<Producto>(`
       SELECT * FROM productos 
-      WHERE categoriaID = ${categoria}
+      WHERE categoriaID = :categoria
       ORDER BY ${randomFunc} LIMIT 4;
-  `, { type: QueryTypes.SELECT })
+  `, { type: QueryTypes.SELECT, replacements: { categoria } })
 
     return res.status(200).json({
       ok: true,

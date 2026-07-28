@@ -63,12 +63,11 @@ export const PaymentIntentCtrl: Controller<any, PaymentIntentDTO> = async (req, 
       })
     } catch (error) {
       console.log(error)
-      res.status(400).json({
+      return res.status(400).json({
         ok: false,
         msg: 'Error del servidor al crear el intento de pago'
       })
     }
-    return stripe
   } catch (error) {
     console.log(error)
     return res.status(400).json({
@@ -128,7 +127,7 @@ export const ObtenerCarritoUsuarioCtrl: Controller<CarritoResponse> = async (req
   `, { type: QueryTypes.SELECT })
 
     return res.status(200).json({
-      ok: false,
+      ok: true,
       data: {
         carrito: carritoUsuario,
         productosRelacionados
@@ -178,7 +177,7 @@ export const AgregarProductoCarritoCtrl: Controller<ProductoCarrito, AgregarProd
   } catch (err) {
     console.log(err)
     return res.status(400).json({
-      ok: true,
+      ok: false,
       msg: 'Error al agregar al carrito'
     })
   }
@@ -215,8 +214,8 @@ export const EliminarProductoCarrito: Controller<boolean, null, any, { id: strin
   } catch (err) {
     console.log(err)
     return res.status(400).json({
-      ok: true,
-      msg: 'Error al agregar al carrito'
+      ok: false,
+      msg: 'Error al eliminar del carrito'
     })
   }
 }
