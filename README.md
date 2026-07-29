@@ -1,47 +1,55 @@
-# Proyecto "Alibabeto" - Tienda en Línea
+# Alibabeto - Tienda en Línea
 
-## Link del sitio
+E-commerce completo para tienda mayorista de electrónicos en Cancún. Catálogo de productos, carrito de compras, pagos con Stripe, panel de administracion con dashboard y seguimiento de pedidos en tiempo real via WebSockets.
+
+## Demo
 
 [https://alibabeto.netlify.app](https://alibabeto.netlify.app)
 
-## Descripción del Proyecto
+## Features
 
-Este repositorio contiene el código fuente del proyecto "Alibabeto", una tienda mayorista ubicada en Cancún que busca expandir su alcance mediante la transición al comercio electrónico. El proyecto se desarrollará utilizando las siguientes tecnologías:
+- Catalogo de productos con filtros, busqueda y paginacion
+- Carrito de compras
+- Pagos con Stripe
+- Panel de administracion (dashboard, productos, pedidos, usuarios)
+- Seguimiento de pedidos en tiempo real (WebSockets)
+- Autenticacion JWT + Google OAuth
+- API REST + GraphQL
+- Documentacion Swagger
 
-- **ReactJS:** Biblioteca JavaScript para construir interfaces de usuario interactivas.
-- **Express.js:** Framework web para construir aplicaciones Node.js robustas.
-- **TypeScript:** Superset de JavaScript que agrega tipado estático opcional.
-- **MySQL:** Sistema de gestión de bases de datos relacional.
+## Tech Stack
 
-## Estructura del Proyecto
+- **Frontend:** React 18, TypeScript, Vite, TailwindCSS, Zustand, Apollo Client, React Router
+- **Backend:** Node.js, Express, TypeScript, Sequelize, GraphQL, Socket.io
+- **Database:** SQLite / MySQL
+- **Payments:** Stripe
+- **Auth:** JWT, Google OAuth
 
-El proyecto se organizará en varias carpetas y seguirá una estructura modular para facilitar el desarrollo y el mantenimiento:
+## Estructura
 
-- **`/frontend`:** Contiene el código fuente de la interfaz de usuario desarrollada con ReactJS y Vite.
-- **`/backend`:** Incluye la lógica del servidor construida con Express.js y TypeScript.
+```
+backend/   Servidor Express + TypeScript (API REST, GraphQL, Socket.io)
+frontend/  Cliente React + Vite + TailwindCSS
+```
 
-## Configuración del Entorno
+## Setup
 
-1. **ReactJS y Vite:**
-   - Asegúrese de tener [Node.js 20](https://nodejs.org/) instalado.
-   - Vaya a la carpeta `cd /frontend` y ejecute `npm install` para instalar las dependencias.
-   - Ejecute el servidor de desarrollo con `npm run dev`.
+1. **Backend:**
+   ```bash
+   cd backend
+   npm install
+   cp .env.example .env
+   npm run dev
+   ```
 
-2. **Express.js y TypeScript:**
-   - En la carpeta `/backend`, ejecute `npm install` para instalar las dependencias.
-   - Configure la base de datos MySQL en el archivo `.env` siguiendo el formato de `.env.example`.
-   - Ejecute el servidor con `npm start`.
-
-## Métricas de Éxito
-
-- Número de pedidos en línea.
-- Alcance geográfico de la clientela.
-- Retorno de inversión en la implementación en línea.
-
-## Contribuciones
-
-¡Contribuciones son bienvenidas! Si desea contribuir al proyecto, por favor siga las prácticas de desarrollo y envíe pull requests.
+2. **Frontend:**
+   ```bash
+   cd frontend
+   npm install
+   cp .env.example .env
+   npm run dev
+   ```
 
 ## Licencia
 
-Este proyecto está bajo la Licencia [MIT](LICENSE).
+MIT
