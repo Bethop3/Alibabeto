@@ -8,7 +8,6 @@ import { ApolloServer } from '@apollo/server'
 import fileUpload from 'express-fileupload'
 import swaggerUI from 'swagger-ui-express'
 import { json } from 'body-parser'
-import { ESLint } from 'eslint'
 import dotenv from 'dotenv'
 import http from 'http'
 import cors from 'cors'
@@ -44,25 +43,6 @@ import resolvers from './resolvers'
 import { MiddlewareTokenValidator } from './middlewares/middlewareTokenValidator'
 import { type ContextApp } from './types'
 import ContextFn from './context'
-
-export async function runESLint (): Promise<void> {
-  const eslint = new ESLint()
-  const results = await eslint.lintFiles(['src/**/*.ts'])
-  const formatter = await eslint.loadFormatter('stylish')
-  const resultText = formatter.format(results)
-  console.log(resultText)
-}
-
-// // Inicialización de modelos Sequelize
-// app.listen(port, async () => {
-//   // Inicialización de modelos Sequelize
-//   initModels(sequelize)
-
-//   // Conexión a la base de datos
-//   await getConnection()
-
-//   console.log(`Servidor corriendo en http://localhost:${port}`)
-// })
 
 const main = async () => {
   // Inicialización de la aplicación Express
