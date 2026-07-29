@@ -114,7 +114,6 @@ const usePedidoPorId = () => {
             });
 
         } catch (error) {
-            console.log(error)
             toast.error('Error al actualizar el pedido', {
                 position: "bottom-center",
                 autoClose: 5000,

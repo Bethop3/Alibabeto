@@ -27,6 +27,5 @@ export const uploadImageCtrl: Controller = async (req: any, res): Promise<any> =
       }
     })
   } catch (error) {
-    console.log(error)
   }
 }

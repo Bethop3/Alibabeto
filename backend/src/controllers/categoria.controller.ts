@@ -11,7 +11,6 @@ export const GetCategoria: Controller<Categoria[]> = async (req, res) => {
       data: categoria
     })
   } catch (error) {
-    console.log(error)
 
     return res.status(400).json()
   }
@@ -122,7 +121,6 @@ export const EliminarCategoriaCtrl: Controller<string | null, number, any, { id:
     })
   } catch (err) {
     // En caso de error, imprime el error en la consola y retorna un código de estado 400
-    console.log(err)
     return res.status(400).json()
   }
 }
@@ -148,7 +146,6 @@ export const ObtenerCategoriaPorIdCtrl: Controller<Categoria | null, number, any
       data: categoria
     })
   } catch (error) {
-    console.log(error)
     return res.status(400).json({
       ok: false,
       data: null

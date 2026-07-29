@@ -38,7 +38,6 @@ export const getIdPedidosCtrl: Controller<any, CreatePedido> = async (req, res) 
       }
     ]
   })
-  console.log(pedidos)
   return res.status(200).json({
     data: pedidos
   })
@@ -147,13 +146,11 @@ export const ActualizarEstadoPedido: Controller<any, ActualizarEstadoPedidoT> = 
       status: pedido.estadoPedidoID
     })
 
-    console.log(canal)
 
     return res.status(201).json({
       ok: true
     })
   } catch (error) {
-    console.log(error)
     return res.status(500).json({
       ok: false,
       msg: 'Error del servidor'
@@ -218,7 +215,6 @@ export const CreatePedidoCtrl: Controller<any, CreatePedido> = async (req, res) 
       msg: 'Pedido creado correctamente'
     })
   } catch (err) {
-    console.log(err)
     return res.status(400).json({
       ok: true,
       data: [],

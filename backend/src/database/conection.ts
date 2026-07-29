@@ -19,7 +19,6 @@ export const getConnection = async (): Promise<void> => {
       await sequelize.sync()
     } catch (err: any) {
       if (sequelize.getDialect() === 'sqlite' && String(err?.message).includes('PRIMARY')) {
-        console.log('Tablas e índices sincronizados en SQLite')
       } else {
         throw err
       }
@@ -35,8 +34,6 @@ export const getConnection = async (): Promise<void> => {
     console.clear()
 
     // Mensajes de confirmación
-    console.log('Modelos actualizados')
-    console.log('Base de datos actualizada')
   } catch (error) {
     // Captura y manejo de errores durante la conexión
     throw new Error('Error al intentar conectar la base de datos: ' + error)

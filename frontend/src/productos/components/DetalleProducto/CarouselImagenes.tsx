@@ -24,8 +24,6 @@ const CarouselImagenes = () => {
                 slidesPerView={1}
                 navigation={true}
                 thumbs={{ swiper: thumbsSwiper }}
-                onSlideChange={() => console.log('slide change')}
-                onSwiper={(swiper) => console.log(swiper)}
                 modules={[FreeMode, Navigation, Thumbs]}
                 loop={true}
             >

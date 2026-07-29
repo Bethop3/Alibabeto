@@ -108,7 +108,6 @@ const useVentasHoy = () => {
             })
 
         } catch (error) {
-            console.log(error)
             alert("Error")
         }
 

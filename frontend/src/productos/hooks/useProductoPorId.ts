@@ -51,7 +51,6 @@ const useProductoPorId = () => {
 
     } catch (error) {
       setLoading(false)
-      console.log();
     }
 
   }
@@ -139,7 +138,6 @@ const useProductoPorId = () => {
 
     } catch (error) {
       setLoadingCarrito(false)
-      console.log();
     }
 
   }

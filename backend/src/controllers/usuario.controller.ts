@@ -158,7 +158,6 @@ export const EditUsuarioCtrl: Controller<UsuarioAttributes | null, EditarUsuario
       msg: 'Usuario actualizado correctamente'
     })
   } catch (error) {
-    console.log(error)
     return res.status(400).json()
   }
 }
@@ -191,7 +190,6 @@ export const EliminarUsuarioCtrl: Controller<string | null, number, any, { id: s
       msg: 'Usuario eliminado correctamente'
     })
   } catch (error) {
-    console.log(error)
     return res.status(400).json()
   }
 }

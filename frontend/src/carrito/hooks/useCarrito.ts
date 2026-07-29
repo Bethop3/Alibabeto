@@ -67,7 +67,6 @@ const useCarrito = () => {
 
         const { data : { data } } = await AuthAxios.get<BasicResponse<CarritoResponse>>('/carrito')
 
-        console.log(data)
 
         setProductosRelacionados(data.productosRelacionados)
 
@@ -78,7 +77,6 @@ const useCarrito = () => {
         setIsLoading(false)
 
       } catch (error) {
-        console.log(error);
         await Swal.fire({
           title: 'Error del servidor al obtener el carrito',
           icon:"error"
@@ -195,7 +193,6 @@ const useCarrito = () => {
           productos: productos
         })
         
-        // console.log(data)
         
         setIsLoading(false)
         

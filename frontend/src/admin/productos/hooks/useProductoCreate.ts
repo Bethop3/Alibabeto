@@ -66,7 +66,6 @@ const useProductoCreate = () => {
         catch (error:any) 
         {
             setLoading(false)
-            console.log(error)
             if( error?.response?.data?.msg )
             {
                 const msg = error?.response?.data?.msg

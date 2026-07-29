@@ -113,9 +113,6 @@ const main = async () => {
 
   await new Promise<void>((resolve) => httpServer.listen({ port }, resolve))
 
-  console.log()
-  console.log(`Servidor corriendo en http://localhost:${port}`)
-  console.log(`🚀 Servidor corriendo en http://localhost:${port}/graphql`)
 }
 
 main()

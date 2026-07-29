@@ -156,8 +156,6 @@ const useBuscadorProductos = () => {
 
             window.history.pushState({ path: nuevaURL }, '', nuevaURL);
                   
-            console.log('categoria');
-            console.log(categoria);
 
             const params: any = {
               pagina: pagination.pagina  
@@ -184,9 +182,7 @@ const useBuscadorProductos = () => {
               
             const { data : { data } } = await AuthAxios.get<BasicResponse<ProductoQueryResponse>>(url)
 
-            console.log('data')
             
-            console.log(data)
             
             setProductos(data.productos)
 
@@ -201,7 +197,6 @@ const useBuscadorProductos = () => {
 
 
         } catch (error) {
-            console.log();
         }
 
     }

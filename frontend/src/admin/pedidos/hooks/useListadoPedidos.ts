@@ -31,7 +31,6 @@ const useListadoPedidos = () => {
         
           // alert('se creo un pedido')
         
-          console.log('Mensaje desde el servidor:', pedido);
   
           
           // alert("pedido nuevo")

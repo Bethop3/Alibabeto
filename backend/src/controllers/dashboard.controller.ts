@@ -59,7 +59,6 @@ export const getDashboard: Controller<DashboardResponse> = async (req, res) => {
       data: { ventasHoy, mejoresClientes, productosMasVendidos, ingresosTotales }
     })
   } catch (error) {
-    console.log(error)
     return res.status(400).json()
   }
 }

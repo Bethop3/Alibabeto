@@ -27,8 +27,6 @@ export const PaymentIntentCtrl: Controller<any, PaymentIntentDTO> = async (req, 
 
       const totalFinal = t.toNumber()
 
-      console.log('totalFinal')
-      console.log(totalFinal)
 
       const usuario = await Usuario.findOne({
         where: {
@@ -62,14 +60,12 @@ export const PaymentIntentCtrl: Controller<any, PaymentIntentDTO> = async (req, 
         }
       })
     } catch (error) {
-      console.log(error)
       return res.status(400).json({
         ok: false,
         msg: 'Error del servidor al crear el intento de pago'
       })
     }
   } catch (error) {
-    console.log(error)
     return res.status(400).json({
       ok: false,
       msg: 'Error del servidor al crear el intento de pago'
@@ -98,7 +94,6 @@ export const RecomendarProductosCtrl: Controller = async (req, res) => {
 
 export const ObtenerCarritoUsuarioCtrl: Controller<CarritoResponse> = async (req, res) => {
   try {
-    console.log(req.payload)
     const carritoUsuario = await Carrito.findAll({
       where: {
         usuarioID: req.payload?.id_usuario,
@@ -134,7 +129,6 @@ export const ObtenerCarritoUsuarioCtrl: Controller<CarritoResponse> = async (req
       }
     })
   } catch (err) {
-    console.log(err)
     return res.status(500).json({
       ok: false
     })
@@ -175,7 +169,6 @@ export const AgregarProductoCarritoCtrl: Controller<ProductoCarrito, AgregarProd
       msg: 'Producto agregado al carrito'
     })
   } catch (err) {
-    console.log(err)
     return res.status(400).json({
       ok: false,
       msg: 'Error al agregar al carrito'
@@ -212,7 +205,6 @@ export const EliminarProductoCarrito: Controller<boolean, null, any, { id: strin
       msg: 'Articulo eliminado del carrito'
     })
   } catch (err) {
-    console.log(err)
     return res.status(400).json({
       ok: false,
       msg: 'Error al eliminar del carrito'

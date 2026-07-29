@@ -10,7 +10,6 @@ export const GetEntrada: Controller<Entrada[]> = async (req, res) => {
       data: entrada
     })
   } catch (error) {
-    console.log(error)
 
     return res.status(400).json()
   }

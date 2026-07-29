@@ -12,7 +12,6 @@ export function initSocket (server: any) {
   })
 
   io.on('connection', (socket: any) => {
-    console.log('Usuario conectado')
 
     // Puedes agregar lógica de manejo de eventos aquí si es necesario
   })

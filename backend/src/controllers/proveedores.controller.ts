@@ -10,7 +10,6 @@ export const GetProveedores: Controller<Proveedore[]> = async (req, res) => {
       data: proveedore
     })
   } catch (error) {
-    console.log(error)
 
     return res.status(400).json()
   }

@@ -29,8 +29,6 @@ export const GetProductosByQuery: Controller<ProductoQueryResponse, any, null, n
 
     ]
     // Consulta todos los productos en la base de datos
-    console.log('req.query')
-    console.log(req.query)
 
     nombre = nombre ?? ''
 
@@ -68,18 +66,13 @@ export const GetProductosByQuery: Controller<ProductoQueryResponse, any, null, n
 
     switch (orden) {
       case 'id':
-        console.log('orden')
-        console.log(orden)
         orderBy.push(['id', 'DESC'])
         break
       default:
-        console.log('por defecto')
         orderBy.push(['id', 'ASC'])
         break
     }
 
-    console.log('orderBy')
-    console.log(orderBy)
 
     if (landing !== undefined) {
       limit = 8
@@ -89,8 +82,6 @@ export const GetProductosByQuery: Controller<ProductoQueryResponse, any, null, n
         },
         is_deleted: 0
       }
-      console.log('whereClause')
-      console.log(whereClause)
     }
 
     const totalProductos = await Producto.count({
@@ -144,7 +135,6 @@ export const GetProductosByQuery: Controller<ProductoQueryResponse, any, null, n
     })
   } catch (err) {
     // En caso de error, imprime el error en la consola y retorna un código de estado 400
-    console.log(err)
     return res.status(400).json()
   }
 }
@@ -188,7 +178,6 @@ export const CrearProductoC: Controller<ProductoAttributes, CrearProducto> = asy
     })
   } catch (err) {
     // En caso de error, imprime el error en la consola y retorna un código de estado 400
-    console.log(err)
     return res.status(400).json()
   }
 }
@@ -229,8 +218,6 @@ export const EditarProductoCtrl: Controller<ProductoAttributes | null, EditarPro
       ...rest
     })
 
-    console.log('rest.imagenesRemove')
-    console.log(rest.imagenesRemove)
 
     for (const imagen of rest.imagenes) {
       await ImagenesProducto.create({
@@ -261,7 +248,6 @@ export const EditarProductoCtrl: Controller<ProductoAttributes | null, EditarPro
     })
   } catch (err) {
     // En caso de error, imprime el error en la consola y retorna un código de estado 400
-    console.log(err)
     return res.status(400).json()
   }
 }
@@ -308,7 +294,6 @@ export const EliminarProductoCtrl: Controller<string | null, number, any, { id: 
     })
   } catch (err) {
     // En caso de error, imprime el error en la consola y retorna un código de estado 400
-    console.log(err)
     return res.status(400).json()
   }
 }
@@ -354,8 +339,6 @@ export const ObtenerProductoidctrl: Controller <ProductoPorIdResponse | null, nu
 
     const categoria = productoABuscar.categoriaID
 
-    console.log('productoABuscar')
-    console.log(productoABuscar)
 
     const randomFunc = sequelize?.getDialect() === 'sqlite' ? 'RANDOM()' : 'RAND()'
     const productosRelacionados = await sequelize?.query<Producto>(`
@@ -372,7 +355,6 @@ export const ObtenerProductoidctrl: Controller <ProductoPorIdResponse | null, nu
       }
     })
   } catch (error) {
-    console.log(error)
     return res.status(400).json({
       ok: false,
       data: null

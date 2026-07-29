@@ -10,7 +10,6 @@ async function importSqlDump() {
       return
     }
 
-    console.log('Cargando modelos e importando dump completo de Rony...')
     initModels(sequelize)
 
     const rawSql = fs.readFileSync(dumpPath, 'utf-8')
@@ -54,7 +53,6 @@ async function importSqlDump() {
 
       try {
         await sequelize.query(createQuery)
-        console.log(`✓ Tabla creada: [${tableName}]`)
       } catch (err: any) {
         console.warn(`! Error al crear tabla [${tableName}]: ${err.message}`)
       }
@@ -86,7 +84,6 @@ async function importSqlDump() {
       try {
         await sequelize.query(query)
         count++
-        console.log(`  ➔ Datos insertados en [${tableName}]`)
       } catch (err: any) {
         console.warn(`! Error al insertar datos en [${tableName}]: ${err.message}`)
       }
@@ -108,7 +105,6 @@ async function importSqlDump() {
       } catch (e) {}
     }
 
-    console.log(`\n🎉 ¡Base de datos completa de Rony importada a SQLite con alias de tablas! (${count} tablas cargadas).`)
   } catch (error) {
     console.error('Error durante la importación:', error)
   } finally {

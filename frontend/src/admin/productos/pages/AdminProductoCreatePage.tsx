@@ -28,7 +28,6 @@ const AdminProductoCreatePage = () => {
 
     const onChange = (imageList: any, addUpdateIndex: any) => {
         // data for submit
-        console.log(imageList, addUpdateIndex);
         setImages(imageList);
         updateImages(imageList)
     };

@@ -10,7 +10,6 @@ export const GetRoles: Controller<Role[]> = async (req, res) => {
       data: roles
     })
   } catch (error) {
-    console.log(error)
 
     return res.status(400).json()
   }

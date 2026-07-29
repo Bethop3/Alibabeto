@@ -91,7 +91,6 @@ export const AuthRegister: Controller<boolean | null, AuthRegistroUsuario> = asy
       data: true
     })
   } catch (err) {
-    console.log(err)
     res.status(500).json({
       ok: false,
       msg: 'Error del servidor',
